@@ -1,0 +1,12 @@
+{
+    "name": "peron/brom",
+    "description": "Just BROM",
+    "type": "cms",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Bartosz Perończyk",
+            "email": "bartosz@peronczyk.com"
+        }
+    ]
+}
