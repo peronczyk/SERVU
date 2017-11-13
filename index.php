@@ -6,10 +6,24 @@
 
 define('BROM_START', microtime(true));
 
+
+/**
+ * Initiate core
+ */
+
 require_once('core.php');
 $core = new Core();
 
-$db = new Sqlite();
 
+/**
+ * Prepare connection to database
+ */
 
-echo '<br>' . round(microtime(true) - BROM_START, 4);
+$db = new Sqlite(_STORAGE_DIR . 'database/' . _DB_FILE_NAME, _DEBUG);
+
+echo '<pre>';
+
+echo '<br>Loading: ' . round(microtime(true) - BROM_START, 4);
+echo '<br>Queries: ' . count($db->get_log());
+
+echo '</pre>';
