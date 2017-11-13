@@ -23,8 +23,8 @@ define('BROM_INDEX', true);
  * Initiate core
  */
 
-require_once('core.php');
-$core = new Core();
+require_once('base.php');
+$base = new Base();
 
 
 /**

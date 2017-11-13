@@ -29,10 +29,10 @@ $base_config = [
 
 
 /**
- * Core class
+ * Base class
  */
 
-class Core {
+class Base {
 	public function __construct() {
 		/**
 		 * Configuration defines
