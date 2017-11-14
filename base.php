@@ -18,6 +18,7 @@ $base_config = [
 	'_ENTRY_MODULE' => 'api',
 
 	// Directories
+	'_CORE_DIR' => 'core/',
 	'_LIBS_DIR' => 'libs/',
 	'_MODULES_DIR' => 'modules/',
 	'_STORAGE_DIR' => 'storage/',
