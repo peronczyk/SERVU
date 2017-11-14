@@ -35,9 +35,11 @@ $base_config = [
 
 class Base {
 	public function __construct() {
+
 		/**
 		 * Configuration defines
 		 */
+
 		foreach($GLOBALS['base_config'] as $key => $val) {
 			define($key, $val);
 		}
@@ -45,9 +47,26 @@ class Base {
 		error_reporting(_DEBUG ? E_ALL : 0);
 		session_start();
 
+
+		/**
+		 * Define root URL
+		 */
+
+		$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
+		$root_url = $protocol . $_SERVER['SERVER_NAME'];
+		$script_dirname = dirname($_SERVER['SCRIPT_NAME']);
+		if ($script_dirname != '/') {
+			$root_url .= $script_dirname;
+		}
+
+		define('APP_PROTOCOL', $protocol);
+		define('APP_ROOT_URL', $root_url);
+
+
 		/**
 		 * Autoload libs (PSR-0)
 		 */
+
 		spl_autoload_register(function($class) {
 			$class_path = './' . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
 			if (file_exists($class_path)) include_once($class_path);
