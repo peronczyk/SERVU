@@ -14,24 +14,36 @@ class Sqlite {
 	protected $conditions;
 	protected $table;
 
+	// Last query result
 	protected $result;
 
+	// Array that logs all performed queries
 	protected $log = [];
+
+	protected $options = [
+		// Decide if errors should be thrown
+		'debug' => false,
+
+		// Create database file if it does not exist
+		'autocreate' => true,
+	];
 
 
 	/**
 	 * Constructor
 	 */
 
-	public function __construct($file, $debug = false) {
-		if (is_file($file)) {
-			$this->file = $file;
-			$this->debug = $debug;
+	public function __construct($file, $new_options = []) {
+		if (is_array($new_options)) {
+			$this->options = array_merge($this->options, $new_options);
 		}
-		else {
+		$this->file = $file;
+
+		if (!$this->options['autocreate'] && !is_file($file)) {
 			throw new Error('Database file does not exist');
 		}
 	}
+
 
 	/**
 	 * Connect to database file
@@ -44,7 +56,7 @@ class Sqlite {
 		$this->connection = new PDO('sqlite:./' . $this->file);
 		$this->connection->setAttribute(
 			PDO::ATTR_ERRMODE,
-			$this->debug ? PDO::ERRMODE_EXCEPTION : PDO::ERRMODE_SILENT
+			$this->options['debug'] ? PDO::ERRMODE_EXCEPTION : PDO::ERRMODE_SILENT
 		);
 	}
 
@@ -82,6 +94,24 @@ class Sqlite {
 
 
 	/**
+	 * Perform query
+	 */
+
+	public function query($query_string) {
+		$this->result = $this->connection->query($query_string);
+		$this->log[] = $query_string;
+
+		// Reset
+		$this->command = null;
+		$this->fields = null;
+		$this->conditions = null;
+		$this->table = null;
+
+		return $this->result;
+	}
+
+
+	/**
 	 * Perform query and return array of elements
 	 */
 
@@ -89,8 +119,10 @@ class Sqlite {
 		// Autoconnect to DB if there is no connection
 		if (!$this->connection) $this->connect();
 
-		// Perform query and fetch data
-		$this->result = $this->connection->query($this->prepare_query());
+		// Perform query
+		$this->query($this->prepare_query());
+
+		// Fetch and return result
 		return $this->result->fetchAll(PDO::FETCH_ASSOC);
 	}
 
@@ -112,10 +144,12 @@ class Sqlite {
 				}
 				else $fields = $this->fields;
 				$query = "SELECT {$fields} FROM `{$this->table}`";
+				if (!empty($this->conditions)) {
+					$query .= " WHERE {$this->conditions}";
+				}
 				break;
 		}
 
-		$this->log[] = $query;
 		return $query;
 	}
 
