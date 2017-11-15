@@ -15,7 +15,7 @@ $default_config = [
 	'_DEBUG' => preg_match('/(localhost|::1|\.dev)$/', @$_SERVER['SERVER_NAME']),
 
 	// Primary module, that will be displayed to user when he enters root app path
-	'_DEFAULT_CORE_MODULE' => 'api',
+	'_DEFAULT_BASE_MODULE' => 'api',
 
 	// Directories
 	'_CORE_DIR' => 'core/',
@@ -89,30 +89,54 @@ class Core {
 
 		/**
 		 * REQUEST URI
-		 * Complicated part starts here.
 		 */
 
 		// Remove query string and multiple slashes
 		$request_uri = explode('?', $_SERVER['REQUEST_URI'])[0];
 		$request_uri = preg_replace('#/+#', '/', $request_uri);
 
-		$request_uri_arr = explode('/', trim($request_uri, '/'));
-		$root_uri_arr = explode('/', $root_uri);
+		define('REQUEST_URI', self::str_remove_common_part($root_uri, $request_uri));
+	}
 
 
-		/**
-		 * Remove common part of ROOT_URI and REQUEST_URI to get clean request.
-		 */
+	/**
+	 * Autoload libs (PSR-0)
+	 */
+
+	public function define_autoloader() {
+		spl_autoload_register(function($class) {
+			$class_path = './' . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
+			if (file_exists($class_path)) include_once($class_path);
+		});
+	}
+
+
+	/**
+	 * Remove common part of two URI
+	 * Takes two strings and returns second string without common part of those two.
+	 * Example:
+	 * Str A: 'lorem/ipsum/dolor/sit/amet'
+	 * Str B: 'dolor/sit/amet/consectetur/adipiscing'
+	 * Return: 'consectetur/adipiscing'
+	 *
+	 * @param string $str_a
+	 * @param string $str_b - this one will be returned without common part
+	 * @return string
+	 */
+
+	public static function str_remove_common_part($str_a, $str_b, $divider = '/') {
+		$str_a_arr = explode('/', trim($str_a, $divider));
+		$str_b_arr = explode('/', trim($str_b, $divider));
 
 		$common_part_end = false;
-		foreach($root_uri_arr as $key => $root_uri_chunk) {
-			if ($root_uri_chunk == $request_uri_arr[0]) {
+		foreach($str_a_arr as $key => $str_a_chunk) {
+			if ($str_a_chunk == $str_b_arr[0]) {
 				$check = true;
 				$n = 0;
 
 				// Now check if rest of the elements are the same
-				for ($i = $key; isset($root_uri_arr[$i]); $i++) {
-					if ($root_uri_arr[$i] != $request_uri_arr[$n]) {
+				for ($i = $key; isset($str_a_arr[$i]); $i++) {
+					if ($str_a_arr[$i] != $str_b_arr[$n]) {
 						$check = false;
 						break;
 					}
@@ -126,23 +150,9 @@ class Core {
 		}
 
 		if ($common_part_end) {
-			$request_uri = implode('/', array_slice($request_uri_arr, $common_part_end));
-
-			echo $request_uri;
+			return implode('/', array_slice($str_b_arr, $common_part_end));
 		}
 
-		define('REQUEST_URI', $request_uri);
-	}
-
-
-	/**
-	 * Autoload libs (PSR-0)
-	 */
-
-	public function define_autoloader() {
-		spl_autoload_register(function($class) {
-			$class_path = './' . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
-			if (file_exists($class_path)) include_once($class_path);
-		});
+		return $str_b;
 	}
 }

@@ -43,10 +43,8 @@ $db = new Sqlite($db_file, ['debug' => _DEBUG]);
 
 $router = new Router();
 
-if (_DEFAULT_CORE_MODULE == 'api') {
-	$router->add_route('/admin', [
-		'file' => ''
-	]);
+if (_DEFAULT_BASE_MODULE == 'api') {
+
 }
 
 echo '<pre>';
