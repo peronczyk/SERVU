@@ -9,7 +9,7 @@
  * Remember that each of the setting names starts with underscore "_".
  */
 
-$base_config = [
+$default_config = [
 
 	// Force displaying all errors, warnings and notices
 	'_DEBUG' => preg_match('/(localhost|::1|\.dev)$/', @$_SERVER['SERVER_NAME']),
@@ -30,10 +30,10 @@ $base_config = [
 
 
 /**
- * Base class
+ * Core class
  */
 
-class Base {
+class Core {
 	public function init() {
 		$this->load_configuration();
 
@@ -49,7 +49,7 @@ class Base {
 	 */
 
 	public function load_configuration() {
-		$config = $GLOBALS['base_config'];
+		$config = $GLOBALS['default_config'];
 		if (file_exists('config.php')) {
 			$overwrite = include_once('config.php');
 			$config = array_merge($config, $overwrite);

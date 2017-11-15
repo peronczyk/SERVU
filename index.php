@@ -21,19 +21,20 @@ define('BROM_VERSION', '0.0.1');
 define('BROM_INDEX', true);
 
 /**
- * Initiate base
+ * Initiate core
  */
 
-require_once('base.php');
-$base = new Base();
-$base->init();
+require_once('core.php');
+$core = new Core();
+$core->init();
 
 
 /**
- * Prepare connection to database
+ * Prepare database object
  */
 
-$db = new Sqlite(_STORAGE_DIR . 'database/' . _DB_FILE_NAME, ['debug' => _DEBUG]);
+$db_file = _STORAGE_DIR . 'database/' . _DB_FILE_NAME;
+$db = new Sqlite($db_file, ['debug' => _DEBUG]);
 
 
 /**
