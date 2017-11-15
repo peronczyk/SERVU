@@ -42,6 +42,11 @@ $db = new Sqlite(_STORAGE_DIR . 'database/' . _DB_FILE_NAME, ['debug' => _DEBUG]
 
 $router = new Router();
 
+if (_DEFAULT_CORE_MODULE == 'api') {
+	$router->add_route('/admin', [
+		'file' => ''
+	]);
+}
 
 echo '<pre>';
 

@@ -29,7 +29,7 @@ class Router {
 	 * Add route
 	 */
 
-	public function add_route($arr) {
+	public function add_route($path, $arr) {
 		$this->routes[] = $arr;
 	}
 

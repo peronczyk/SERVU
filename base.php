@@ -15,7 +15,7 @@ $base_config = [
 	'_DEBUG' => preg_match('/(localhost|::1|\.dev)$/', @$_SERVER['SERVER_NAME']),
 
 	// Primary module, that will be displayed to user when he enters root app path
-	'_ENTRY_MODULE' => 'api',
+	'_DEFAULT_CORE_MODULE' => 'api',
 
 	// Directories
 	'_CORE_DIR' => 'core/',
@@ -96,20 +96,12 @@ class Base {
 		$request_uri = explode('?', $_SERVER['REQUEST_URI'])[0];
 		$request_uri = preg_replace('#/+#', '/', $request_uri);
 
-		$request_uri_arr = explode('/', $request_uri);
-		if (empty($request_uri_arr[0])) array_shift($request_uri_arr);
-
+		$request_uri_arr = explode('/', trim($request_uri, '/'));
 		$root_uri_arr = explode('/', $root_uri);
-
-		echo '<pre>';
-		echo 'Root URI: ' . $root_uri . '<br>';
-		echo 'Request URI: ' . $request_uri . '<br>';
-		echo 'Dirname: ' . $script_dirname . '<br>';
-		echo '</pre>';
 
 
 		/**
-		 *
+		 * Remove common part of ROOT_URI and REQUEST_URI to get clean request.
 		 */
 
 		$common_part_end = false;
