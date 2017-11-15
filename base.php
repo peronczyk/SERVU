@@ -34,39 +34,120 @@ $base_config = [
  */
 
 class Base {
-	public function __construct() {
-
-		/**
-		 * Configuration defines
-		 */
-
-		foreach($GLOBALS['base_config'] as $key => $val) {
-			define($key, $val);
-		}
+	public function init() {
+		$this->load_configuration();
 
 		error_reporting(_DEBUG ? E_ALL : 0);
 		session_start();
 
+		$this->define_paths();
+		$this->define_autoloader();
+	}
 
-		/**
-		 * Define root URL
-		 */
+	/**
+	 * Configuration defines
+	 */
 
-		$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
-		$root_url = $protocol . $_SERVER['SERVER_NAME'];
-		$script_dirname = dirname($_SERVER['SCRIPT_NAME']);
-		if ($script_dirname != '/') {
-			$root_url .= $script_dirname;
+	public function load_configuration() {
+		$config = $GLOBALS['base_config'];
+		if (file_exists('config.php')) {
+			$overwrite = include_once('config.php');
+			$config = array_merge($config, $overwrite);
 		}
 
-		define('APP_PROTOCOL', $protocol);
-		define('APP_ROOT_URL', $root_url);
+		foreach($config as $key => $val) {
+			define($key, $val);
+		}
+	}
+
+
+	/**
+	 * App paths definitions required to proper rooting
+	 */
+
+	public function define_paths() {
+
+		/**
+		 * PROTOCOL (http or https)
+		 */
+
+		define('APP_PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http');
 
 
 		/**
-		 * Autoload libs (PSR-0)
+		 * ROOT URI
+		 * This path represents browser address of index.php
+		 * Everything after that address is a request.
 		 */
 
+		$root_uri = $_SERVER['SERVER_NAME'];
+		$script_dirname = dirname($_SERVER['SCRIPT_NAME']);
+		if ($script_dirname != '/') $root_uri .= $script_dirname;
+
+		define('APP_ROOT_URI', $root_uri);
+
+
+		/**
+		 * REQUEST URI
+		 * Complicated part starts here.
+		 */
+
+		// Remove query string and multiple slashes
+		$request_uri = explode('?', $_SERVER['REQUEST_URI'])[0];
+		$request_uri = preg_replace('#/+#', '/', $request_uri);
+
+		$request_uri_arr = explode('/', $request_uri);
+		if (empty($request_uri_arr[0])) array_shift($request_uri_arr);
+
+		$root_uri_arr = explode('/', $root_uri);
+
+		echo '<pre>';
+		echo 'Root URI: ' . $root_uri . '<br>';
+		echo 'Request URI: ' . $request_uri . '<br>';
+		echo 'Dirname: ' . $script_dirname . '<br>';
+		echo '</pre>';
+
+
+		/**
+		 *
+		 */
+
+		$common_part_end = false;
+		foreach($root_uri_arr as $key => $root_uri_chunk) {
+			if ($root_uri_chunk == $request_uri_arr[0]) {
+				$check = true;
+				$n = 0;
+
+				// Now check if rest of the elements are the same
+				for ($i = $key; isset($root_uri_arr[$i]); $i++) {
+					if ($root_uri_arr[$i] != $request_uri_arr[$n]) {
+						$check = false;
+						break;
+					}
+					$n++;
+				}
+				if ($check) {
+					$common_part_end = $n;
+					break;
+				}
+			}
+		}
+
+		if ($common_part_end) {
+			$request_uri = implode('/', array_slice($request_uri_arr, $common_part_end));
+
+			echo $request_uri;
+		}
+
+		define('REQUEST_URI', $request_uri);
+	}
+
+
+	/**
+	 * Autoload libs (PSR-0)
+	 */
+
+	public function define_autoloader() {
 		spl_autoload_register(function($class) {
 			$class_path = './' . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
 			if (file_exists($class_path)) include_once($class_path);

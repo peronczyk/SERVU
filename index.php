@@ -21,11 +21,12 @@ define('BROM_VERSION', '0.0.1');
 define('BROM_INDEX', true);
 
 /**
- * Initiate core
+ * Initiate base
  */
 
 require_once('base.php');
 $base = new Base();
+$base->init();
 
 
 /**
@@ -33,6 +34,13 @@ $base = new Base();
  */
 
 $db = new Sqlite(_STORAGE_DIR . 'database/' . _DB_FILE_NAME, ['debug' => _DEBUG]);
+
+
+/**
+ * Init router
+ */
+
+$router = new Router();
 
 
 echo '<pre>';
