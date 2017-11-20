@@ -33,11 +33,12 @@ class Sqlite {
 	 * Constructor
 	 */
 
-	public function __construct($file, $new_options = []) {
-		if (is_array($new_options)) {
-			$this->options = array_merge($this->options, $new_options);
-		}
+	public function __construct($file, $options = []) {
 		$this->file = $file;
+
+		if (count($options) > 0) {
+			$this->options = array_merge($this->options, $options);
+		}
 
 		if (!$this->options['autocreate'] && !is_file($file)) {
 			throw new Error('Database file does not exist');

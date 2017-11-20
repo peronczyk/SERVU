@@ -1,6 +1,6 @@
 <?php
 
-class UsersController {
+class FilesController {
 
 	// Requests
 	protected $request;
@@ -26,8 +26,8 @@ class UsersController {
 	 * List
 	 */
 
-	public function index() {
-		$users_list = $this->db->select()->from('users')->all();
+	public function getlist() {
+		$users_list = $this->db->select()->from('files')->all();
 		$this->rest->set('users_list', $users_list);
 		$this->rest->set('route', 'users/list');
 	}

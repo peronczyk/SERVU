@@ -2,6 +2,7 @@
 
 class Rest {
 
+	// Storage for data that will be returned to API
 	protected $store = [];
 
 
@@ -12,7 +13,13 @@ class Rest {
 	public function __construct() {
 		set_exception_handler(function($exception) {
 			$this->store = [
-				'message' => $exception->getMessage(),
+				'error' => [
+					'message' => $exception->getMessage(),
+					'file'    => $exception->getFile(),
+					'line'    => $exception->getLine(),
+					'code'    => $exception->getCode(),
+					'trace'   => _DEBUG ? $exception->getTrace() : 'Available in debug mode'
+				]
 			];
 			$this->send();
 		});

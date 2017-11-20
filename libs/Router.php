@@ -12,7 +12,13 @@ class Router {
 	protected $options = [
 		'controllers_dir' => '',
 		'default_controller' => 'Home',
-		'default_method' => 'index'
+		'default_method' => 'index',
+
+		// This array allows to use forbidden keywords in requests.
+		// For example request 'users/list' will run method 'users/getlist'
+		'method_names_replacement' => [
+			'list' => 'getlist',
+		]
 	];
 
 
@@ -22,6 +28,7 @@ class Router {
 
 	public function __construct($uri, $options = []) {
 		$this->request = explode('/', $uri);
+
 		if (count($options) > 0) {
 			$this->options = array_merge($this->options, $options);
 		}
@@ -107,7 +114,11 @@ class Router {
 			$method_name = $this->options['default_method'];
 		}
 		else {
-			$method_name = $method_name;
+			$method_name = str_replace(
+				array_keys($this->options['method_names_replacement']),
+				array_values($this->options['method_names_replacement']),
+				$method_name);
+
 			$this->shift_request();
 		}
 
