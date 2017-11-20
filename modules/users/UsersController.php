@@ -1,6 +1,6 @@
 <?php
 
-class CollectionsController {
+class UsersController {
 
 	// Requests
 	protected $request;
@@ -29,6 +29,6 @@ class CollectionsController {
 	 */
 
 	public function index() {
-		$this->rest->set('route', 'collections/index');
+		$this->rest->set('route', 'users/index');
 	}
 }

@@ -1,12 +1,20 @@
 <?php
 
 /**
- * Default configuration array.
+ * =================================================================================
+ *
+ * BROM
+ * Class : Core
+ *
+ * =================================================================================
+ */
+
+/**
+ * DEFAULT CONFIGURATION
  * All keys will be turned to constants.
  * This configuration can be overwritten by file 'config.php' placed in main
- * directory, which returns array with variables that you want to change.
- *
- * Remember that each of the setting names starts with underscore "_".
+ * directory, which should return array with variables that you want to change.
+ * Remember that each of the setting names should start with underscore.
  */
 
 $default_config = [
@@ -18,7 +26,7 @@ $default_config = [
 	'_DEFAULT_BASE_MODULE' => 'api',
 
 	// Directories
-	'_CORE_DIR' => 'core/',
+	'_BASE_DIR' => 'base/',
 	'_LIBS_DIR' => 'libs/',
 	'_MODULES_DIR' => 'modules/',
 	'_STORAGE_DIR' => 'storage/',
@@ -30,7 +38,7 @@ $default_config = [
 
 
 /**
- * Core class
+ * CORE CLASS
  */
 
 class Core {
@@ -105,7 +113,7 @@ class Core {
 
 	public function define_autoloader() {
 		spl_autoload_register(function($class) {
-			$class_path = './' . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
+			$class_path = __DIR__ . '/' . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
 			if (file_exists($class_path)) include_once($class_path);
 		});
 	}

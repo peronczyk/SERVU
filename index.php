@@ -9,7 +9,7 @@
  * | |_) | | \ \| |__| | |  | |
  * |____/|_|  \_\\____/|_|  |_|
  *
- * HELLO TO BROM
+ * BROM SAYS HELLO
  * Headless Content Canagement System
  *
  * @author Bartosz Perończyk
@@ -38,20 +38,39 @@ $db = new Sqlite($db_file, ['debug' => _DEBUG]);
 
 
 /**
- * Init router
+ * Initiate router
  */
 
-$router = new Router();
+$router = new Router(REQUEST_URI, [
+	'controllers_dir' => _MODULES_DIR
+]);
 
-if (_DEFAULT_BASE_MODULE == 'api') {
 
+/**
+ * Load base module
+ */
+
+$base_module = $router->get_first_request();
+
+if (empty($base_module) || !is_dir(_BASE_DIR . $base_module)) {
+	$base_module = _DEFAULT_BASE_MODULE;
+}
+elseif ($base_module != _DEFAULT_BASE_MODULE) {
+	$router->shift_request();
 }
 
-echo '<pre>';
+include(_BASE_DIR . $base_module . '/' . $base_module . '.php');
 
-// print_r($db->select()->from('collections')->all()); // db test
 
+
+
+# ==================================================================================
+/*echo '<pre>';
+
+print_r($db->select()->from('collections')->all()); // db test
+
+echo '<br>Request: ' . REQUEST_URI;
 echo '<br>Loading: ' . round(microtime(true) - BROM_START, 4);
 echo '<br>Queries: ' . count($db->get_log());
 
-echo '</pre>';
+echo '</pre>';*/
