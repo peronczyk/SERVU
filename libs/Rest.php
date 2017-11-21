@@ -21,7 +21,6 @@ class Rest {
 					'file'    => $exception->getFile(),
 					'line'    => $exception->getLine(),
 					'code'    => $exception->getCode(),
-					'trace'   => _DEBUG ? $exception->getTrace() : 'Available in debug mode'
 				]
 			];
 			$this->send();

@@ -2,23 +2,20 @@
 
 class Controller {
 
-	// Requests
-	protected $request;
-
-	// Dependencies shortcusts
-	protected $rest;
-	protected $db;
+	protected $dependencies;
 
 
 	/**
 	 * Constructor
 	 */
 
-	public function __construct($request, $params) {
-		$this->request = $request;
+	public function __construct($params) {
+		$this->dependencies = $params['dependencies'];
 
-		$this->rest = $params['dependencies']['rest'];
-		$this->db = $params['dependencies']['db'];
+		// Create properties that are shortcuts to dependencies
+		foreach ($params['dependencies'] as $key => $val) {
+			$this->{$key} = $val;
+		}
 	}
 
 }

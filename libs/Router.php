@@ -17,7 +17,7 @@ class Router {
 		// This array allows to use forbidden keywords in requests.
 		// For example request 'users/list' will run method 'users/getlist'
 		'method_names_replacement' => [
-			'list' => 'getlist',
+			'list' => 'get_list',
 		]
 	];
 
@@ -69,7 +69,7 @@ class Router {
 	 * Run route
 	 *
 	 * @param array $additional_params - array of variables that will be passed to
-	 *   constructor
+	 *   constructor. Eg.: dependencies.
 	 */
 
 	public function run($additional_params = []) {
@@ -98,7 +98,7 @@ class Router {
 
 		$controller_name = $controller_name . 'Controller';
 		if (class_exists($controller_name)) {
-			$this->controller = new $controller_name($this->request, $additional_params);
+			$this->controller = new $controller_name($additional_params);
 		}
 		else {
 			throw new Exception('Controller class `' . $controller_name . '` is missing in file `' . $controller_file . '`');
@@ -122,8 +122,8 @@ class Router {
 			$this->shift_request();
 		}
 
-		if (method_exists($this->controller, $method_name)) {
-			call_user_func_array([$this->controller, $method_name], []);
+		if (method_exists($this->controller, $method_name) && is_callable([$this->controller, $method_name])) {
+			call_user_func_array([$this->controller, $method_name], [$this->request]);
 		}
 		else {
 			throw new Exception('Unknown method `' . $method_name . '`');

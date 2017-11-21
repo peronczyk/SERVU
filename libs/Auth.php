@@ -14,6 +14,10 @@ class Auth {
 
 	public function __construct($db) {
 		$this->db = $db;
+
+		if (isset($_SESSION['brom_auth_lvl']) && is_numeric($_SESSION['brom_auth_lvl']) && $_SESSION['brom_auth_lvl'] > 0) {
+			$this->set($_SESSION['brom_auth_lvl']);
+		}
 	}
 
 
@@ -31,6 +35,7 @@ class Auth {
 	 */
 
 	public function set($lvl) {
+		$_SESSION['brom_auth_lvl'] = $lvl;
 		$this->lvl = $lvl;
 	}
 }

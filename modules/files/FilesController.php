@@ -26,7 +26,7 @@ class FilesController {
 	 * List
 	 */
 
-	public function getlist() {
+	public function get_list() {
 		$users_list = $this->db->select()->from('files')->all();
 		$this->rest->set('users_list', $users_list);
 		$this->rest->set('route', 'users/list');
