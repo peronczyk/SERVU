@@ -5,6 +5,9 @@ class Rest {
 	// Storage for data that will be returned to API
 	protected $store = [];
 
+	// Stores all throwable errors
+	protected $error_list = [];
+
 
 	/**
 	 * Constructor
@@ -51,5 +54,38 @@ class Rest {
 	public function send() {
 		header('Content-type: application/json');
 		echo json_encode($this->store);
+	}
+
+
+	/**
+	 * Add one error or array of errors to error list
+	 *
+	 * @param string|array $error_id
+	 * @param string $error_value
+	 */
+
+	public function add_error($error_id, $error_value = null) {
+		if (is_array($error_id)) {
+			$this->error_list = array_merge($this->error_list, $error_id);
+		}
+		else {
+			$error_list[$error_id] = $error_value;
+		}
+	}
+
+
+	/**
+	 * Throw error
+	 */
+
+	public function throw_error($error_id, $file = null, $line = null) {
+		$this->store = [
+			'error' => [
+				'message' => $this->error_list[$error_id] ?: $error_id,
+				'file' => $file,
+				'line' => $line,
+			]
+		];
+		$this->send();
 	}
 }

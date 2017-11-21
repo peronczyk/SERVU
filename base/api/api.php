@@ -13,6 +13,18 @@ $router->run([
 	]
 ]);
 
-if (_DEBUG) $rest->set('load_time', round(microtime(true) - BROM_START, 4));
+
+/**
+ * Debug info
+ */
+
+if (_DEBUG) {
+	$rest->set('debug', [
+		'root-uri'    => APP_ROOT_URI,
+		'request-uri' => REQUEST_URI,
+		'load-time'   => round(microtime(true) - BROM_START, 4),
+		'queries'     => count($db->get_log()),
+	]);
+}
 
 $rest->send();

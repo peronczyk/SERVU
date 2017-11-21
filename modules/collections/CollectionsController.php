@@ -1,32 +1,30 @@
 <?php
 
-class CollectionsController {
-
-	// Requests
-	protected $request;
-
-	// Dependencies shortcusts
-	protected $rest;
-	protected $db;
-
+class CollectionsController extends Controller {
 
 	/**
-	 * Constructor
+	 * List
 	 */
 
-	public function __construct($request, $params) {
-		$this->request = $request;
-
-		$this->rest = $params['dependencies']['rest'];
-		$this->db = $params['dependencies']['db'];
+	public function getlist() {
+		$collections_list = $this->db->select()->from('collections')->all();
+		foreach($collections_list as $key => $val) {
+			$collections_list[$key]['fields'] = json_decode($val['fields']);
+		}
+		$this->rest->set('collections', $collections_list);
 	}
 
 
 	/**
-	 * Index
+	 * Add
 	 */
 
-	public function index() {
-		$this->rest->set('route', 'collections/index');
-	}
+	public function add() {}
+
+
+	/**
+	 * Remove
+	 */
+
+	public function remove() {}
 }
