@@ -1,34 +1,28 @@
 <?php
 
-class FilesController {
+class FilesController extends ModulesController {
 
-	// Requests
-	protected $request;
-
-	// Dependencies shortcusts
-	protected $rest;
-	protected $db;
+	private $actions;
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Constructor
 	 */
 
-	public function __construct($request, $params) {
-		$this->request = $request;
+	public function __construct($params) {
+		$this->create_dependecies_shortcuts($params['dependencies']);
 
-		$this->rest = $params['dependencies']['rest'];
-		$this->db = $params['dependencies']['db'];
+		include('FilesActions.php');
+		$this->actions = new FilesActions($params['dependencies']);
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * List
 	 */
 
 	public function get_list() {
-		$users_list = $this->db->select()->from('files')->all();
-		$this->rest->set('users_list', $users_list);
-		$this->rest->set('route', 'users/list');
+		$files_list = $this->actions->get_files_list();
+		$this->_rest->set('files-list', $files_list);
 	}
 }

@@ -1,29 +1,46 @@
 <?php
 
-class UsersController extends Controller {
+class UsersController extends ModulesController {
+
+	private $actions;
 
 
-	/**
+	/** ----------------------------------------------------------------------------
+	 * Constructor
+	 */
+
+	public function __construct($params) {
+		$this->create_dependecies_shortcuts($params['dependencies']);
+
+		include('UsersActions.php');
+		$this->actions = new UsersActions($params['dependencies']);
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * List
 	 */
 
 	public function get_list() {
-		$users_list = $this->db->select()->from('users')->all();
-		$this->rest->set('users-list', $users_list);
-		$this->rest->set('route', 'users/list');
+		$users_list = $this->_db->select()->from('users')->all();
+		$this->_rest->set('users-list', $users_list);
 	}
 
 
-	/**
-	 * Add
+	/** ----------------------------------------------------------------------------
+	 * Add user
 	 */
 
-	public function add() {}
+	public function add() {
+		/** @todo */
+	}
 
 
-	/**
-	 * Remove
+	/** ----------------------------------------------------------------------------
+	 * Remove user
 	 */
 
-	public function remove() {}
+	public function remove() {
+		/** @todo */
+	}
 }

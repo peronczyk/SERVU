@@ -13,6 +13,7 @@ class Sqlite {
 	protected $fields;
 	protected $conditions;
 	protected $table;
+	protected $order_by;
 
 	// Last query result
 	protected $result;
@@ -73,6 +74,17 @@ class Sqlite {
 		return $this;
 	}
 
+
+	/**
+	 * COUNT
+	 * Shortcut to 'SELECT'
+	 */
+
+	public function count() {
+		return $this->select('COUNT(*) as count');
+	}
+
+
 	/**
 	 * FROM
 	 * @param string $table
@@ -95,6 +107,17 @@ class Sqlite {
 
 
 	/**
+	 * ORDER BY
+	 */
+
+	public function order_by($order, $dir = 'ASC') {
+		$this->order_by = $order;
+		$this->order_dir = strtoupper($dir);
+		return $this;
+	}
+
+
+	/**
 	 * Perform query
 	 */
 
@@ -107,6 +130,8 @@ class Sqlite {
 		$this->fields = null;
 		$this->conditions = null;
 		$this->table = null;
+		$this->order_by = null;
+		$this->order_dir = 'ASC';
 
 		return $this->result;
 	}
@@ -136,6 +161,7 @@ class Sqlite {
 		switch ($this->command) {
 			case 'select':
 				$fields = '';
+
 				if (is_array($this->fields)) {
 					$fields_num = count($this->fields) - 1;
 					foreach($this->fields as $i => $field) {
@@ -144,10 +170,17 @@ class Sqlite {
 					}
 				}
 				else $fields = $this->fields;
+
 				$query = "SELECT {$fields} FROM `{$this->table}`";
+
 				if (!empty($this->conditions)) {
 					$query .= " WHERE {$this->conditions}";
 				}
+
+				if (!empty($this->order_by)) {
+					$query .= " ORDER BY `{$this->order_by}` {$this->order_dir}";
+				}
+
 				break;
 		}
 

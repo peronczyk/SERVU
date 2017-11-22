@@ -93,7 +93,7 @@ class Router {
 			include_once($controller_file);
 		}
 		else {
-			throw new Exception('Controller `' . $controller_name . '` file does not exist');
+			throw new Exception("Controller `{$controller_name}` file does not exist");
 		}
 
 		$controller_name = $controller_name . 'Controller';
@@ -101,7 +101,7 @@ class Router {
 			$this->controller = new $controller_name($additional_params);
 		}
 		else {
-			throw new Exception('Controller class `' . $controller_name . '` is missing in file `' . $controller_file . '`');
+			throw new Exception("Controller class `{$controller_name}` is missing in file `{$controller_file}`");
 		}
 
 
@@ -110,7 +110,7 @@ class Router {
 		 */
 
 		$method_name = $this->get_first_request();
-		if (empty($method_name)) {
+		if (empty($method_name) || is_numeric($method_name)) {
 			$method_name = $this->options['default_method'];
 		}
 		else {
@@ -126,7 +126,7 @@ class Router {
 			call_user_func_array([$this->controller, $method_name], [$this->request]);
 		}
 		else {
-			throw new Exception('Unknown method `' . $method_name . '`');
+			throw new Exception("Method `{$method_name}` does not exist in controller `{$controller_file}`");
 		}
 	}
 }

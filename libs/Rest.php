@@ -18,9 +18,10 @@ class Rest {
 			$this->store = [
 				'error' => [
 					'message' => $exception->getMessage(),
-					'file'    => $exception->getFile(),
+					'file'    => str_replace('\\', '/', $exception->getFile()),
 					'line'    => $exception->getLine(),
 					'code'    => $exception->getCode(),
+					'trace'   => json_decode(str_replace('\\', '/', json_encode($exception->getTrace()))),
 				]
 			];
 			$this->send();
