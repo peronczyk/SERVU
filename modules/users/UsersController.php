@@ -22,7 +22,7 @@ class UsersController extends ModulesController {
 	 */
 
 	public function get_list() {
-		$users_list = $this->_db->select()->from('users')->all();
+		$users_list = $this->actions->get_list();
 		$this->_rest->set('users-list', $users_list);
 	}
 
@@ -32,7 +32,7 @@ class UsersController extends ModulesController {
 	 */
 
 	public function add() {
-		/** @todo */
+
 	}
 
 
