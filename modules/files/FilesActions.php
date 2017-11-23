@@ -21,12 +21,16 @@ class FilesActions {
 	 */
 
 	public function get_files_list($sub_dir = '') {
+		if (!is_dir($this->uploads_dir . $sub_dir)) {
+			return false;
+		}
+
 		$files = scandir($this->uploads_dir . $sub_dir);
 		foreach ($files as $key => $file_name) {
 			if (in_array($file_name, $this->ignored_files)) {
 				unset($files[$key]);
 			}
 		}
-		return array_values($files);
+		return $files ? array_values($files) : [];
 	}
 }
