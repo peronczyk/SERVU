@@ -9,11 +9,11 @@ class UsersController extends ModulesController {
 	 * Constructor
 	 */
 
-	public function __construct($params) {
-		$this->create_dependecies_shortcuts($params['dependencies']);
+	public function __construct($dependencies) {
+		$dependencies->register($this);
 
 		include('UsersActions.php');
-		$this->actions = new UsersActions($params['dependencies']);
+		$this->actions = new UsersActions($dependencies);
 	}
 
 
@@ -32,7 +32,7 @@ class UsersController extends ModulesController {
 	 */
 
 	public function add() {
-
+		$this->require_auth(1);
 	}
 
 

@@ -2,7 +2,6 @@
 
 class ContentActions {
 
-	private $dependencies;
 	private $db_table_name = 'content';
 
 
@@ -11,7 +10,7 @@ class ContentActions {
 	 */
 
 	public function __construct($dependencies) {
-		$this->dependencies = $dependencies;
+		$dependencies->register($this);
 	}
 
 
@@ -20,7 +19,7 @@ class ContentActions {
 	 */
 
 	public function get_details($id) {
-		$result = $this->dependencies['db']
+		$result = $this->_db
 			->select()
 			->from($this->db_table_name)
 			->where("`id` = {$id}")
@@ -35,7 +34,7 @@ class ContentActions {
 	 */
 
 	public function get_number_of_children($parent_id) {
-		$count_children = $this->dependencies['db']
+		$count_children = $this->_db
 			->count()
 			->from($this->db_table_name)
 			->where("`parent-id` = {$parent_id}")
@@ -52,7 +51,7 @@ class ContentActions {
 	 */
 
 	public function get_children($parent_id = 0) {
-		$result = $this->dependencies['db']
+		$result = $this->_db
 			->select()
 			->from($this->db_table_name)
 			->where("`parent-id` = {$parent_id}")

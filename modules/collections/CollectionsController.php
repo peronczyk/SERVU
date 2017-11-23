@@ -9,11 +9,11 @@ class CollectionsController extends ModulesController {
 	 * Constructor
 	 */
 
-	public function __construct($params) {
-		$this->create_dependecies_shortcuts($params['dependencies']);
+	public function __construct($dependencies) {
+		$dependencies->register($this);
 
 		include('CollectionsActions.php');
-		$this->actions = new CollectionsActions($params['dependencies']);
+		$this->actions = new CollectionsActions($dependencies);
 	}
 
 

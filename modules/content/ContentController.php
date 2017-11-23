@@ -9,11 +9,11 @@ class ContentController extends ModulesController {
 	 * Constructor
 	 */
 
-	public function __construct($params) {
-		$this->create_dependecies_shortcuts($params['dependencies']);
+	public function __construct($dependencies) {
+		$dependencies->register($this);
 
 		include('ContentActions.php');
-		$this->actions = new ContentActions($params['dependencies']);
+		$this->actions = new ContentActions($dependencies);
 	}
 
 

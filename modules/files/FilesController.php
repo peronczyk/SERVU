@@ -9,11 +9,11 @@ class FilesController extends ModulesController {
 	 * Constructor
 	 */
 
-	public function __construct($params) {
-		$this->create_dependecies_shortcuts($params['dependencies']);
+	public function __construct($dependencies) {
+		$dependencies->register($this);
 
 		include('FilesActions.php');
-		$this->actions = new FilesActions($params['dependencies']);
+		$this->actions = new FilesActions($dependencies);
 	}
 
 

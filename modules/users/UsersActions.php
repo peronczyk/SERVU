@@ -2,7 +2,6 @@
 
 class UsersActions {
 
-	private $dependencies;
 	private $db_table_name = 'users';
 
 
@@ -11,7 +10,7 @@ class UsersActions {
 	 */
 
 	public function __construct($dependencies) {
-		$this->dependencies = $dependencies;
+		$dependencies->register($this);
 	}
 
 
@@ -20,7 +19,7 @@ class UsersActions {
 	 */
 
 	public function get_list() {
-		$result = $this->dependencies['db']
+		$result = $this->_db
 			->select()
 			->from($this->db_table_name)
 			->all();

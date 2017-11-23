@@ -6,13 +6,14 @@ $rest = new Rest();
 
 $auth = new Auth($db);
 
-$router->run([
-	'dependencies' => [
-		'db'   => $db,
-		'rest' => $rest,
-		'auth' => $auth,
-	]
+$dependencies = new DependencyContainer();
+$dependencies->add([
+	'db'   => $db,
+	'rest' => $rest,
+	'auth' => $auth,
 ]);
+
+$router->run($dependencies);
 
 
 /**

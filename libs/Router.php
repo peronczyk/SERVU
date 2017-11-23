@@ -72,7 +72,7 @@ class Router {
 	 *   constructor. Eg.: dependencies.
 	 */
 
-	public function run($additional_params = []) {
+	public function run() {
 
 		/**
 		 * Run controller
@@ -98,7 +98,12 @@ class Router {
 
 		$controller_name = $controller_name . 'Controller';
 		if (class_exists($controller_name)) {
-			$this->controller = new $controller_name($additional_params);
+
+			// Get all arguments passed to this method and pass them as separate
+			// arguments to created controller.
+			$args = func_get_args();
+			$reflector = new ReflectionClass($controller_name);
+			$this->controller = $reflector->newInstanceArgs($args);
 		}
 		else {
 			throw new Exception("Controller class `{$controller_name}` is missing in file `{$controller_file}`");
