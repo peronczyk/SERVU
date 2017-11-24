@@ -59,18 +59,4 @@ elseif ($base_module != _DEFAULT_BASE_MODULE) {
 	$router->shift_request();
 }
 
-include(_BASE_DIR . $base_module . '/' . $base_module . '.php');
-
-
-
-
-# ==================================================================================
-/*echo '<pre>';
-
-print_r($db->select()->from('collections')->all()); // db test
-
-echo '<br>Request: ' . REQUEST_URI;
-echo '<br>Loading: ' . round(microtime(true) - BROM_START, 4);
-echo '<br>Queries: ' . count($db->get_log());
-
-echo '</pre>';*/
+include(_BASE_DIR . $base_module . '/index.php');
