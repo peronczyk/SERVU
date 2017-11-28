@@ -3,10 +3,13 @@
 # URL REWRITES
 
 <IfModule mod_rewrite.c>
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule .* index.php [L]
+	# Whitelist of file types that will not be redirected to index.php
+	RewriteCond %{REQUEST_URI} !\.(css|doc|docx|eot|flv|gif|htm?l|ico|js|jpg|mp4|odt|otf|svg|pdf|png|ppt|pptx|swf|ttf|txt|woff?2|xml)$
+
+	# Redirect all traffic to index.php
+	RewriteRule ^(.*)$ index.php?app_request=$1 [L,QSA]
 </IfModule>
+
 
 # ----------------------------------------------------------------------------------
 # EXPIRES
