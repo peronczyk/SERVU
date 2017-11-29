@@ -117,4 +117,29 @@ class Core {
 			if (file_exists($class_path)) include_once($class_path);
 		});
 	}
+
+
+	/**
+	 *
+	 */
+
+	public function get_modules_list() {
+		$directories = scandir(_MODULES_DIR);
+		$modules = [];
+		$index = 0;
+
+		foreach($directories as $key => $dir) {
+			if ($dir == '.' || $dir == '..' || $dir == 'default') continue;
+
+			$module_config_file = _MODULES_DIR . $dir . '/module_config.php';
+
+			if (is_file($module_config_file)) {
+				$modules[$index] = include_once($module_config_file);
+				$modules[$index]['node'] = $dir;
+				$index++;
+			}
+		}
+
+		return $modules;
+	}
 }

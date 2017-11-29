@@ -81,7 +81,8 @@ class Router {
 		$controller_dir = $this->get_first_request();
 
 		if (empty($controller_dir)) {
-			$controller_name = $this->options['default_controller'];
+			$controller_dir = $this->options['default_controller'];
+			$controller_name = ucfirst($this->options['default_controller']);
 		}
 		else {
 			$controller_name = ucfirst($controller_dir);
@@ -93,7 +94,7 @@ class Router {
 			include_once($controller_file);
 		}
 		else {
-			throw new Exception("Controller `{$controller_name}` file does not exist");
+			throw new Exception("`{$controller_name}` controller file does not exist: `{$controller_file}");
 		}
 
 		$controller_name = $controller_name . 'Controller';

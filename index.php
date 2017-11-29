@@ -42,7 +42,8 @@ $db = new Sqlite($db_file, ['debug' => _DEBUG]);
  */
 
 $router = new Router(REQUEST_URI, [
-	'controllers_dir' => _MODULES_DIR
+	'controllers_dir'    => _MODULES_DIR,
+	'default_controller' => 'default',
 ]);
 
 

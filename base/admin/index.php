@@ -7,6 +7,17 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 	<title>Administration Panel</title>
+
+	<script>
+		window.appConfig = <?php
+			echo json_encode([
+				'apiBaseUri' => APP_PROTOCOL . '://' . APP_ROOT_URI . ((_DEFAULT_BASE_MODULE == 'api' ? '' : '/api')),
+			]);
+		?>;
+		window.appModules = <?php
+			echo json_encode($core->get_modules_list());
+		?>;
+	</script>
 </head>
 
 <body>

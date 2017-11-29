@@ -5,7 +5,7 @@ class Auth {
 	// Dependencies
 	protected $db;
 
-	protected $lvl = 0;
+	protected $lvl = 1;
 
 
 	/**
