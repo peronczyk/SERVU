@@ -1,7 +1,21 @@
-<!DOCTYPE html>
+<?php
+
+$admin_url = APP_ROOT_URL . 'admin/';
+$admin_dir = APP_ROOT_URL . 'base/admin/';
+
+$app_config = [
+	'rootUrl' => $admin_url,
+	'apiBaseUrl' => APP_ROOT_URL . ((_DEFAULT_BASE_MODULE == 'api' ? '' : 'api/')),
+];
+
+$app_modules = $core->get_modules_list();
+
+?><!DOCTYPE html>
 <html lang="en">
 
 <head>
+	<base href="<?= $admin_url ?>">
+
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -9,14 +23,8 @@
 	<title>Administration Panel</title>
 
 	<script>
-		window.appConfig = <?php
-			echo json_encode([
-				'apiBaseUri' => APP_PROTOCOL . '://' . APP_ROOT_URI . ((_DEFAULT_BASE_MODULE == 'api' ? '' : '/api')),
-			]);
-		?>;
-		window.appModules = <?php
-			echo json_encode($core->get_modules_list());
-		?>;
+		window.appConfig  = <?= json_encode($app_config); ?>;
+		window.appModules = <?= json_encode($app_modules); ?>;
 	</script>
 </head>
 
@@ -30,7 +38,7 @@
 
 	<div id="app"></div>
 
-	<script src="<?= APP_PROTOCOL ?>://<?= APP_ROOT_URI ?>/base/admin/dist/app.js" async></script>
+	<script src="<?= $admin_dir ?>dist/app.js" async></script>
 </body>
 
 </html>

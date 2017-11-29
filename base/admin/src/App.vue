@@ -1,8 +1,8 @@
 <template>
 
 	<div id="app" v-if="$store.getters.isAppConnected" :class="{'is-UserLoggedIn': $store.getters.getUserAccess > 0}">
-		<side-left />
-		<side-right />
+		<the-sidebar />
+		<the-main />
 	</div>
 
 </template>
@@ -11,15 +11,15 @@
 <script>
 
 import axios from 'axios';
-import SideLeft from './components/SideLeft.vue';
-import SideRight from './components/SideRight.vue';
+import TheSidebar from './components/TheSidebar.vue';
+import TheMain from './components/TheMain.vue';
 
 export default {
 	computed: {
 	},
 
 	created() {
-		axios.get(window.appConfig.apiBaseUri)
+		axios.get(window.appConfig.apiBaseUrl)
 			.then(result => {
 				this.$store.commit('appConnected', result.data['app-info']);
 			})
@@ -29,7 +29,7 @@ export default {
 			});
 	},
 
-	components: { SideLeft, SideRight }
+	components: { TheSidebar, TheMain }
 }
 
 </script>
@@ -54,6 +54,11 @@ body {
 
 #app {
 	min-height: 100%;
+}
+
+a {
+	cursor: pointer;
+	color: blue;
 }
 
 </style>

@@ -12,6 +12,8 @@ class FilesController extends ModulesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
+		include('helpers.php');
+
 		include('FilesActions.php');
 		$this->actions = new FilesActions($dependencies);
 	}
@@ -28,7 +30,7 @@ class FilesController extends ModulesController {
 				$path = $_GET['path'];
 			}
 			else {
-				throw new Exception("Parameter `path` have wrong value: `{$_GET['path']}`");
+				throw new Exception("Parameter `path` have not acceptable value: `{$_GET['path']}`");
 			}
 		}
 		$files_list = $this->actions->get_files_list($path);

@@ -87,7 +87,7 @@ class Core {
 
 		/**
 		 * ROOT URI
-		 * This path represents browser address of index.php
+		 * This path represents browser location of index.php
 		 * Everything after that address is a request.
 		 */
 
@@ -95,7 +95,14 @@ class Core {
 		$script_dirname = dirname($_SERVER['SCRIPT_NAME']);
 		if ($script_dirname != '/') $root_uri .= $script_dirname;
 
-		define('APP_ROOT_URI', $root_uri);
+		define('APP_ROOT_URI', $root_uri . '/');
+
+
+		/**
+		 * ROOT URL
+		 */
+
+		define('APP_ROOT_URL', APP_PROTOCOL . '://' . APP_ROOT_URI);
 
 
 		/**

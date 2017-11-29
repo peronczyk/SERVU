@@ -1,8 +1,8 @@
 <template>
 
-	<div class="c-SideLeft">
+	<div class="c-Sidebar">
 		<login-info v-if="$store.getters.getUserAccess < 1" />
-		<the-nav v-if="$store.getters.getUserAccess > 0" />
+		<the-nav v-else />
 	</div>
 
 </template>
@@ -10,7 +10,7 @@
 
 <style lang="scss">
 
-.c-SideLeft {
+.c-Sidebar {
 	position: fixed;
 	display: flex;
 	width: 50%;
@@ -20,8 +20,7 @@
 	transition: .4s;
 
 	.is-UserLoggedIn & {
-		width: 20%;
-		max-width: 250px;
+		width: 250px;
 	}
 }
 

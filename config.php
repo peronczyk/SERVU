@@ -9,5 +9,6 @@
  */
 
 return [
-	'_EXAMPLE_SETTING' => 'Some example value', // This line can be removed
+	// Line below exists only to be an example - can be removed
+	'_EXAMPLE_SETTING' => 'Some example value',
 ];

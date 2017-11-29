@@ -1,8 +1,8 @@
 <template>
 
-	<div class="c-SideRight">
-		<login-form v-if="!$parent.isUserLoggedIn" />
-		<transition>
+	<div class="c-Main">
+		<login-form v-if="$store.getters.getUserAccess < 1" />
+		<transition v-else>
 			<router-view></router-view>
 		</transition>
 	</div>
@@ -23,8 +23,12 @@ export default {
 
 <style lang="scss">
 
-.c-SideRight {
+.c-Main {
+	margin-left: 50%;
 
+	.is-UserLoggedIn & {
+		margin-left: 250px;
+	}
 }
 
 </style>

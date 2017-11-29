@@ -1,7 +1,9 @@
 <template>
 
 	<nav class="c-Nav">
-		<div class="c-Nav__top"></div>
+		<div class="c-Nav__top">
+			<h3>Admin</h3>
+		</div>
 
 		<div class="c-Nav__links">
 			<ul>
@@ -21,6 +23,8 @@
 <style lang="scss">
 
 .c-Nav {
+	$padding: 20px;
+
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -31,15 +35,20 @@
 	}
 
 	&__top {
+		display: flex;
+		align-items: center;
+		padding-left: $padding;
+		padding-right: $padding;
 		height: 10vh;
+		min-height: 40px;
 	}
 
 	&__links {
 		a {
 			display: flex;
 			align-items: center;
-			padding-left: 20px;
-			padding-right: 20px;
+			padding-left: $padding;
+			padding-right: $padding;
 			height: 5vh;
 		}
 	}
