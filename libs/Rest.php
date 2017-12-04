@@ -16,13 +16,14 @@ class Rest {
 	public function __construct() {
 		set_exception_handler(function($exception) {
 			$this->store = [
-				'error' => [
-					'message' => $exception->getMessage(),
-					'file'    => str_replace('\\', '/', $exception->getFile()),
-					'line'    => $exception->getLine(),
-					'code'    => $exception->getCode(),
-					'trace'   => json_decode(str_replace('\\', '/', json_encode($exception->getTrace()))),
-				]
+				'errors' => [[
+					'message'    => $exception->getMessage(),
+					'error-info' => 'This error was catched automatically by exception handler in ' . str_replace('\\', '/', __FILE__),
+					'file'       => str_replace('\\', '/', $exception->getFile()),
+					'line'       => $exception->getLine(),
+					'code'       => $exception->getCode(),
+					'trace'      => $exception->getTrace(),
+				]]
 			];
 			$this->send();
 		});
@@ -80,11 +81,11 @@ class Rest {
 
 	public function throw_error($error_id, $file = null, $line = null) {
 		$this->store = [
-			'error' => [
+			'errors' => [[
 				'message' => $this->error_list[$error_id] ?: $error_id,
 				'file' => $file,
 				'line' => $line,
-			]
+			]]
 		];
 		$this->send();
 	}

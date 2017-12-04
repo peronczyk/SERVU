@@ -36,4 +36,18 @@ class FilesController extends ModulesController {
 		$files_list = $this->actions->get_files_list($path);
 		$this->_rest->set('files-list', $files_list);
 	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Remove file
+	 */
+
+	public function remove() {
+		if (!$this->require_auth(Auth::LVL_ADMIN)) return false;
+		if (empty($_GET['file'])) {
+			throw new Exception('You need to specify which file you want to remove by adding query param `file`.');
+		}
+
+		$this->_rest->set('file-remove-status', $this->actions->remove_file($_GET['file']));
+	}
 }

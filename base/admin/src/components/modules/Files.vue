@@ -19,7 +19,7 @@
 				</tr>
 				<tr v-for="(file, index) in filesList" :key="file.id">
 					<td>{{ index + 1 }}.</td>
-					<td v-if="file.type == 'dir'">
+					<td v-if="file.type == 'directory'">
 						<a @click.prevent="getList(file.name)">{{ file.name }}</a>
 					</td>
 					<td v-else>{{ file.name }}</td>

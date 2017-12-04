@@ -2,8 +2,11 @@
 
 class Auth {
 
+	const LVL_USER  = 0;
+	const LVL_ADMIN = 1;
+
 	// Dependencies
-	protected $db;
+	protected $_db;
 
 	protected $lvl = 1;
 
@@ -13,9 +16,9 @@ class Auth {
 	 */
 
 	public function __construct($db) {
-		$this->db = $db;
+		$this->_db = $db;
 
-		if (isset($_SESSION['brom_auth_lvl']) && is_numeric($_SESSION['brom_auth_lvl']) && $_SESSION['brom_auth_lvl'] > 0) {
+		if (isset($_SESSION['brom_auth_lvl']) && is_numeric($_SESSION['brom_auth_lvl']) && $_SESSION['brom_auth_lvl'] > self::LVL_USER) {
 			$this->set($_SESSION['brom_auth_lvl']);
 		}
 	}

@@ -23,7 +23,7 @@ class FilesActions {
 	 */
 
 	public function get_files_list($sub_dir = '') {
-		$files_dir = $this->uploads_dir . $sub_dir;
+		$files_dir = trim($this->uploads_dir . $sub_dir, '/') . '/';
 
 		if (!is_dir($files_dir)) {
 			return false;
@@ -46,6 +46,7 @@ class FilesActions {
 					$arr['children'] = count(scandir($files_dir . $file_name)) - 2;
 				}
 				else {
+					$arr['size'] = filesize($file_path);
 					$arr['path'] = $file_path;
 					$arr['full-path'] = APP_ROOT_URL . $file_path;
 					$arr['extension'] = pathinfo($file_name, PATHINFO_EXTENSION);
@@ -55,5 +56,32 @@ class FilesActions {
 			}
 		}
 		return $files_data;
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Remove file
+	 */
+
+	public function remove_file($file) {
+		$file_path = $this->uploads_dir . $file;
+
+		if (!file_exists($file_path)) {
+			throw new Exception("File {$file} does not exist in specified location of uploads.");
+		}
+		else {
+			$result = unlink($file_path);
+
+			if ($result) return true;
+			else {
+				$last_error = error_get_last();
+				if (is_array($last_error)) {
+					throw new Exception("Error occured while trying to remove file `{$file_path}`: {$last_error['message']}");
+				}
+				else {
+					throw new Exception("Unknown error occured while trying to remove file `{$file_path}`");
+				}
+			}
+		}
 	}
 }

@@ -26,4 +26,13 @@ class UsersActions {
 
 		return $result;
 	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Login
+	 */
+
+	public function login() {
+
+	}
 }
