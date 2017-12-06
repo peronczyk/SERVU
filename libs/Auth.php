@@ -8,7 +8,8 @@ class Auth {
 	// Dependencies
 	protected $_db;
 
-	protected $lvl = 1;
+	// Default user lvl
+	protected $lvl = self::LVL_USER;
 
 
 	/**
@@ -28,7 +29,7 @@ class Auth {
 	 * Get auth lvl
 	 */
 
-	public function get() {
+	public function get_lvl() {
 		return $this->lvl;
 	}
 
@@ -37,8 +38,78 @@ class Auth {
 	 * Set auth lvl
 	 */
 
-	public function set($lvl) {
+	public function set_lvl($lvl) {
 		$_SESSION['brom_auth_lvl'] = $lvl;
 		$this->lvl = $lvl;
 	}
+
+
+	/**
+	 * Validate email
+	 */
+
+	public function email_validate($email) {
+		return (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) ? true : false;
+	}
+
+
+	/**
+	 * Validate password
+	 */
+
+	public function password_validate($password) {
+		return strlen($password) > 6;
+	}
+
+
+	/**
+	 * Password encode
+	 */
+
+	public function password_encode($password) {
+		return password_hash($password, PASSWORD_BCRYPT);
+	}
+
+
+	/**
+	 * Verify password
+	 */
+
+	public function password_verify($password, $hash) {
+		return password_verify($password, $hash);
+	}
+
+
+	/**
+	 * Login
+	 */
+
+	public function login($email, $password) {
+		if (empty($email)) {
+			throw new Exception("Email not provided");
+		}
+
+		if (empty($password)) {
+			throw new Exception("Password not provided");
+		}
+
+		if (!$this->email_validate($email)) {
+			throw new Exception("Provided email address is incorrect");
+		}
+
+		$user = $this->_db
+			->select(['id', 'access-lvl', 'email', 'password'])
+			->from('users')
+			->where("email = '{$email}'")
+			->all()[0];
+
+		if (!$this->password_verify($password, $user['password'])) {
+			throw new Exception("Provided password is incorrect");
+		}
+		else {
+			$_SESSION['brom_auth_lvl'] = $user['lvl'];
+			return true;
+		}
+	}
+
 }

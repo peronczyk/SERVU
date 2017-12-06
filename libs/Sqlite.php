@@ -7,10 +7,10 @@
 class Sqlite {
 	protected $connection = false;
 	protected $file;
-	protected $debug;
 
 	protected $command;
 	protected $fields;
+	protected $insert_data;
 	protected $conditions;
 	protected $table;
 	protected $order_by;
@@ -69,8 +69,23 @@ class Sqlite {
 	 */
 
 	public function select($fields = '*') {
-		$this->command = 'select';
+		$this->query_type = 'select';
 		$this->fields = $fields;
+		return $this;
+	}
+
+
+	/**
+	 * INSERT
+	 */
+
+	public function insert($arr) {
+		if (!is_array($arr) || count($arr) < 1) {
+			throw new Exception("There are no valid data passed to method `insert` that can be inserted into database.");
+		}
+
+		$this->query_type = 'insert';
+		$this->insert_data = $arr;
 		return $this;
 	}
 
@@ -124,14 +139,7 @@ class Sqlite {
 	public function query($query_string) {
 		$this->result = $this->connection->query($query_string);
 		$this->log[] = $query_string;
-
-		// Reset
-		$this->command = null;
-		$this->fields = null;
-		$this->conditions = null;
-		$this->table = null;
-		$this->order_by = null;
-		$this->order_dir = 'ASC';
+		$this->reset();
 
 		return $this->result;
 	}
@@ -142,7 +150,7 @@ class Sqlite {
 	 */
 
 	public function all() {
-		// Autoconnect to DB if there is no connection
+		// Autoconnect to DB if there is no open connection
 		if (!$this->connection) $this->connect();
 
 		// Perform query
@@ -154,11 +162,34 @@ class Sqlite {
 
 
 	/**
+	 * Perform insertion
+	 */
+
+	public function into($table) {
+		if ($this->query_type != 'insert') {
+			throw new Exception("Method `into` can be used only with `insert` query type.");
+		}
+
+		// Autoconnect to DB if there is no open connection
+		if (!$this->connection) $this->connect();
+
+		$this->table = $table;
+
+		// Perform query
+		return $this->query($this->prepare_query());
+	}
+
+
+	/**
 	 * Prepare query
 	 */
 
 	protected function prepare_query() {
-		switch ($this->command) {
+		switch ($this->query_type) {
+
+			/**
+			 * Select data from database
+			 */
 			case 'select':
 				$fields = '';
 
@@ -182,9 +213,37 @@ class Sqlite {
 				}
 
 				break;
+
+			/**
+			 * Insert data into database table
+			 */
+			case 'insert':
+				$columns = "'" . implode("', '", array_keys($this->insert_data)) . "'";
+				$values  = "'" . implode("', '", array_values($this->insert_data)) . "'";
+
+				$query = "INSERT INTO {$this->table}({$columns}) VALUES({$values});";
+				break;
+
+			default:
+				throw new Exception('Unknown');
 		}
 
 		return $query;
+	}
+
+
+	/**
+	 * Reset prepared query data
+	 */
+
+	public function reset() {
+		$this->query_type = null;
+		$this->fields = null;
+		$this->insert_data = null;
+		$this->conditions = null;
+		$this->table = null;
+		$this->order_by = null;
+		$this->order_dir = 'ASC';
 	}
 
 

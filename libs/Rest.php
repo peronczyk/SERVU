@@ -18,11 +18,11 @@ class Rest {
 			$this->store = [
 				'errors' => [[
 					'message'    => $exception->getMessage(),
-					'error-info' => 'This error was catched automatically by exception handler in ' . str_replace('\\', '/', __FILE__),
+					'catched-by' => 'Exception handler: ' . str_replace('\\', '/', __FILE__),
 					'file'       => str_replace('\\', '/', $exception->getFile()),
 					'line'       => $exception->getLine(),
 					'code'       => $exception->getCode(),
-					'trace'      => $exception->getTrace(),
+					'trace'      => _DEBUG ? $exception->getTrace() : 'Available only in debug mode',
 				]]
 			];
 			$this->send();

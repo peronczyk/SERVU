@@ -18,21 +18,56 @@ class UsersController extends ModulesController {
 
 
 	/** ----------------------------------------------------------------------------
+	 * Login
+	 */
+
+	public function login() {
+		$login_status = $this->_auth->login($_GET['email'], $_GET['password']);
+		$this->_rest->set('status', $login_status);
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * List
 	 */
 
 	public function get_list() {
 		$users_list = $this->actions->get_list();
-		$this->_rest->set('users-list', $users_list);
+		$this->_rest->set('data', $users_list);
 	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * Add user
+	 * Create user
 	 */
 
-	public function add() {
-		$this->require_auth(1);
+	public function create() {
+		$this->require_auth(Auth::LVL_ADMIN);
+
+		if (empty($_GET['email'])) {
+			throw new Exception("Email not provided");
+		}
+
+		if (empty($_GET['password'])) {
+			throw new Exception("Password not provided");
+		}
+
+		if (!$this->_auth->email_validate($_GET['email'])) {
+			throw new Exception("Provided email address is incorrect");
+		}
+
+		if (!$this->_auth->password_validate($_GET['password'])) {
+			throw new Exception("Provided password does not meet the requirements");
+		}
+
+		$result = $this->actions->create_user($_GET['email'], $this->_auth->password_encode($_GET['password']), Auth::LVL_ADMIN);
+
+		if (!$result) {
+			throw new Exception("Unknown error occured while adding new user");
+		}
+		else {
+			$this->_rest->set('status', true);
+		}
 	}
 
 
@@ -41,6 +76,7 @@ class UsersController extends ModulesController {
 	 */
 
 	public function remove() {
+		$this->require_auth(Auth::LVL_ADMIN);
 		/** @todo */
 	}
 }

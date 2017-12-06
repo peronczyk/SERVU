@@ -28,7 +28,7 @@ if (_API_DISPLAY_INFO) {
 		'request-uri'     => REQUEST_URI,
 		'load-time'       => round(microtime(true) - BROM_START, 4),
 		'queries'         => count($db->get_log()),
-		'auth-lvl'        => $auth->get(),
+		'auth-lvl'        => $auth->get_lvl(),
 	]);
 }
 

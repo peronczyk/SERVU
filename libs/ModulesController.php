@@ -10,7 +10,7 @@ class ModulesController {
 	 */
 
 	protected function require_auth($lvl) {
-		if ($this->_auth->get() < $lvl) {
+		if ($this->_auth->get_lvl() < $lvl) {
 			throw new Exception("Your authentication level is lower than required by this method");
 			return false;
 		}
