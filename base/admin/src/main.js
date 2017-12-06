@@ -1,3 +1,5 @@
+import styles from './assets/styles/styles.scss';
+
 import Vue from 'vue/dist/vue.esm.js';
 import VueRouter from 'vue-router';
 

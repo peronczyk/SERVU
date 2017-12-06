@@ -1,0 +1,13 @@
+.o-Header {
+	display: flex;
+	align-items: center;
+	min-height: 10vh;
+
+	h1 {
+		margin: 0;
+	}
+
+	&__buttons {
+		margin-left: auto;
+	}
+}

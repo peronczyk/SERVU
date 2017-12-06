@@ -2,8 +2,8 @@
 
 	<div class="c-Main">
 		<login-form v-if="$store.getters.getUserAccess < 1" />
-		<transition v-else>
-			<router-view></router-view>
+		<transition v-else duration="5000">
+			<router-view class="c-Main__view"></router-view>
 		</transition>
 	</div>
 
@@ -23,11 +23,19 @@ export default {
 
 <style lang="scss">
 
+@import '../assets/styles/_variables';
+
 .c-Main {
 	margin-left: 50%;
+	min-height: 100%;
 
 	.is-UserLoggedIn & {
-		margin-left: 250px;
+		margin-left: 200px;
+	}
+
+	&__view {
+		padding: 0 $gutter * 2;
+		min-height: 100%;
 	}
 }
 

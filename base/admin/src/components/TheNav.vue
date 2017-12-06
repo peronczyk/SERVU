@@ -48,9 +48,9 @@ export default {
 
 <style lang="scss">
 
-.c-Nav {
-	$padding: 20px;
+@import '../assets/styles/_variables';
 
+.c-Nav {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -60,22 +60,57 @@ export default {
 		width: 100%;
 	}
 
+	a {
+		color: $color-text;
+	}
+
 	&__top {
 		display: flex;
 		align-items: center;
-		padding-left: $padding;
-		padding-right: $padding;
+		padding-left: $gutter;
+		padding-right: $gutter;
 		height: 10vh;
 		min-height: 40px;
+
+		h3 {
+			margin: 0;
+		}
 	}
 
 	&__links {
+		ul {
+			list-style-type: none;
+		}
+
 		a {
+			position: relative;
 			display: flex;
 			align-items: center;
-			padding-left: $padding;
-			padding-right: $padding;
-			height: 5vh;
+			padding-left: $gutter;
+			padding-right: $gutter;
+			height: 8vh;
+			font-size: 15px;
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				width: 2px;
+				background-color: $color-links;
+				opacity: 0;
+				transform: scaleY(0);
+				transition: .2s;
+			}
+
+			&:hover,
+			&.router-link-exact-active {
+				&::after {
+					opacity: 1;
+					transform: none;
+				}
+			}
 		}
 	}
 

@@ -1,0 +1,21 @@
+@keyframes pageLeave {
+	0% {
+		transform: none;
+		opacity: 1;
+	}
+	100% {
+		transform: scale(.9);
+		opacity: 0;
+	}
+}
+
+@keyframes pageEnter {
+	0% {
+		transform: scale(.9);
+		opacity: 0;
+	}
+	100% {
+		transform: none;
+		opacity: 1;
+	}
+}

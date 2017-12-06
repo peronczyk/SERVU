@@ -1,11 +1,13 @@
 <template>
 
-	<form @submit.prevent="login">
-		<input type="email" name="email" placeholder="Email" v-model="formValues.email">
-		<input type="password" name="password" placeholder="Password" v-model="formValues.password">
-		<button type="submit">Login</button>
-		<p v-if="loginErrorText">{{ loginErrorText }}</p>
-	</form>
+	<div class="c-LoginForm">
+		<form @submit.prevent="login">
+			<input type="email" name="email" placeholder="Email" v-model="formValues.email">
+			<input type="password" name="password" placeholder="Password" v-model="formValues.password">
+			<button type="submit">Login</button>
+			<p v-if="loginErrorText">{{ loginErrorText }}</p>
+		</form>
+	</div>
 
 </template>
 
@@ -46,3 +48,17 @@ export default {
 }
 
 </script>
+
+
+<style lang="scss">
+
+@import '../assets/styles/_variables';
+
+.c-LoginForm {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	padding: $gutter;
+}
+
+</style>

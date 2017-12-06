@@ -1,0 +1,35 @@
+table {
+	$side-paddings: 10px;
+
+	margin-bottom: $gutter;
+	width: 100%;
+	border-collapse: collapse;
+
+	th, td {
+		padding-left: $side-paddings;
+		padding-right: $side-paddings;
+		text-align: left;
+	}
+
+	thead {
+		th {
+			padding-top: $side-paddings * 1.4;
+			padding-bottom: $side-paddings * 1.4;
+			font-size: 12px;
+		}
+
+		tr:last-child {
+			th {
+				border-bottom: 2px solid $color-lines;
+			}
+		}
+	}
+
+	tbody {
+		td {
+			padding-top: $side-paddings;
+			padding-bottom: $side-paddings;
+			border-bottom: 1px solid $color-lines;
+		}
+	}
+}

@@ -1,0 +1,17 @@
+.v-leave-active {
+	position: absolute;
+	width: 100%;
+	animation: pageLeave .7s forwards;
+}
+
+.v-leave-to {
+
+}
+
+.v-enter-active {
+	animation: pageEnter .7s forwards;
+}
+
+.v-enter-to {
+
+}

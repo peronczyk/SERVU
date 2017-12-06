@@ -26,6 +26,8 @@ $app_modules = $core->get_modules_list();
 		window.appConfig  = <?= json_encode($app_config); ?>;
 		window.appModules = <?= json_encode($app_modules); ?>;
 	</script>
+
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,700,300,400italic,700italic">
 </head>
 
 <body>

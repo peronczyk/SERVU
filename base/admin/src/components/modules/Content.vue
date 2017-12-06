@@ -1,7 +1,13 @@
 <template>
 
 	<div>
-		<h1>Content</h1>
+		<header class="o-Header">
+			<h1>Content</h1>
+
+			<div class="o-Header__buttons">
+				<a class="Btn">Create</a>
+			</div>
+		</header>
 
 		<table>
 			<thead>

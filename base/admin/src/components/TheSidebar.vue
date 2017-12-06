@@ -8,25 +8,6 @@
 </template>
 
 
-<style lang="scss">
-
-.c-Sidebar {
-	position: fixed;
-	display: flex;
-	width: 50%;
-	height: 100%;
-	background-color: #fff;
-	box-shadow: 0 0 100px rgba(0, 0, 0, .05);
-	transition: .4s;
-
-	.is-UserLoggedIn & {
-		width: 250px;
-	}
-}
-
-</style>
-
-
 <script>
 
 import LoginInfo from './LoginInfo.vue';
@@ -37,4 +18,25 @@ export default {
 }
 
 </script>
+
+
+<style lang="scss">
+
+@import '../assets/styles/_variables';
+
+.c-Sidebar {
+	position: fixed;
+	display: flex;
+	width: 50%;
+	height: 100%;
+	background-color: $color-white;
+	box-shadow: 0 0 100px rgba($color-black, .06);
+	transition: .4s;
+
+	.is-UserLoggedIn & {
+		width: 200px;
+	}
+}
+
+</style>
 

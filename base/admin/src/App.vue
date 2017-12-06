@@ -1,6 +1,6 @@
 <template>
 
-	<div id="app" :class="{'is-AppConnected': $store.getters.isAppConnected, 'is-UserLoggedIn': $store.getters.getUserAccess > 0}">
+	<div class="c-App" :class="{'is-AppConnected': $store.getters.isAppConnected, 'is-UserLoggedIn': $store.getters.getUserAccess > 0}">
 		<the-sidebar />
 		<the-main />
 	</div>
@@ -42,37 +42,17 @@ export default {
 
 <style lang="scss">
 
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
-
-html {
-	height: 100%;
-}
-
-body {
-	min-height: 100%;
-	background-color: #f5f5f3;
-	font-family: sans-serif;
-}
-
-#app {
+.c-App {
 	visibility: hidden;
 	min-height: 100%;
 	opacity: 0;
+	overflow: hidden;
 	transition: .4s;
 
 	&.is-AppConnected {
 		visibility: visible;
 		opacity: 1;
 	}
-}
-
-a {
-	cursor: pointer;
-	color: blue;
 }
 
 </style>
