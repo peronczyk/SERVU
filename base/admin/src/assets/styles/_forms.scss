@@ -1,3 +1,12 @@
+form {
+	width: 100%;
+}
+
+label {
+	display: block;
+	margin-bottom: $box-margin / 2;
+}
+
 input,
 select,
 button,
@@ -11,7 +20,14 @@ input {
 	&[type='password'] {
 		padding-left: 10px;
 		padding-right: 10px;
-		border: 1px solid $color-inputs-border;
+		width: 100%;
+		border: none;
+		border-bottom: 1px solid $color-inputs-border;
+		background: none;
+
+		&:focus {
+			border-bottom-color: $color-links;
+		}
 	}
 }
 

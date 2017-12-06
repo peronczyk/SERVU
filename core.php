@@ -18,6 +18,9 @@
  */
 
 $default_config = [
+	// This variable will be added to meta section of all api request. It also will
+	// be displayed on front page of admin panel
+	'_SITE_NAME' => $_SERVER['SERVER_NAME'],
 
 	// Force displaying all errors, warnings and notices
 	'_DEBUG' => preg_match('/(localhost|::1|\.dev)$/', @$_SERVER['SERVER_NAME']),

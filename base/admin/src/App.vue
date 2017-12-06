@@ -3,6 +3,7 @@
 	<div class="c-App" :class="{'is-AppConnected': $store.getters.isAppConnected, 'is-UserLoggedIn': $store.getters.getUserAccess > 0}">
 		<the-sidebar />
 		<the-main />
+		<the-toast />
 	</div>
 
 </template>
@@ -13,11 +14,9 @@
 import axios from 'axios';
 import TheSidebar from './components/TheSidebar.vue';
 import TheMain from './components/TheMain.vue';
+import TheToast from './components/TheToast.vue';
 
 export default {
-	computed: {
-	},
-
 	created() {
 		axios.get(window.appConfig.apiBaseUrl)
 			.then(receivedData => {
@@ -34,7 +33,7 @@ export default {
 			});
 	},
 
-	components: { TheSidebar, TheMain }
+	components: { TheSidebar, TheMain, TheToast }
 }
 
 </script>
@@ -44,7 +43,8 @@ export default {
 
 .c-App {
 	visibility: hidden;
-	min-height: 100%;
+	position: relative;
+	height: 100%;
 	opacity: 0;
 	overflow: hidden;
 	transition: .4s;

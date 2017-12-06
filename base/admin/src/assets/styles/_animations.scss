@@ -4,14 +4,14 @@
 		opacity: 1;
 	}
 	100% {
-		transform: scale(.9);
+		transform: scale(.95);
 		opacity: 0;
 	}
 }
 
 @keyframes pageEnter {
 	0% {
-		transform: scale(.9);
+		transform: scale(.98);
 		opacity: 0;
 	}
 	100% {

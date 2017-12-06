@@ -21,6 +21,7 @@ $router->run($dependencies);
  */
 
 $rest->set('meta', [
+	'site-name'       => _SITE_NAME,
 	'debug-mode'      => _DEBUG,
 	'request-method'  => $_SERVER['REQUEST_METHOD'],
 	'root-uri'        => APP_ROOT_URI,

@@ -16,6 +16,10 @@ table {
 			padding-top: $side-paddings * 1.4;
 			padding-bottom: $side-paddings * 1.4;
 			font-size: 12px;
+
+			&:first-child {
+				width: 40px;
+			}
 		}
 
 		tr:last-child {

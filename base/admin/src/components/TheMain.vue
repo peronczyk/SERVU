@@ -27,7 +27,7 @@ export default {
 
 .c-Main {
 	margin-left: 50%;
-	min-height: 100%;
+	height: 100%;
 
 	.is-UserLoggedIn & {
 		margin-left: 200px;
@@ -35,7 +35,7 @@ export default {
 
 	&__view {
 		padding: 0 $gutter * 2;
-		min-height: 100%;
+		height: 100%;
 	}
 }
 

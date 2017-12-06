@@ -12,6 +12,10 @@ export default new Vuex.Store({
 	state: {
 		connected: false,
 		userAccessLvl: 0,
+		toast: {
+			isVisible: false,
+			content: null
+		}
 	},
 
 
@@ -42,6 +46,16 @@ export default new Vuex.Store({
 
 		changeUserAccessLvl(state, lvl) {
 			state.userAccessLvl = lvl;
+		},
+
+		openToast(state, content) {
+			state.toast.isVisible = !state.toast.isVisible;
+			state.toast.content = content;
+		},
+
+		closeToast(state) {
+			state.toast.isVisible = false;
+			state.toast.content = null;
 		}
 	},
 

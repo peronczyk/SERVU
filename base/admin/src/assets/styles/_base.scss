@@ -22,3 +22,17 @@ a {
 	color: $color-links;
 	text-decoration: none;
 }
+
+
+/* ---------------------------------------------------------------------------------
+ * Scrollbar
+ */
+
+ ::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+
+	&-track { background-color: $color-bg; }
+
+	&-thumb { background-color: $color-headers; }
+}

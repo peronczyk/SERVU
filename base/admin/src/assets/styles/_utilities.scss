@@ -1,3 +1,7 @@
 .u-Width {
 	&--full { width: 100%; }
 }
+
+.u-Error {
+	color: $color-errors;
+}

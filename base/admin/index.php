@@ -4,6 +4,7 @@ $admin_url = APP_ROOT_URL . 'admin/';
 $admin_dir = APP_ROOT_URL . 'base/admin/';
 
 $app_config = [
+	'siteName' => _SITE_NAME,
 	'rootUrl' => $admin_url,
 	'apiBaseUrl' => APP_ROOT_URL . ((_DEFAULT_BASE_MODULE == 'api' ? '' : 'api/')),
 ];
