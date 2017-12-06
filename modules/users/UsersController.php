@@ -22,8 +22,20 @@ class UsersController extends ModulesController {
 	 */
 
 	public function login() {
-		$login_status = $this->_auth->login($_GET['email'], $_GET['password']);
+		$this->require_request_method('POST');
+
+		$login_status = $this->_auth->login(@$_POST['email'], @$_POST['password']);
 		$this->_rest->set('status', $login_status);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Logout
+	 */
+
+	public function logout() {
+		$logout_status = $this->_auth->logout();
+		$this->_rest->set('status', $logout_status);
 	}
 
 

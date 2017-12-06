@@ -34,9 +34,6 @@ $default_config = [
 	// Database file name. You can change this file name to something more complex
 	// if you want to be more sure no one will access it from browser.
 	'_DB_FILE_NAME' => 'db.sqlite',
-
-	// Decide if debug info will be added to each response
-	'_API_DISPLAY_INFO' => true,
 ];
 
 

@@ -11,7 +11,7 @@ export default new Vuex.Store({
 
 	state: {
 		connected: false,
-		userAuthLvl: 0,
+		userAccessLvl: 0,
 	},
 
 
@@ -25,7 +25,7 @@ export default new Vuex.Store({
 		},
 
 		getUserAccess(state) {
-			return state.userAuthLvl;
+			return state.userAccessLvl;
 		},
 	},
 
@@ -35,12 +35,14 @@ export default new Vuex.Store({
 	 */
 
 	mutations: {
-		appConnected(state, appInfo) {
-			if (appInfo) {
-				state.connected = true;
-				state.userAuthLvl = appInfo['auth-lvl'];
-			}
+		appConnected(state, meta) {
+			state.connected = true;
+			state.userAccessLvl = meta['access-lvl'];
 		},
+
+		changeUserAccessLvl(state, lvl) {
+			state.userAccessLvl = lvl;
+		}
 	},
 
 

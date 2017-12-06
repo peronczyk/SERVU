@@ -15,10 +15,36 @@
 			</ul>
 		</div>
 
-		<div class="c-Nav__bottom"></div>
+		<div class="c-Nav__bottom">
+			<a @click.prevent="logout()">logout</a>
+		</div>
 	</nav>
 
 </template>
+
+
+<script>
+
+import axios from 'axios';
+
+export default {
+	methods: {
+		logout() {
+			axios.get(window.appConfig.apiBaseUrl + 'users/logout')
+				.then(receivedData => {
+					if (receivedData.data.status) {
+						this.$store.commit('changeUserAccessLvl', receivedData.data.meta['access-lvl']);
+					}
+					else {
+						console.error('Logout failed');
+					}
+				});
+		}
+	}
+}
+</script>
+
+
 
 <style lang="scss">
 
@@ -56,6 +82,7 @@
 	&__bottom {
 		margin-top: auto;
 		height: 30px;
+		text-align: center;
 	}
 }
 

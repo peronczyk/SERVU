@@ -20,7 +20,7 @@ class Auth {
 		$this->_db = $db;
 
 		if (isset($_SESSION['brom_auth_lvl']) && is_numeric($_SESSION['brom_auth_lvl']) && $_SESSION['brom_auth_lvl'] > self::LVL_USER) {
-			$this->set($_SESSION['brom_auth_lvl']);
+			$this->set_lvl($_SESSION['brom_auth_lvl']);
 		}
 	}
 
@@ -101,15 +101,30 @@ class Auth {
 			->select(['id', 'access-lvl', 'email', 'password'])
 			->from('users')
 			->where("email = '{$email}'")
-			->all()[0];
+			->all();
 
-		if (!$this->password_verify($password, $user['password'])) {
+		if (!$user) {
+			throw new Exception("User with this email addres does not exists");
+		}
+
+		if (!$this->password_verify($password, $user[0]['password'])) {
 			throw new Exception("Provided password is incorrect");
 		}
 		else {
-			$_SESSION['brom_auth_lvl'] = $user['lvl'];
+			$this->set_lvl($user[0]['access-lvl']);
 			return true;
 		}
+	}
+
+
+	/**
+	 * Login
+	 */
+
+	public function logout() {
+		$this->set_lvl(self::LVL_USER);
+
+		return ($this->get_lvl() === self::LVL_USER);
 	}
 
 }

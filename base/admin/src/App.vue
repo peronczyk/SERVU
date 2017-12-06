@@ -1,6 +1,6 @@
 <template>
 
-	<div id="app" v-if="$store.getters.isAppConnected" :class="{'is-UserLoggedIn': $store.getters.getUserAccess > 0}">
+	<div id="app" :class="{'is-AppConnected': $store.getters.isAppConnected, 'is-UserLoggedIn': $store.getters.getUserAccess > 0}">
 		<the-sidebar />
 		<the-main />
 	</div>
@@ -20,8 +20,13 @@ export default {
 
 	created() {
 		axios.get(window.appConfig.apiBaseUrl)
-			.then(result => {
-				this.$store.commit('appConnected', result.data['app-info']);
+			.then(receivedData => {
+				if (receivedData.data['meta']) {
+					this.$store.commit('appConnected', receivedData.data['meta']);
+				}
+				else {
+					console.error('No meta entry in connection data');
+				}
 			})
 			.catch(error => {
 				console.error('Application could not connect to api');
@@ -50,10 +55,19 @@ html {
 body {
 	min-height: 100%;
 	background-color: #f5f5f3;
+	font-family: sans-serif;
 }
 
 #app {
+	visibility: hidden;
 	min-height: 100%;
+	opacity: 0;
+	transition: .4s;
+
+	&.is-AppConnected {
+		visibility: visible;
+		opacity: 1;
+	}
 }
 
 a {
