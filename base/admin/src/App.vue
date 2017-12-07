@@ -20,8 +20,12 @@ export default {
 	created() {
 		axios.get(window.appConfig.apiBaseUrl)
 			.then(receivedData => {
-				if (receivedData.data['meta']) {
-					this.$store.commit('appConnected', receivedData.data['meta']);
+				if (receivedData.data.meta) {
+					this.$store.commit('appConnected', receivedData.data.meta);
+
+					if (receivedData.data.meta['app-version']) {
+						this.$store.commit('setAppVersion', receivedData.data.meta['app-version']);
+					}
 				}
 				else {
 					console.error('No meta entry in connection data');

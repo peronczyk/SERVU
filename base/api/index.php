@@ -29,6 +29,9 @@ $rest->set('meta', [
 	'load-time'       => round(microtime(true) - BROM_START, 4),
 	'queries'         => count($db->get_log()),
 	'access-lvl'      => $auth->get_lvl(),
+
+	// App version is visible only for logged in users
+	'app-version'     => ($auth->get_lvl() > Auth::LVL_USER) ? BROM_VERSION : null,
 ]);
 
 $rest->send();

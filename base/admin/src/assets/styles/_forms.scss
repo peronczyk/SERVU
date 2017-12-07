@@ -1,4 +1,5 @@
 form {
+	margin-bottom: $box-margin;
 	width: 100%;
 }
 
@@ -18,8 +19,6 @@ input {
 	&[type='text'],
 	&[type='email'],
 	&[type='password'] {
-		padding-left: 10px;
-		padding-right: 10px;
 		width: 100%;
 		border: none;
 		border-bottom: 1px solid $color-inputs-border;

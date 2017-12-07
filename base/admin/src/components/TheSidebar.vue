@@ -26,6 +26,7 @@ export default {
 
 .c-Sidebar {
 	position: fixed;
+	z-index: +1;
 	display: flex;
 	width: 50%;
 	height: 100%;

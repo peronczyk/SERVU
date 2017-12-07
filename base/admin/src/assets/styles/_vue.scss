@@ -1,5 +1,5 @@
 .v-leave-active {
-	position: absolute;
+	position: absolute !important;
 	width: 100%;
 	animation: pageLeave .7s forwards;
 }

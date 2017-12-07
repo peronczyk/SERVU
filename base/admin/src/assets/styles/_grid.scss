@@ -1,0 +1,61 @@
+@mixin columns($screen-size:'') {
+	@for $i from 1 through 12 {
+		.Col-#{$i}#{$screen-size} {
+			width: percentage($i/12);
+			flex-basis: percentage($i/12);
+		}
+	}
+	.Col-hide#{$screen-size} { display: none; }
+}
+
+
+.Grid {
+	display: flex;
+	flex: 0 1 auto;
+	flex-direction: row;
+	flex-wrap: wrap;
+
+	&--gutter {
+		margin-left: -$gutter;
+		margin-right: -$gutter;
+
+		[class*='Col-'] {
+			padding-left: $gutter;
+			padding-right: $gutter;
+		}
+	}
+}
+
+
+// Default screen size
+@include columns();
+
+// Screen size: Ultra large
+@include narrower-than(ul) {
+	@include columns('\\@UL');
+}
+
+// Screen size: Extra large
+@include narrower-than(xl) {
+	@include columns('\\@XL');
+}
+
+// Screen size: Large
+@include narrower-than(lg) {
+	@include columns('\\@LG');
+}
+
+// Screen size: Medium
+@include narrower-than(md) {
+	@include columns('\\@MD');
+}
+
+// Screen size: Small
+@include narrower-than(sm) {
+	@include columns('\\@SM');
+}
+
+// Screen size: Extra small
+@include narrower-than(xs) {
+	@include columns('\\@XS');
+}

@@ -2,7 +2,7 @@
 
 	<div class="c-Main">
 		<login-form v-if="$store.getters.getUserAccess < 1" />
-		<transition v-else duration="5000">
+		<transition v-else duration="2000">
 			<router-view class="c-Main__view"></router-view>
 		</transition>
 	</div>
@@ -26,6 +26,7 @@ export default {
 @import '../assets/styles/_variables';
 
 .c-Main {
+	position: relative;
 	margin-left: 50%;
 	height: 100%;
 

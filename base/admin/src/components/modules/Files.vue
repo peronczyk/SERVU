@@ -5,16 +5,18 @@
 			<h1>Files</h1>
 		</header>
 
-		<div class="Grid">
+		<div class="Grid Grid--gutter">
 
 			<div class="Col-8">
 				<h3>Filles list</h3>
+
+				<ul class="o-Path"></ul>
 
 				<table>
 					<thead>
 						<tr>
 							<th></th>
-							<th>Name</th>
+							<th>File name</th>
 							<th>Options</th>
 						</tr>
 					</thead>
@@ -37,10 +39,17 @@
 			</div>
 
 			<div class="Col-4">
-				<h3>Upload file</h3>
+				<h3>Upload files</h3>
 				<file-upload />
 
 				<h3>Create directory</h3>
+				<form>
+					<label>
+						<input type="text" placeholder="Directory name">
+					</label>
+
+					<button class="Btn">Create</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -64,7 +73,7 @@ export default {
 
 	methods: {
 		getList() {
-			axios.get(this.nodeUrl + '/list')
+			axios.get(this.nodeUrl + 'list')
 				.then(result => {
 					this.filesList = result.data['files-list'];
 				});

@@ -1,3 +1,19 @@
+$breakpoints: (
+
+	// Horizontal
+	h-ul: 1520px, // Ultra large
+	h-xl: 1280px, // Extra large
+	h-lg: 980px,  // large
+	h-md: 800px,  // Medium
+	h-sm: 640px,  // Small
+	h-xs: 480px,  // Extra small
+
+	// Vertical
+	v-lg: 780px,  // Large
+	v-md: 700px,  // Medium
+	v-sm: 620px,  // Small
+);
+
 $gutter              : 2vw;
 $box-margin          : 3vh;
 $inputs-height       : 40px;

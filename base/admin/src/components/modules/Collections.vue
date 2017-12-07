@@ -5,10 +5,9 @@
 			<h1>Collections</h1>
 
 			<div class="o-Header__buttons">
-				<a class="Btn">Create</a>
+				<a class="Btn">Create collection</a>
 			</div>
 		</header>
-
 
 		<table>
 			<thead>
@@ -47,7 +46,7 @@ export default {
 
 	methods: {
 		getList() {
-			axios.get(this.nodeUrl + '/list')
+			axios.get(this.nodeUrl + 'list')
 				.then(result => {
 					this.collectionsList = result.data['collections-list'];
 				});

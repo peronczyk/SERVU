@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="c-Nav__bottom">
-			<a @click.prevent="logout()">logout</a>
+			<a @click.prevent="logout()">Logout</a>
 		</div>
 	</nav>
 
@@ -115,9 +115,26 @@ export default {
 	}
 
 	&__bottom {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		margin-top: auto;
-		height: 30px;
-		text-align: center;
+		height: 7vh;
+		min-height: 40px;
+		border-top: 1px solid $color-lines;
+
+		a {
+			display: inline-block;
+			padding: 10px;
+			font-size: 12px;
+			font-weight: bold;
+			text-transform: uppercase;
+			transition: .2s;
+
+			&:hover {
+				color: $color-links-hover;
+			}
+		}
 	}
 }
 

@@ -5,7 +5,7 @@
 			<h1>Content</h1>
 
 			<div class="o-Header__buttons">
-				<a class="Btn">Create</a>
+				<a class="Btn">Add content</a>
 			</div>
 		</header>
 
@@ -63,7 +63,7 @@ export default {
 			this.previousParentId = id ? this.actualParentId : null;
 			this.actualParentId = id ? id : 0;
 
-			axios.get(this.nodeUrl + '/list?parent-id=' + this.actualParentId)
+			axios.get(this.nodeUrl + 'list?parent-id=' + this.actualParentId)
 				.then(result => {
 					this.contentList = result.data['content-list'];
 				});
