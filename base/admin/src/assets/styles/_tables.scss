@@ -9,6 +9,14 @@ table {
 		padding-left: $side-paddings;
 		padding-right: $side-paddings;
 		text-align: left;
+
+		&:first-child {
+			padding-left: 0;
+		}
+
+		&::last-child {
+			padding-right: 0;
+		}
 	}
 
 	thead {
@@ -16,10 +24,6 @@ table {
 			padding-top: $side-paddings * 1.4;
 			padding-bottom: $side-paddings * 1.4;
 			font-size: 12px;
-
-			&:first-child {
-				width: 40px;
-			}
 		}
 
 		tr:last-child {

@@ -7,9 +7,8 @@
 
 		<div class="Grid Grid--gutter">
 
-			<div class="Col-8">
+			<div class="Col-8 Col-12@LG">
 				<h3>Users list</h3>
-
 				<table>
 					<thead>
 						<tr>
@@ -20,7 +19,7 @@
 					</thead>
 					<tbody>
 						<tr v-for="(entry, index) in usersList" :key="entry.id">
-							<td>{{ entry.id }}.</td>
+							<td>{{ entry.id }}</td>
 							<td>{{ entry.email }}</td>
 							<td></td>
 						</tr>
@@ -28,7 +27,7 @@
 				</table>
 			</div>
 
-			<div class="Col-4">
+			<div class="Col-4 Col-12@LG">
 				<h3>Add user</h3>
 				<form @submit.prevent="addUser">
 					<label>

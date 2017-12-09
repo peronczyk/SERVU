@@ -8,14 +8,16 @@
 		<div class="Grid Grid--gutter">
 
 			<div class="Col-8">
-				<h3>Filles list</h3>
+				<h3>Files list</h3>
 
-				<ul class="o-Path"></ul>
+				<ul class="o-Path">
+					<li>Uploads</li>
+					<li v-for="(index, chunk) in pathChunks" :key="index">{{ chunk }}</li>
+				</ul>
 
 				<table>
 					<thead>
 						<tr>
-							<th></th>
 							<th>File name</th>
 							<th>Options</th>
 						</tr>
@@ -27,7 +29,6 @@
 							</td>
 						</tr>
 						<tr v-for="(file, index) in filesList" :key="file.id">
-							<td>{{ index + 1 }}.</td>
 							<td v-if="file.type == 'directory'">
 								<a @click.prevent="getList(file.name)">{{ file.name }}</a>
 							</td>
@@ -88,3 +89,47 @@ export default {
 }
 
 </script>
+
+
+<style lang="scss">
+
+@import '../../assets/styles/_variables';
+
+.o-Path {
+	list-style-type: none;
+	margin-bottom: 10px;
+	color: $color-gray;
+
+	li {
+		position: relative;
+		display: inline-block;
+		padding: 10px 30px 10px 0;
+		font-size: 14px;
+
+		&:first-child {
+			font-weight: bold;
+		}
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			right: 10px;
+			width: 6px;
+			height: 1px;
+			background-color: $color-gray;
+		}
+
+		&::before {
+			top: calc(50% - 2px);
+			transform: rotate(45deg);
+		}
+
+		&::after {
+			top: calc(50% + 2px);
+			transform: rotate(-45deg);
+		}
+	}
+}
+
+</style>
