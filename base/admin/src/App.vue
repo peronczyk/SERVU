@@ -4,6 +4,7 @@
 		<the-sidebar />
 		<the-main />
 		<the-toast />
+		<the-modal />
 	</div>
 
 </template>
@@ -15,6 +16,7 @@ import axios from 'axios';
 import TheSidebar from './components/TheSidebar.vue';
 import TheMain from './components/TheMain.vue';
 import TheToast from './components/TheToast.vue';
+import TheModal from './components/themodal.vue';
 
 export default {
 	created() {
@@ -37,7 +39,7 @@ export default {
 			});
 	},
 
-	components: { TheSidebar, TheMain, TheToast }
+	components: { TheSidebar, TheMain, TheToast, TheModal }
 }
 
 </script>

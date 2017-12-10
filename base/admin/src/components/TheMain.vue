@@ -3,7 +3,9 @@
 	<div class="c-Main">
 		<login-form v-if="$store.getters.getUserAccess < 1" />
 		<transition v-else duration="2000">
-			<router-view class="c-Main__view"></router-view>
+			<keep-alive>
+				<router-view class="c-Main__view"></router-view>
+			</keep-alive>
 		</transition>
 	</div>
 

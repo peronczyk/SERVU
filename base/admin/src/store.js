@@ -16,6 +16,10 @@ export default new Vuex.Store({
 		toast: {
 			isVisible: false,
 			content: null
+		},
+		modal: {
+			isOpen: false,
+			content: null
 		}
 	},
 
@@ -60,7 +64,21 @@ export default new Vuex.Store({
 
 		closeToast(state) {
 			state.toast.isVisible = false;
-			state.toast.content = null;
+			setTimeout(() => {
+				state.toast.content = null;
+			});
+		},
+
+		openModal(state, content) {
+			state.modal.isOpen = true;
+			state.modal.content = content;
+		},
+
+		closeModal(state) {
+			state.modal.isOpen = false;
+			setTimeout(() => {
+				state.modal.content = null;
+			}, 1000);
 		}
 	},
 

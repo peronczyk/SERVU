@@ -5,7 +5,7 @@
 			<h1>Collections</h1>
 
 			<div class="o-Header__buttons">
-				<a class="Btn">Create collection</a>
+				<a class="Btn" @click.prevent="openForm">Create collection</a>
 			</div>
 		</header>
 
@@ -35,6 +35,7 @@
 <script>
 
 import axios from 'axios';
+import CollectionsForm from './CollectionsForm.vue';
 
 export default {
 	data() {
@@ -51,11 +52,17 @@ export default {
 					this.collectionsList = result.data['collections-list'];
 				});
 		},
+
+		openForm() {
+			this.$store.commit('openModal', CollectionsForm);
+		}
 	},
 
 	created() {
 		this.getList();
-	}
+	},
+
+	components: { CollectionsForm }
 }
 
 </script>
