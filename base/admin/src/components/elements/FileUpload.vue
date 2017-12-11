@@ -2,7 +2,7 @@
 
 	<div class="e-FileUpload">
 		<label>
-			<span class="Btn Btn--secondary">Select files</span>
+			<span class="Btn Btn--hollow">Select files</span>
 			<input type="file" multiple @change="fileInputChange">
 		</label>
 

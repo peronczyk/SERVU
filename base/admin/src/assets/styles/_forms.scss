@@ -15,18 +15,17 @@ button,
 	height: $inputs-height;
 }
 
-input {
-	&[type='text'],
-	&[type='email'],
-	&[type='password'] {
-		width: 100%;
-		border: none;
-		border-bottom: 1px solid $color-inputs-border;
-		background: none;
+input[type='text'],
+input[type='email'],
+input[type='password'],
+select {
+	width: 100%;
+	border: none;
+	border-bottom: 1px solid $color-inputs-border;
+	background: none;
 
-		&:focus {
-			border-bottom-color: $color-links;
-		}
+	&:focus {
+		border-bottom-color: $color-links;
 	}
 }
 
@@ -52,7 +51,7 @@ button,
 		font-size: 16px;
 	}
 
-	&--secondary {
+	&--hollow {
 		height: $inputs-height * .8;
 		font-size: 13px;
 		font-weight: normal;

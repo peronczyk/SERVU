@@ -87,8 +87,37 @@ export default {
 
 	&__close {
 		position: absolute;
-		top: 0;
-		right: 0;
+		top: 8px;
+		right: 8px;
+		display: block;
+		width: 40px;
+		height: 40px;
+		text-indent: -200px;
+		overflow: hidden;
+		transition: .2s;
+
+		&:hover {
+			background-color: $color-gray-light;
+		}
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			top: 20px;
+			left: 11px;
+			width: 20px;
+			height: 1px;
+			background-color: $color-dark;
+		}
+
+		&::before {
+			transform: rotate(45deg);
+		}
+
+		&::after {
+			transform: rotate(-45deg);
+		}
 	}
 
 	&__content {

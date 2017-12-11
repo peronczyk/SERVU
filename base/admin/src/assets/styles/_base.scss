@@ -23,12 +23,18 @@ a {
 	text-decoration: none;
 }
 
+hr {
+	margin: 20px 0;
+	border: none;
+	border-top: 3px solid $color-lines;
+}
+
 
 /* ---------------------------------------------------------------------------------
  * Scrollbar
  */
 
- ::-webkit-scrollbar {
+::-webkit-scrollbar {
 	width: 10px;
 	height: 10px;
 

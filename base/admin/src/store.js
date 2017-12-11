@@ -20,7 +20,17 @@ export default new Vuex.Store({
 		modal: {
 			isOpen: false,
 			content: null
-		}
+		},
+		contentFieldTypes: [
+			{
+				id: 'simple',
+				name: 'Simple text field'
+			},
+			{
+				id: 'rich',
+				name: 'Rich text field'
+			},
+		],
 	},
 
 
