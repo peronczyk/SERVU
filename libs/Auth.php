@@ -19,8 +19,8 @@ class Auth {
 	public function __construct($db) {
 		$this->_db = $db;
 
-		if (isset($_SESSION['brom_auth_lvl']) && is_numeric($_SESSION['brom_auth_lvl']) && $_SESSION['brom_auth_lvl'] > self::LVL_USER) {
-			$this->set_lvl($_SESSION['brom_auth_lvl']);
+		if (isset($_SESSION['servant_auth_lvl']) && is_numeric($_SESSION['servant_auth_lvl']) && $_SESSION['servant_auth_lvl'] > self::LVL_USER) {
+			$this->set_lvl($_SESSION['servant_auth_lvl']);
 		}
 	}
 
@@ -39,7 +39,7 @@ class Auth {
 	 */
 
 	public function set_lvl($lvl) {
-		$_SESSION['brom_auth_lvl'] = $lvl;
+		$_SESSION['servant_auth_lvl'] = $lvl;
 		$this->lvl = $lvl;
 	}
 

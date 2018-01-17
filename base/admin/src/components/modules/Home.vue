@@ -14,7 +14,7 @@
 
 			<li>
 				Provided by:
-				<strong><a href="https://github.com/peronczyk/BROM" target="_blank">BROM</a></strong>
+				<strong><a href="https://github.com/peronczyk/servant" target="_blank">Servant</a></strong>
 			</li>
 		</ul>
 	</div>

@@ -18,9 +18,9 @@
 			<p class="u-Error" v-if="loginErrorText">{{ loginErrorText }}</p>
 		</form>
 
-		<a class="c-LoginForm__appname" href="https://github.com/peronczyk/BROM" target="_blank">
+		<a class="c-LoginForm__appname" href="https://github.com/peronczyk/servant" target="_blank">
 			<span>Powered by:</span>
-			BROM
+			Servant
 		</a>
 	</div>
 

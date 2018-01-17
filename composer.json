@@ -1,6 +1,6 @@
 {
-    "name": "peron/brom",
-    "description": "Just BROM",
+    "name": "peron/servant",
+    "description": "Servant - Headless CMS",
     "type": "cms",
     "license": "MIT",
     "authors": [

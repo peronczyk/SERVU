@@ -2,23 +2,22 @@
 
 /**
  * =================================================================================
- *  ____  _____   ____  __  __
- * |  _ \|  __ \ / __ \|  \/  |
- * | |_) | |__) | |  | | \  / |
- * |  _ <|  _  /| |  | | |\/| |
- * | |_) | | \ \| |__| | |  | |
- * |____/|_|  \_\\____/|_|  |_|
+ *  __                            _
+ * / _\ ___ _ ____   ____ _ _ __ | |_
+ * \ \ / _ \ '__\ \ / / _` | '_ \| __|
+ * _\ \  __/ |   \ V / (_| | | | | |_
+ * \__/\___|_|    \_/ \__,_|_| |_|\__|
  *
- * BROM SAYS HELLO
+ * SERVANT SAYS HELLO
  * Headless Content Canagement System
  *
  * @author Bartosz Perończyk
  * =================================================================================
  */
 
-define('BROM_START', microtime(true));
-define('BROM_VERSION', '0.0.1');
-define('BROM_INDEX', true);
+define('APP_START', microtime(true));
+define('APP_VERSION', '0.0.1');
+define('APP_INDEX', true);
 
 /**
  * Initiate core

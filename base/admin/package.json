@@ -1,7 +1,7 @@
 {
-  "name": "brom-admin",
+  "name": "servant-admin",
   "version": "0.0.1",
-  "description": "Administration panel for BROM Headless CMS",
+  "description": "Administration panel for Servant Headless CMS",
   "main": "index.php",
   "scripts": {
     "watch": "webpack --progress --colors --watch",
@@ -12,6 +12,9 @@
   "license": "ISC",
   "devDependencies": {
     "axios": "^0.17.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
     "css-loader": "^0.28.4",
     "node-sass": "^4.5.3",
     "plon": "^1.1.4",
