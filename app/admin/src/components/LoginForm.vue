@@ -101,7 +101,7 @@ export default {
 		span {
 			display: block;
 			font-weight: normal;
-			color: $color-text-light;
+			color: $color-text-lvl-2;
 		}
 	}
 }

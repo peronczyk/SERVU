@@ -2,7 +2,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 1em;
 	font-weight: normal;
 	line-height: 1.6em;
-	color: $color-headers;
+	color: $color-text-lvl-1;
 
 	strong {
 		font-weight: bold;
@@ -15,7 +15,7 @@ h1 {
 
 h2 {
 	font-size: 24px;
-	color: $color-text-light;
+	color: $color-text-lvl-2;
 }
 
 h3 {
@@ -36,5 +36,5 @@ p {
 
 small {
 	font-size: .9em;
-	color: $color-text-light;
+	color: $color-text-lvl-3;
 }

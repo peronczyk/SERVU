@@ -30,8 +30,7 @@ export default {
 	display: flex;
 	width: 50%;
 	height: 100%;
-	background-color: $color-white;
-	box-shadow: 0 0 100px rgba($color-black, .06);
+	background-color: $color-bg-lvl-3;
 	transition: .4s;
 
 	.is-UserLoggedIn & {

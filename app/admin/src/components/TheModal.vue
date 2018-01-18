@@ -57,7 +57,7 @@ export default {
 	height: 100%;
 	border: none;
 	overflow: auto;
-	background-color: rgba($color-dark, .8);
+	background-color: rgba($color-bg-lvl-1, .95);
 	text-align: center;
 	opacity: 0;
 	transition: .3s;
@@ -79,7 +79,7 @@ export default {
 		z-index: +1;
 		min-height: 40px;
 		max-width: 800px;
-		background-color: $color-white;
+		background-color: $color-bg-lvl-2;
 		opacity: 0;
 		transform: scale(.6);
 		transition: .3s;
@@ -97,7 +97,7 @@ export default {
 		transition: .2s;
 
 		&:hover {
-			background-color: $color-gray-light;
+			background-color: $color-bg-lvl-3;
 		}
 
 		&::before,
@@ -108,7 +108,7 @@ export default {
 			left: 11px;
 			width: 20px;
 			height: 1px;
-			background-color: $color-dark;
+			background-color: $color-links;
 		}
 
 		&::before {

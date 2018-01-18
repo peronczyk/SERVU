@@ -10,11 +10,11 @@ html, body {
 }
 
 body {
-	background-color: $color-bg;
+	background-color: $color-bg-lvl-2;
 	font-family: 'Roboto', sans-serif;
 	font-size: 13px;
 	line-height: 1em;
-	color: $color-text;
+	color: $color-text-lvl-2;
 }
 
 a {
@@ -38,7 +38,7 @@ hr {
 	width: 10px;
 	height: 10px;
 
-	&-track { background-color: $color-bg; }
+	&-track { background-color: $color-bg-lvl-1; }
 
-	&-thumb { background-color: $color-headers; }
+	&-thumb { background-color: $color-text-lvl-3; }
 }

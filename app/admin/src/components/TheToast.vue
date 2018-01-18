@@ -47,7 +47,7 @@ export default {
 	max-width: 300px;
 	min-height: 60px;
 	color: $color-white;
-	background-color: $color-dark;
+	background-color: $color-bg-lvl-3;
 	opacity: 0;
 	transform: translateX(40px);
 	transition: .4s;

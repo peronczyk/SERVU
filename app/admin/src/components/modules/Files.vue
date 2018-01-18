@@ -98,7 +98,7 @@ export default {
 .o-Path {
 	list-style-type: none;
 	margin-bottom: 10px;
-	color: $color-gray;
+	color: $color-text-lvl-3;
 
 	li {
 		position: relative;
@@ -117,7 +117,7 @@ export default {
 			right: 10px;
 			width: 6px;
 			height: 1px;
-			background-color: $color-gray;
+			background-color: $color-bg-lvl-2;
 		}
 
 		&::before {

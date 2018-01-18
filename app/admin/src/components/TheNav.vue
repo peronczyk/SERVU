@@ -61,7 +61,7 @@ export default {
 	}
 
 	a {
-		color: $color-text;
+		color: $color-text-lvl-2;
 	}
 
 	&__top {

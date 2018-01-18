@@ -65,7 +65,7 @@ export default {
 		border-top: 1px solid $color-lines;
 
 		li {
-			color: $color-text-light;
+			color: $color-text-lvl-2;
 			line-height: 1.4em;
 
 			&:last-child {
@@ -76,7 +76,7 @@ export default {
 			strong {
 				display: block;
 				font-size: 1.1em;
-				color: $color-headers;
+				color: $color-text-lvl-1;
 			}
 		}
 	}
