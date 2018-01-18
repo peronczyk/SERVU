@@ -12,9 +12,9 @@ class FilesController extends ModulesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		include('helpers.php');
+		require 'helpers.php';
 
-		include('FilesActions.php');
+		require 'FilesActions.php';
 		$this->actions = new FilesActions($dependencies);
 	}
 
@@ -34,7 +34,7 @@ class FilesController extends ModulesController {
 			}
 		}
 		$files_list = $this->actions->get_files_list($path);
-		$this->_rest->set('files-list', $files_list);
+		$this->_rest->set('data', $files_list);
 	}
 
 

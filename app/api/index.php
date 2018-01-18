@@ -24,7 +24,7 @@ $rest->set('meta', [
 	'site-name'       => _SITE_NAME,
 	'debug-mode'      => _DEBUG,
 	'request-method'  => $_SERVER['REQUEST_METHOD'],
-	'root-uri'        => APP_ROOT_URI,
+	'root-uri'        => ROOT_URI,
 	'request-uri'     => REQUEST_URI,
 	'load-time'       => round(microtime(true) - APP_START, 4),
 	'queries'         => count($db->get_log()),

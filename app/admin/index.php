@@ -1,12 +1,15 @@
 <?php
 
-$admin_url = APP_ROOT_URL . 'admin/';
-$admin_dir = APP_ROOT_URL . 'base/admin/';
+// URL visible in browser address bar
+$admin_url = ROOT_URL . 'admin/';
+
+// Physical address of admin app
+$admin_dir = ROOT_URL . _APP_DIR . _ADMIN_DIR;
 
 $app_config = [
 	'siteName' => _SITE_NAME,
 	'rootUrl' => $admin_url,
-	'apiBaseUrl' => APP_ROOT_URL . ((_DEFAULT_BASE_MODULE == 'api' ? '' : 'api/')),
+	'apiBaseUrl' => ROOT_URL . ((_DEFAULT_BASE_MODULE == 'api' ? '' : 'api/')),
 ];
 
 $app_modules = $core->get_modules_list();

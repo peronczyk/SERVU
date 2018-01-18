@@ -12,7 +12,7 @@ class ContentController extends ModulesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		include('ContentActions.php');
+		require 'ContentActions.php';
 		$this->actions = new ContentActions($dependencies);
 	}
 
@@ -53,6 +53,6 @@ class ContentController extends ModulesController {
 			$content_list = $this->actions->get_children();
 		}
 
-		$this->_rest->set('content-list', $content_list);
+		$this->_rest->set('data', $content_list);
 	}
 }

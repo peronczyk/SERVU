@@ -29,7 +29,9 @@ $default_config = [
 	'_DEFAULT_BASE_MODULE' => 'api',
 
 	// Directories
-	'_BASE_DIR' => 'base/',
+	'_APP_DIR' => 'app/',
+	'_ADMIN_DIR' => 'admin/',
+	'_API_DIR' => 'api/',
 	'_LIBS_DIR' => 'libs/',
 	'_MODULES_DIR' => 'modules/',
 	'_STORAGE_DIR' => 'storage/',
@@ -82,7 +84,7 @@ class Core {
 		 * PROTOCOL (http or https)
 		 */
 
-		define('APP_PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http');
+		define('PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http');
 
 
 		/**
@@ -95,14 +97,14 @@ class Core {
 		$script_dirname = dirname($_SERVER['SCRIPT_NAME']);
 		if ($script_dirname != '/') $root_uri .= $script_dirname;
 
-		define('APP_ROOT_URI', $root_uri . '/');
+		define('ROOT_URI', $root_uri . '/');
 
 
 		/**
 		 * ROOT URL
 		 */
 
-		define('APP_ROOT_URL', APP_PROTOCOL . '://' . APP_ROOT_URI);
+		define('ROOT_URL', PROTOCOL . '://' . ROOT_URI);
 
 
 		/**
@@ -120,7 +122,7 @@ class Core {
 
 	public function define_autoloader() {
 		spl_autoload_register(function($class) {
-			$class_path = __DIR__ . '/' . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
+			$class_path = __DIR__ . '/' . _APP_DIR . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
 			if (file_exists($class_path)) include_once($class_path);
 		});
 	}
@@ -131,14 +133,14 @@ class Core {
 	 */
 
 	public function get_modules_list() {
-		$directories = scandir(_MODULES_DIR);
+		$directories = scandir(_APP_DIR . _MODULES_DIR);
 		$modules = [];
 		$index = 0;
 
 		foreach($directories as $key => $dir) {
 			if ($dir == '.' || $dir == '..' || $dir == 'default') continue;
 
-			$module_config_file = _MODULES_DIR . $dir . '/module_config.php';
+			$module_config_file = _APP_DIR . _MODULES_DIR . $dir . '/module_config.php';
 
 			if (is_file($module_config_file)) {
 				$modules[$index] = include_once($module_config_file);

@@ -48,7 +48,7 @@ class FilesActions {
 				else {
 					$arr['size'] = filesize($file_path);
 					$arr['path'] = $file_path;
-					$arr['full-path'] = APP_ROOT_URL . $file_path;
+					$arr['full-path'] = ROOT_URL . $file_path;
 					$arr['extension'] = pathinfo($file_name, PATHINFO_EXTENSION);
 				}
 

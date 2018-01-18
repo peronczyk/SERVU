@@ -12,7 +12,7 @@ class UsersController extends ModulesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		include('UsersActions.php');
+		require 'UsersActions.php';
 		$this->actions = new UsersActions($dependencies);
 	}
 
@@ -45,7 +45,7 @@ class UsersController extends ModulesController {
 
 	public function get_list() {
 		$users_list = $this->actions->get_list();
-		$this->_rest->set('users-list', $users_list);
+		$this->_rest->set('data', $users_list);
 	}
 
 

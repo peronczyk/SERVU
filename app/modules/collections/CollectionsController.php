@@ -12,7 +12,7 @@ class CollectionsController extends ModulesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		include('CollectionsActions.php');
+		require 'CollectionsActions.php';
 		$this->actions = new CollectionsActions($dependencies);
 	}
 
@@ -26,7 +26,7 @@ class CollectionsController extends ModulesController {
 		foreach($collections_list as $key => $val) {
 			$collections_list[$key]['fields'] = json_decode($val['fields']);
 		}
-		$this->_rest->set('collections-list', $collections_list);
+		$this->_rest->set('data', $collections_list);
 	}
 
 
