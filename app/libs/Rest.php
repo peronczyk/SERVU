@@ -14,6 +14,30 @@ class Rest {
 	 */
 
 	public function __construct() {
+
+		/**
+		 * Error handler
+		 * Mostly usable for catching all notices
+		 */
+		set_error_handler(function($code, $message, $filename, $line) {
+			$this->store = [
+				'errors' => [[
+					'message'    => $message,
+					'catched-by' => 'Error handler: ' . str_replace('\\', '/', __FILE__),
+					'file'       => str_replace('\\', '/', $filename),
+					'line'       => $line,
+					'code'       => $code,
+				]]
+			];
+			$this->send();
+
+			return true; // Discourages using normal error handler by PHP
+		});
+
+		/**
+		 * Exception handler
+		 * Used to catch all custom errors thrown by `throw new Exception()`
+		 */
 		set_exception_handler(function($exception) {
 			$this->store = [
 				'errors' => [[
@@ -55,6 +79,7 @@ class Rest {
 	public function send() {
 		header('Content-type: application/json');
 		echo json_encode($this->store);
+		exit;
 	}
 
 
@@ -82,9 +107,10 @@ class Rest {
 	public function throw_error($error_id, $file = null, $line = null) {
 		$this->store = [
 			'errors' => [[
+				'id'      => $error_id,
 				'message' => $this->error_list[$error_id] ?: $error_id,
-				'file' => $file,
-				'line' => $line,
+				'file'    => $file,
+				'line'    => $line,
 			]]
 		];
 		$this->send();
