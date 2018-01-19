@@ -104,7 +104,7 @@ class Auth {
 			->all();
 
 		if (!$user) {
-			throw new Exception("User with this email addres does not exists");
+			throw new Exception("User with this email addres does not exist");
 		}
 
 		if (!$this->password_verify($password, $user[0]['password'])) {

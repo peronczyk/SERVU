@@ -18,7 +18,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="(entry, index) in usersList" :key="entry.id">
+						<tr v-for="entry in usersList" :key="entry.id">
 							<td>{{ entry.id }}</td>
 							<td>{{ entry.email }}</td>
 							<td></td>
@@ -30,31 +30,18 @@
 			<div class="Col-4 Col-12@LG">
 				<h3>Add user</h3>
 				<form @submit.prevent="addUser">
-					<label>
-						<input type="email" placeholder="Email address">
-					</label>
-					<label>
-						<input type="checkbox">
-						Send email to this user with registration informations.
-					</label>
+					<form-field type="email" name="email">Email address</form-field>
+					<form-checkbox name="inform" checked>Send email to this user with registration informations.</form-checkbox>
 
 					<button class="Btn" type="submit">Add</button>
 				</form>
 
 				<h3>Change your data</h3>
 				<form @submit.prevent="modifyData">
-					<label>
-						<input type="email" placeholder="Your email address">
-					</label>
-					<label>
-						<input type="password" placeholder="Actual password">
-					</label>
-					<label>
-						<input type="password" placeholder="New password">
-					</label>
-					<label>
-						<input type="password" placeholder="Repeat new password">
-					</label>
+					<form-field type="email" name="email">Your email address</form-field>
+					<form-field type="password" name="password-actual">Actual password</form-field>
+					<form-field type="password" name="password-new">New password</form-field>
+					<form-field type="password" name="password-repeat">Repeat new password</form-field>
 
 					<button class="Btn" type="submit">Change</button>
 				</form>
@@ -69,6 +56,8 @@
 <script>
 
 import axios from 'axios';
+import FormField from '../elements/FormField.vue';
+import FormCheckbox from '../elements/FormCheckbox.vue';
 
 export default {
 	data() {
@@ -89,7 +78,9 @@ export default {
 
 	created() {
 		this.getList();
-	}
+	},
+
+	components: { FormField, FormCheckbox }
 }
 
 </script>

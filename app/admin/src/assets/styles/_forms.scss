@@ -6,6 +6,9 @@ form {
 label {
 	display: block;
 	margin-bottom: $box-margin / 2;
+	line-height: 1.3em;
+	user-select: none;
+	color: $color-text-lvl-3;
 }
 
 input,
@@ -15,13 +18,13 @@ button,
 	height: $inputs-height;
 }
 
-input[type='text'],
-input[type='email'],
-input[type='password'],
+input,
+textarea,
 select {
 	width: 100%;
 	border: none;
 	border-bottom: 1px solid $color-inputs-border;
+	font-size: $base-font-size;
 	color: $color-text-lvl-2;
 	background: none;
 
@@ -66,4 +69,12 @@ button,
 			box-shadow: inset 0 0 0 2px $color-links;
 		}
 	}
+}
+
+
+// Disable default styling for autocompleted inputs
+input:-webkit-autofill {
+	-webkit-box-shadow: inset 0 0 0px 9999px $color-bg-lvl-2;
+	-webkit-text-fill-color: darken($color-text-lvl-2, 20) !important;
+	border-color: $color-inputs-border !important;
 }

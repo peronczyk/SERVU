@@ -1,0 +1,36 @@
+.o-Path {
+	list-style-type: none;
+	margin-bottom: 10px;
+	color: $color-text-lvl-3;
+
+	li {
+		position: relative;
+		display: inline-block;
+		padding: 10px 30px 10px 0;
+		font-size: 14px;
+
+		&:first-child {
+			font-weight: bold;
+		}
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			right: 10px;
+			width: 6px;
+			height: 1px;
+			background-color: $color-white;
+		}
+
+		&::before {
+			top: calc(50% - 2px);
+			transform: rotate(45deg);
+		}
+
+		&::after {
+			top: calc(50% + 2px);
+			transform: rotate(-45deg);
+		}
+	}
+}

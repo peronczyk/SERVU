@@ -23,7 +23,8 @@ table {
 		th {
 			padding-top: $side-paddings * 1.4;
 			padding-bottom: $side-paddings * 1.4;
-			font-size: 12px;
+			font-size: 13px;
+			letter-spacing: .04em;
 		}
 
 		tr:last-child {

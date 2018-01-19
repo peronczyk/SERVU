@@ -2,21 +2,20 @@
 
 	<div class="c-LoginForm">
 
-		<form @submit.prevent="login">
-			<h4>Provide your credentials</h4>
+		<div class="c-LoginForm__wrapper">
+			<form @submit.prevent="login">
+				<h4>Provide your credentials</h4>
 
-			<label>
-				<input type="email" name="email" placeholder="Email" v-model="formValues.email">
-			</label>
-			<label>
-				<input type="password" name="password" placeholder="Password" v-model="formValues.password">
-			</label>
+				<form-field type="email" name="email" ref="email" :required="true">Email</form-field>
+				<form-field type="password" name="password" ref="password" :required="true">Password</form-field>
 
-			<button type="submit" class="u-Width--full">Login</button>
+				<button type="submit" class="u-Width--full">Login</button>
+
+				<p class="u-Error" v-if="loginErrorText">{{ loginErrorText }}</p>
+			</form>
+
 			<a @click.prevent="passwordRecovery">Password recovery</a>
-
-			<p class="u-Error" v-if="loginErrorText">{{ loginErrorText }}</p>
-		</form>
+		</div>
 
 		<a class="c-LoginForm__appname" href="https://github.com/peronczyk/servant" target="_blank">
 			<span>Powered by:</span>
@@ -31,43 +30,61 @@
 
 import axios from 'axios';
 import querystring from 'querystring';
+import FormField from './elements/FormField.vue';
 
 export default {
 	data() {
 		return {
-			formValues: {
-				email: null,
-				password: null,
-			},
+			isFormValid: true,
 			loginErrorText: null
 		}
 	},
 
 	methods: {
 		login() {
-			axios.post(window.appConfig.apiBaseUrl + 'users/login', querystring.stringify(this.formValues))
-				.then(receivedData => {
-					if (receivedData.data.errors) {
-						this.loginErrorText = receivedData.data.errors[0].message;
-					}
-					else if (receivedData.data.status !== true) {
-						this.loginErrorText = 'Login process failed';
-						console.log(receivedData.data);
-					}
-					else {
-						this.$store.commit('changeUserAccessLvl', receivedData.data.meta['access-lvl']);
+			this.isFormValid = true;
 
-						if (receivedData.data.meta['app-version']) {
-							this.$store.commit('setAppVersion', receivedData.data.meta['app-version']);
+			let formData = {};
+
+			for (let refName in this.$refs) {
+				let ref = this.$refs[refName];
+				formData[refName] = ref.fieldValue;
+
+				if (!ref.validate()) {
+					this.isFormValid = false;
+				}
+			}
+
+			if (this.isFormValid) {
+				axios.post(window.appConfig.apiBaseUrl + 'users/login', querystring.stringify(formData))
+					.then(receivedData => {
+						if (receivedData.data.errors) {
+							this.loginErrorText = receivedData.data.errors[0].message;
 						}
-					}
-				});
+						else if (receivedData.data.status !== true) {
+							this.loginErrorText = 'Login process failed';
+							console.log(receivedData.data);
+						}
+						else {
+							this.$store.commit('changeUserAccessLvl', receivedData.data.meta['access-lvl']);
+
+							if (receivedData.data.meta['app-version']) {
+								this.$store.commit('setAppVersion', receivedData.data.meta['app-version']);
+							}
+						}
+					});
+			}
+			else {
+				this.loginErrorText = 'Please fill in both login fields';
+			}
 		},
 
 		passwordRecovery() {
 			this.$store.commit('openToast', 'This function is not available in this application version');
-		}
-	}
+		},
+	},
+
+	components: { FormField }
 }
 
 </script>
@@ -84,7 +101,8 @@ export default {
 	height: 100%;
 	padding: $gutter * 3;
 
-	form {
+	&__wrapper {
+		width: 100%;
 		max-width: 300px;
 	}
 

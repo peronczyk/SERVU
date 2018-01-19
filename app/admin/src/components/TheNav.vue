@@ -61,7 +61,7 @@ export default {
 	}
 
 	a {
-		color: $color-text-lvl-2;
+		color: $color-text-lvl-3;
 	}
 
 	&__top {
@@ -69,7 +69,7 @@ export default {
 		align-items: center;
 		padding-left: $gutter;
 		padding-right: $gutter;
-		height: 10vh;
+		height: 14vh;
 		min-height: 40px;
 
 		h3 {

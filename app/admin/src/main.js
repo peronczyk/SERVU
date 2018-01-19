@@ -10,6 +10,15 @@ import router from './router.js';
 
 
 /**
+ * Global components
+ */
+
+import Icon from './components/elements/Icon.vue';
+
+Vue.component('Icon', Icon);
+
+
+/**
  * Initiate VUE instance
  */
 

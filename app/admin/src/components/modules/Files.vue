@@ -28,7 +28,7 @@
 								<a @click.prevent="getList(previousParentId)"><strong>Go up</strong></a>
 							</td>
 						</tr>
-						<tr v-for="(file, index) in filesList" :key="file.id">
+						<tr v-for="file in filesList" :key="file.id">
 							<td v-if="file.type == 'directory'">
 								<a @click.prevent="getList(file.name)">{{ file.name }}</a>
 							</td>
@@ -41,13 +41,11 @@
 
 			<div class="Col-4">
 				<h3>Upload files</h3>
-				<file-upload />
+				<form-file-upload />
 
 				<h3>Create directory</h3>
 				<form>
-					<label>
-						<input type="text" placeholder="Directory name">
-					</label>
+					<form-field name="directory-name">Directory name</form-field>
 
 					<button class="Btn">Create</button>
 				</form>
@@ -61,7 +59,8 @@
 <script>
 
 import axios from 'axios';
-import FileUpload from '../elements/FileUpload.vue';
+import FormField from '../elements/FormField.vue';
+import FormFileUpload from '../elements/FormFileUpload.vue';
 
 export default {
 	data() {
@@ -85,7 +84,7 @@ export default {
 		this.getList();
 	},
 
-	components: { FileUpload }
+	components: { FormFileUpload, FormField }
 }
 
 </script>
@@ -95,41 +94,6 @@ export default {
 
 @import '../../assets/styles/_variables';
 
-.o-Path {
-	list-style-type: none;
-	margin-bottom: 10px;
-	color: $color-text-lvl-3;
 
-	li {
-		position: relative;
-		display: inline-block;
-		padding: 10px 30px 10px 0;
-		font-size: 14px;
-
-		&:first-child {
-			font-weight: bold;
-		}
-
-		&::before,
-		&::after {
-			content: '';
-			position: absolute;
-			right: 10px;
-			width: 6px;
-			height: 1px;
-			background-color: $color-bg-lvl-2;
-		}
-
-		&::before {
-			top: calc(50% - 2px);
-			transform: rotate(45deg);
-		}
-
-		&::after {
-			top: calc(50% + 2px);
-			transform: rotate(-45deg);
-		}
-	}
-}
 
 </style>
