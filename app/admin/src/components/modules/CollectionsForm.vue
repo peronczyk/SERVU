@@ -1,17 +1,11 @@
 <template>
 
 	<div class="c-CollectionsForm">
-		<h3>Create collection</h3>
+		<h1>Create collection</h1>
 
 		<form @submit.prevent="sendForm">
-			<label>
-				Collection name:
-				<input type="text" placeholder="Enter some name" v-model="collectionName" ref="collectionName">
-			</label>
-			<label>
-				Collection ID:
-				<input type="text" placeholder="collection-id" v-model="collectionId">
-			</label>
+			<form-field ref="collectionName">Collection name</form-field>
+			<form-field ref="collectionId">Collection ID</form-field>
 
 			<h4>Fields list</h4>
 			<a class="Btn Btn--hollow" @click.prevent="addField">Add field</a>
@@ -55,6 +49,9 @@
 
 <script>
 
+import FormField from '../elements/FormField.vue';
+import FormSelect from '../elements/FormSelect.vue';
+
 export default {
 	data() {
 		return {
@@ -93,7 +90,9 @@ export default {
 		removeField(fieldNumber) {
 			this.addedFields.splice(fieldNumber, 1);
 		},
-	}
+	},
+
+	components: { FormField, FormSelect }
 }
 
 </script>

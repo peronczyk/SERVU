@@ -126,7 +126,7 @@ export default {
 		transition: .2s;
 
 		.is-Dirty & {
-			transform: translateY(-$inputs-height / 1.3);
+			transform: translateY(-.6 * $inputs-height);
 			font-size: .85em;
 			color: $color-text-lvl-4;
 			cursor: default;

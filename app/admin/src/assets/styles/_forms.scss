@@ -27,6 +27,7 @@ select {
 	font-size: $base-font-size;
 	color: $color-text-lvl-2;
 	background: none;
+	transition: .2s;
 
 	&:focus {
 		border-bottom-color: $color-links;
@@ -45,9 +46,14 @@ button,
 	background-color: $color-links;
 	cursor: pointer;
 	transition: .2s;
+	will-change: color, background-color, transform;
 
 	&:hover {
 		background-color: $color-links-hover;
+	}
+
+	&:active {
+		transform: scale(.9);
 	}
 
 	&--primary {

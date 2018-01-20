@@ -9,6 +9,12 @@
 			</div>
 		</header>
 
+
+		<ul class="o-Path">
+			<li>Start</li>
+			<li v-for="(index, chunk) in pathChunks" :key="index">{{ chunk }}</li>
+		</ul>
+
 		<table>
 			<thead>
 				<tr>
@@ -27,7 +33,7 @@
 					<td v-if="entry.children > 0"><a @click.prevent="getList(entry.id)">{{ entry.name }}</a></td>
 					<td v-else>{{ entry.name }}</td>
 					<td>{{ entry.children }}</td>
-					<td>edit / delete</td>
+					<td><a>edit</a> / <a>delete</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -55,6 +61,9 @@ export default {
 
 			// Stores received content list for actualParentId
 			contentList: [],
+
+			// Breadcrumb address elements
+			pathChunks: [],
 		}
 	},
 
@@ -65,7 +74,7 @@ export default {
 
 			axios.get(this.nodeUrl + 'list?parent-id=' + this.actualParentId)
 				.then(result => {
-					this.contentList = result.data['content-list'];
+					this.contentList = result.data.data;
 				});
 		},
 	},

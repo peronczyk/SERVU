@@ -23,7 +23,7 @@
 					<td>{{ index + 1 }}.</td>
 					<td>{{ entry.name }}</td>
 					<td>{{ entry.fields.length }}</td>
-					<td>edit / delete</td>
+					<td><a>edit</a> / <a>delete</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -49,7 +49,7 @@ export default {
 		getList() {
 			axios.get(this.nodeUrl + 'list')
 				.then(result => {
-					this.collectionsList = result.data['collections-list'];
+					this.collectionsList = result.data.data;
 				});
 		},
 

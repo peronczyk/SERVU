@@ -8,8 +8,6 @@
 		<div class="Grid Grid--gutter">
 
 			<div class="Col-8">
-				<h3>Files list</h3>
-
 				<ul class="o-Path">
 					<li>Uploads</li>
 					<li v-for="(index, chunk) in pathChunks" :key="index">{{ chunk }}</li>
@@ -33,7 +31,7 @@
 								<a @click.prevent="getList(file.name)">{{ file.name }}</a>
 							</td>
 							<td v-else>{{ file.name }}</td>
-							<td>delete</td>
+							<td><a>delete</a></td>
 						</tr>
 					</tbody>
 				</table>
@@ -75,7 +73,7 @@ export default {
 		getList() {
 			axios.get(this.nodeUrl + 'list')
 				.then(result => {
-					this.filesList = result.data['files-list'];
+					this.filesList = result.data.data;
 				});
 		},
 	},

@@ -3,12 +3,15 @@
 	<dialog class="c-Modal" :class="{'is-Open': isOpen}" role="modal" aria-hidden="true">
 		<div class="c-Modal__window">
 			<a class="c-Modal__close" @click.prevent="closeModal">close</a>
+
 			<div class="c-Modal__content">
 				<keep-alive>
 					<component :is="content" />
 				</keep-alive>
 			</div>
 		</div>
+
+		<div class="c-Modal__bg" @click.prevent="closeModal"></div>
 	</dialog>
 
 </template>
@@ -56,8 +59,8 @@ export default {
 	width: 100%;
 	height: 100%;
 	border: none;
+	background: none;
 	overflow: auto;
-	background-color: rgba($color-bg-lvl-1, .95);
 	text-align: center;
 	opacity: 0;
 	transition: .3s;
@@ -81,7 +84,7 @@ export default {
 		max-width: 800px;
 		background-color: $color-bg-lvl-2;
 		opacity: 0;
-		transform: scale(.6);
+		transform: scale(.8);
 		transition: .3s;
 	}
 
@@ -121,9 +124,19 @@ export default {
 	}
 
 	&__content {
-		padding: 30px;
+		padding: $gutter #{$gutter * 1.5};
 		overflow: hidden;
 		text-align: left;
+	}
+
+
+	&__bg {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba($color-base-1, .8);
 	}
 
 	&.is-Open {
