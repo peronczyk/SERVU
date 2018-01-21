@@ -43,7 +43,7 @@
 
 				<h3>Create directory</h3>
 				<form>
-					<form-field name="directory-name">Directory name</form-field>
+					<form-field ref="directory-name">Directory name</form-field>
 
 					<button class="Btn">Create</button>
 				</form>

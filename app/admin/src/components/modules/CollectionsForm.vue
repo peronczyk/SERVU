@@ -20,12 +20,12 @@
 				<tbody>
 					<tr v-for="(field, fieldNumber) in addedFields" :key="fieldNumber">
 						<td>
-							<select v-model="addedFields[fieldNumber].typeId">
+							<form-select :ref="addedFields[fieldNumber].typeId" label="Select field name">
 								<option v-for="(fieldType, index) in fieldTypes" :key="index" :value="fieldType.id">{{ fieldType.name }}</option>
-							</select>
+							</form-select>
 						</td>
 						<td>
-							<input type="text" placeholder="Fill in field name" v-model="addedFields[fieldNumber].name">
+							<form-field :ref="addedFields[fieldNumber].name">Fill in field name</form-field>
 						</td>
 						<td class="u-Text--center">
 							<a @click.prevent="removeField(fieldNumber)">X</a>

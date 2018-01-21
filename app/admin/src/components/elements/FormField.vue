@@ -1,7 +1,7 @@
 <template>
 
 	<label class="c-FormField" :class="{'is-Dirty': isDirty, 'is-Error': !isValid}">
-		<div class="c-FormField__text">
+		<div class="c-FormField__label">
 			<slot />
 			<span class="u-Required" v-if="required"></span>
 		</div>
@@ -115,7 +115,7 @@ export default {
 	padding-top: 20px;
 
 
-	&__text {
+	&__label {
 		position: absolute;
 		top: 20px;
 		left: 0;

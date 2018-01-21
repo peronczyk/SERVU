@@ -21,7 +21,10 @@
 						<tr v-for="entry in usersList" :key="entry.id">
 							<td>{{ entry.id }}</td>
 							<td>{{ entry.email }}</td>
-							<td></td>
+							<td>
+								<a><icon size="16" glyph="edit" /> edit</a> /
+								<a><icon size="16" glyph="trash" /> delete</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -71,7 +74,7 @@ export default {
 		getList() {
 			axios.get(this.nodeUrl + 'list')
 				.then(result => {
-					this.usersList = result.data['users-list'];
+					this.usersList = result.data['data'];
 				});
 		},
 	},

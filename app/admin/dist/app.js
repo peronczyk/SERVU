@@ -15638,18 +15638,33 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 exports.default = {
 	props: {
-		options: {
-			type: Object,
+		label: {
+			type: String,
 			required: true
 		}
 	},
 
 	data: function data() {
-		return {};
+		return {
+			fieldValue: '',
+			isDirty: false,
+			isValid: true
+		};
 	}
 };
 
@@ -16002,7 +16017,7 @@ exports.default = {
 			var _this = this;
 
 			_axios2.default.get(this.nodeUrl + 'list').then(function (result) {
-				_this.usersList = result.data['users-list'];
+				_this.usersList = result.data['data'];
 			});
 		}
 	},
@@ -16014,6 +16029,9 @@ exports.default = {
 
 	components: { FormField: _FormField2.default, FormCheckbox: _FormCheckbox2.default }
 }; //
+//
+//
+//
 //
 //
 //
@@ -18797,7 +18815,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n.c-FormField {\n  position: relative;\n  margin-bottom: 20px;\n  padding-top: 20px;\n}\n.c-FormField__text {\n    position: absolute;\n    top: 20px;\n    left: 0;\n    display: flex;\n    align-items: center;\n    height: 40px;\n    cursor: text;\n    transition: .2s;\n}\n.is-Dirty .c-FormField__text {\n      transform: translateY(-24px);\n      font-size: .85em;\n      color: #527381;\n      cursor: default;\n}\n.c-FormField__error {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n    cursor: help;\n}\n.c-FormField__error .Icon {\n      color: #c64113;\n}\n", ""]);
+exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n.c-FormField {\n  position: relative;\n  margin-bottom: 20px;\n  padding-top: 20px;\n}\n.c-FormField__label {\n    position: absolute;\n    top: 20px;\n    left: 0;\n    display: flex;\n    align-items: center;\n    height: 40px;\n    cursor: text;\n    transition: .2s;\n}\n.is-Dirty .c-FormField__label {\n      transform: translateY(-24px);\n      font-size: .85em;\n      color: #527381;\n      cursor: default;\n}\n.c-FormField__error {\n    position: absolute;\n    top: 10px;\n    right: 10px;\n    cursor: help;\n}\n.c-FormField__error .Icon {\n      color: #c64113;\n}\n", ""]);
 
 // exports
 
@@ -18820,7 +18838,7 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "c-FormField__text" },
+        { staticClass: "c-FormField__label" },
         [
           _vm._t("default"),
           _vm._v(" "),
@@ -20746,6 +20764,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_FormSelect_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_FormSelect_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2671b8c5_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_FormSelect_vue__ = __webpack_require__(107);
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(134)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 
@@ -20755,7 +20777,7 @@ var normalizeComponent = __webpack_require__(0)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -20799,12 +20821,50 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "select",
-    _vm._l(_vm.options, function(option, index) {
-      return _c("option", { key: index, domProps: { value: option.id } }, [
-        _vm._v(_vm._s(option.name))
-      ])
-    })
+    "label",
+    {
+      staticClass: "c-FormSelect",
+      class: { "is-Dirty": _vm.isDirty, "is-Error": !_vm.isValid }
+    },
+    [
+      _c("div", { staticClass: "c-FormSelect__label" }, [
+        _vm._v("\n\t\t" + _vm._s(_vm.label) + "\n\t")
+      ]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.fieldValue,
+              expression: "fieldValue"
+            }
+          ],
+          attrs: { "aria-invalid": !_vm.isValid },
+          on: {
+            focus: _vm.onFocus,
+            blur: _vm.onBlur,
+            change: function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.fieldValue = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            }
+          }
+        },
+        [_vm._t("default")],
+        2
+      )
+    ]
   )
 }
 var staticRenderFns = []
@@ -20871,77 +20931,42 @@ var render = function() {
             [
               _vm._l(_vm.addedFields, function(field, fieldNumber) {
                 return _c("tr", { key: fieldNumber }, [
-                  _c("td", [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.addedFields[fieldNumber].typeId,
-                            expression: "addedFields[fieldNumber].typeId"
-                          }
-                        ],
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.addedFields[fieldNumber],
-                              "typeId",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
-                        }
-                      },
-                      _vm._l(_vm.fieldTypes, function(fieldType, index) {
-                        return _c(
-                          "option",
-                          { key: index, domProps: { value: fieldType.id } },
-                          [_vm._v(_vm._s(fieldType.name))]
-                        )
-                      })
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "form-select",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.addedFields[fieldNumber].name,
-                          expression: "addedFields[fieldNumber].name"
-                        }
-                      ],
-                      attrs: {
-                        type: "text",
-                        placeholder: "Fill in field name"
-                      },
-                      domProps: { value: _vm.addedFields[fieldNumber].name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.addedFields[fieldNumber],
-                            "name",
-                            $event.target.value
+                          ref: _vm.addedFields[fieldNumber].typeId,
+                          refInFor: true,
+                          attrs: { label: "Select field name" }
+                        },
+                        _vm._l(_vm.fieldTypes, function(fieldType, index) {
+                          return _c(
+                            "option",
+                            { key: index, domProps: { value: fieldType.id } },
+                            [_vm._v(_vm._s(fieldType.name))]
                           )
-                        }
-                      }
-                    })
-                  ]),
+                        })
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "form-field",
+                        {
+                          ref: _vm.addedFields[fieldNumber].name,
+                          refInFor: true
+                        },
+                        [_vm._v("Fill in field name")]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("td", { staticClass: "u-Text--center" }, [
                     _c(
@@ -21642,7 +21667,7 @@ var render = function() {
           _c(
             "form",
             [
-              _c("form-field", { attrs: { name: "directory-name" } }, [
+              _c("form-field", { ref: "directory-name" }, [
                 _vm._v("Directory name")
               ]),
               _vm._v(" "),
@@ -22117,7 +22142,25 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(entry.email))]),
                 _vm._v(" "),
-                _c("td")
+                _c("td", [
+                  _c(
+                    "a",
+                    [
+                      _c("icon", { attrs: { size: "16", glyph: "edit" } }),
+                      _vm._v(" edit")
+                    ],
+                    1
+                  ),
+                  _vm._v(" /\n\t\t\t\t\t\t\t"),
+                  _c(
+                    "a",
+                    [
+                      _c("icon", { attrs: { size: "16", glyph: "trash" } }),
+                      _vm._v(" delete")
+                    ],
+                    1
+                  )
+                ])
               ])
             })
           )
@@ -22238,7 +22281,10 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_template_compiler_index_id_data_v_424098c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Icon_vue__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Icon_vue__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Icon_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Icon_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Icon_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Icon_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_424098c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Icon_vue__ = __webpack_require__(133);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
@@ -22246,7 +22292,8 @@ function injectStyle (ssrContext) {
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = null
+
+
 /* template */
 
 /* template functional */
@@ -22258,8 +22305,8 @@ var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __vue_script__,
-  __WEBPACK_IMPORTED_MODULE_0__node_modules_vue_loader_lib_template_compiler_index_id_data_v_424098c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Icon_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_Icon_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_424098c4_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Icon_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -22321,7 +22368,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n.e-Icon {\n  display: inline-block;\n}\n", ""]);
+exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n.e-Icon {\n  display: inline-block;\n  vertical-align: middle;\n  background-color: rgba(255, 255, 255, 0.1);\n}\n.e-Icon--16 {\n    width: 16px;\n    height: 16px;\n}\n.e-Icon--24 {\n    width: 24px;\n    height: 24px;\n}\n.e-Icon--48 {\n    width: 48px;\n    height: 48px;\n}\n", ""]);
 
 // exports
 
@@ -22335,7 +22382,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "e-Icon" })
+  return _c(
+    "div",
+    _vm._b(
+      { staticClass: "e-Icon" },
+      "div",
+      { class: "e-Icon--" + _vm.size },
+      false
+    )
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -22347,6 +22402,79 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-424098c4", esExports)
   }
 }
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(135);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("428be21e", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2671b8c5\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormSelect.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2671b8c5\",\"scoped\":false,\"hasInlineConfig\":false}!../../../node_modules/sass-loader/lib/loader.js!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormSelect.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 135 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+	props: {
+		size: {
+			type: String,
+			default: '24'
+		},
+
+		glyph: {
+			type: String,
+			required: true
+		}
+	}
+};
 
 /***/ })
 /******/ ]);

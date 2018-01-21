@@ -1,8 +1,19 @@
 <template>
 
-	<select>
-		<option v-for="(option, index) in options" :key="index" :value="option.id">{{ option.name }}</option>
-	</select>
+	<label class="c-FormSelect" :class="{'is-Dirty': isDirty, 'is-Error': !isValid}">
+		<div class="c-FormSelect__label">
+			{{ label }}
+		</div>
+
+		<select
+		 v-model="fieldValue"
+		 :aria-invalid="!isValid"
+		 @focus="onFocus"
+		 @blur="onBlur"
+		>
+			<slot />
+		</select>
+	</label>
 
 </template>
 
@@ -11,16 +22,30 @@
 
 export default {
 	props: {
-		options: {
-			type: Object,
+		label: {
+			type: String,
 			required: true,
 		}
 	},
 
 	data() {
 		return {
+			fieldValue: '',
+			isDirty: false,
+			isValid: true,
 		}
 	}
 }
 
 </script>
+
+
+<style lang="scss">
+
+@import '../../assets/styles/_variables';
+
+.c-FormSelect {
+
+}
+
+</style>
