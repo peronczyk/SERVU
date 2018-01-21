@@ -9,7 +9,8 @@
 			<ul>
 				<li v-for="route in $router.options.routes" :key="route.name">
 					<router-link :to="route.path">
-						{{route.name}}
+						<icon size="24" :glyph="route.icon" />
+						{{ route.name }}
 					</router-link>
 				</li>
 			</ul>
@@ -62,6 +63,10 @@ export default {
 
 	a {
 		color: $color-text-lvl-3;
+
+		.e-Icon {
+			margin-right: 10px;
+		}
 	}
 
 	&__top {

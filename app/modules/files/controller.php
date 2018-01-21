@@ -14,7 +14,7 @@ class FilesController extends ModulesController {
 
 		require 'helpers.php';
 
-		require 'FilesActions.php';
+		require 'actions.php';
 		$this->actions = new FilesActions($dependencies);
 	}
 

@@ -140,7 +140,7 @@ class Core {
 		foreach($directories as $key => $dir) {
 			if ($dir == '.' || $dir == '..' || $dir == 'default') continue;
 
-			$module_config_file = _APP_DIR . _MODULES_DIR . $dir . '/module_config.php';
+			$module_config_file = _APP_DIR . _MODULES_DIR . $dir . '/_config.php';
 
 			if (is_file($module_config_file)) {
 				$modules[$index] = include_once($module_config_file);

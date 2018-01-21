@@ -12,7 +12,7 @@ class CollectionsController extends ModulesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		require 'CollectionsActions.php';
+		require 'actions.php';
 		$this->actions = new CollectionsActions($dependencies);
 	}
 

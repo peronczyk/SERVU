@@ -12,7 +12,7 @@ class ContentController extends ModulesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		require 'ContentActions.php';
+		require 'actions.php';
 		$this->actions = new ContentActions($dependencies);
 	}
 

@@ -12,7 +12,7 @@ class UsersController extends ModulesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		require 'UsersActions.php';
+		require 'actions.php';
 		$this->actions = new UsersActions($dependencies);
 	}
 

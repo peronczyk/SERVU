@@ -89,7 +89,7 @@ class Router {
 			$this->shift_request();
 		}
 
-		$controller_file = $this->options['controllers_dir'] . $controller_dir . '/' . $controller_name . 'Controller.php';
+		$controller_file = $this->options['controllers_dir'] . $controller_dir . '/controller.php';
 		if (file_exists($controller_file)) {
 			include_once($controller_file);
 		}

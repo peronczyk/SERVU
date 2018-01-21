@@ -15078,6 +15078,7 @@ exports.default = {
 //
 //
 //
+//
 
 /***/ }),
 /* 20 */
@@ -18292,7 +18293,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n.c-Nav {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  height: 100%;\n}\n.c-Nav > * {\n    width: 100%;\n}\n.c-Nav a {\n    color: #86a5b3;\n}\n.c-Nav__top {\n    display: flex;\n    align-items: center;\n    padding-left: 2vw;\n    padding-right: 2vw;\n    height: 14vh;\n    min-height: 40px;\n}\n.c-Nav__top h3 {\n      margin: 0;\n}\n.c-Nav__links ul {\n    list-style-type: none;\n}\n.c-Nav__links a {\n    position: relative;\n    display: flex;\n    align-items: center;\n    padding-left: 2vw;\n    padding-right: 2vw;\n    height: 8vh;\n    font-size: 15px;\n}\n.c-Nav__links a::after {\n      content: '';\n      position: absolute;\n      top: 0;\n      bottom: 0;\n      right: 0;\n      width: 2px;\n      background-color: #0095ff;\n      opacity: 0;\n      transform: scaleY(0);\n      transition: .2s;\n}\n.c-Nav__links a:hover::after, .c-Nav__links a.router-link-exact-active::after {\n      opacity: 1;\n      transform: none;\n}\n.c-Nav__bottom {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    margin-top: auto;\n    height: 7vh;\n    min-height: 40px;\n    border-top: 1px solid rgba(202, 204, 227, 0.08);\n}\n.c-Nav__bottom a {\n      display: inline-block;\n      padding: 10px;\n      font-size: 12px;\n      font-weight: bold;\n      text-transform: uppercase;\n      transition: .2s;\n}\n.c-Nav__bottom a:hover {\n        color: #33aaff;\n}\n", ""]);
+exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n.c-Nav {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  height: 100%;\n}\n.c-Nav > * {\n    width: 100%;\n}\n.c-Nav a {\n    color: #86a5b3;\n}\n.c-Nav a .e-Icon {\n      margin-right: 10px;\n}\n.c-Nav__top {\n    display: flex;\n    align-items: center;\n    padding-left: 2vw;\n    padding-right: 2vw;\n    height: 14vh;\n    min-height: 40px;\n}\n.c-Nav__top h3 {\n      margin: 0;\n}\n.c-Nav__links ul {\n    list-style-type: none;\n}\n.c-Nav__links a {\n    position: relative;\n    display: flex;\n    align-items: center;\n    padding-left: 2vw;\n    padding-right: 2vw;\n    height: 8vh;\n    font-size: 15px;\n}\n.c-Nav__links a::after {\n      content: '';\n      position: absolute;\n      top: 0;\n      bottom: 0;\n      right: 0;\n      width: 2px;\n      background-color: #0095ff;\n      opacity: 0;\n      transform: scaleY(0);\n      transition: .2s;\n}\n.c-Nav__links a:hover::after, .c-Nav__links a.router-link-exact-active::after {\n      opacity: 1;\n      transform: none;\n}\n.c-Nav__bottom {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    margin-top: auto;\n    height: 7vh;\n    min-height: 40px;\n    border-top: 1px solid rgba(202, 204, 227, 0.08);\n}\n.c-Nav__bottom a {\n      display: inline-block;\n      padding: 10px;\n      font-size: 12px;\n      font-weight: bold;\n      text-transform: uppercase;\n      transition: .2s;\n}\n.c-Nav__bottom a:hover {\n        color: #33aaff;\n}\n", ""]);
 
 // exports
 
@@ -18317,9 +18318,15 @@ var render = function() {
             "li",
             { key: route.name },
             [
-              _c("router-link", { attrs: { to: route.path } }, [
-                _vm._v("\n\t\t\t\t\t" + _vm._s(route.name) + "\n\t\t\t\t")
-              ])
+              _c(
+                "router-link",
+                { attrs: { to: route.path } },
+                [
+                  _c("icon", { attrs: { size: "24", glyph: route.icon } }),
+                  _vm._v("\n\t\t\t\t\t" + _vm._s(route.name) + "\n\t\t\t\t")
+                ],
+                1
+              )
             ],
             1
           )
