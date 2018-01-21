@@ -34,6 +34,12 @@ select {
 	}
 }
 
+select {
+	option {
+		background-color: $color-bg-lvl-3;
+	}
+}
+
 button,
 .Btn {
 	display: inline-flex;

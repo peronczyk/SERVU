@@ -10,6 +10,7 @@
 		 :aria-invalid="!isValid"
 		 @focus="onFocus"
 		 @blur="onBlur"
+		 @change="onChange"
 		>
 			<slot />
 		</select>
@@ -34,6 +35,29 @@ export default {
 			isDirty: false,
 			isValid: true,
 		}
+	},
+
+	methods: {
+		validate() {
+			console.log('Validate');
+		},
+
+		onFocus() {
+			this.isValid = true;
+		},
+
+		onChange() {
+			this.isDirty = true;
+		},
+
+		onBlur() {
+			if (this.fieldValue.length < 1) {
+				this.isDirty = false;
+			}
+			else {
+				this.validate();
+			}
+		}
 	}
 }
 
@@ -45,7 +69,28 @@ export default {
 @import '../../assets/styles/_variables';
 
 .c-FormSelect {
+	position: relative;
+	margin-bottom: 20px;
+	padding-top: 20px;
 
+	&__label {
+		position: absolute;
+		top: 20px;
+		left: 0;
+		z-index: -1;
+		display: flex;
+		align-items: center;
+		height: $inputs-height;
+		cursor: text;
+		transition: .2s;
+
+		.is-Dirty & {
+			transform: translateY(-.6 * $inputs-height);
+			font-size: .85em;
+			color: $color-text-lvl-4;
+			cursor: default;
+		}
+	}
 }
 
 </style>

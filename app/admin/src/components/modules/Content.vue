@@ -5,7 +5,7 @@
 			<h1>Content</h1>
 
 			<div class="o-Header__buttons">
-				<a class="Btn">Add content</a>
+				<a class="Btn" @click.prevent="openForm">Add content</a>
 			</div>
 		</header>
 
@@ -46,6 +46,7 @@
 <script>
 
 import axios from 'axios';
+import ContentForm from './ContentForm.vue';
 
 export default {
 	data() {
@@ -77,6 +78,10 @@ export default {
 					this.contentList = result.data.data;
 				});
 		},
+
+		openForm() {
+			this.$store.commit('openModal', ContentForm);
+		}
 	},
 
 	created() {

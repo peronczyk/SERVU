@@ -7,7 +7,7 @@
 		</div>
 
 		<span class="c-FormField__error" v-if="!isValid" title="This field is required - please fill it">
-			<icon glyph="error" />
+			<icon size="16" glyph="error" />
 		</span>
 
 		<textarea
@@ -86,12 +86,12 @@ export default {
 			return this.isValid;
 		},
 
-		onFocus(event) {
+		onFocus() {
 			this.isValid = true;
 			this.isDirty = true;
 		},
 
-		onBlur(event) {
+		onBlur() {
 			if (this.fieldValue.length < 1) {
 				this.isDirty = false;
 			}

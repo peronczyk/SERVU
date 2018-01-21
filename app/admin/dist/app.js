@@ -15316,11 +15316,11 @@ exports.default = {
 
 			return this.isValid;
 		},
-		onFocus: function onFocus(event) {
+		onFocus: function onFocus() {
 			this.isValid = true;
 			this.isDirty = true;
 		},
-		onBlur: function onBlur(event) {
+		onBlur: function onBlur() {
 			if (this.fieldValue.length < 1) {
 				this.isDirty = false;
 			} else {
@@ -15650,6 +15650,7 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
 
 
 exports.default = {
@@ -15666,6 +15667,26 @@ exports.default = {
 			isDirty: false,
 			isValid: true
 		};
+	},
+
+
+	methods: {
+		validate: function validate() {
+			console.log('Validate');
+		},
+		onFocus: function onFocus() {
+			this.isValid = true;
+		},
+		onChange: function onChange() {
+			this.isDirty = true;
+		},
+		onBlur: function onBlur() {
+			if (this.fieldValue.length < 1) {
+				this.isDirty = false;
+			} else {
+				this.validate();
+			}
+		}
 	}
 };
 
@@ -15684,7 +15705,58 @@ var _axios = __webpack_require__(4);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _ContentForm = __webpack_require__(137);
+
+var _ContentForm2 = _interopRequireDefault(_ContentForm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 exports.default = {
 	data: function data() {
@@ -15717,57 +15789,16 @@ exports.default = {
 			_axios2.default.get(this.nodeUrl + 'list?parent-id=' + this.actualParentId).then(function (result) {
 				_this.contentList = result.data.data;
 			});
+		},
+		openForm: function openForm() {
+			this.$store.commit('openModal', _ContentForm2.default);
 		}
 	},
 
 	created: function created() {
 		this.getList();
 	}
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 /* 29 */
@@ -16250,7 +16281,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n@keyframes pageLeave {\n  0% {\n    transform: none;\n    opacity: 1; }\n  100% {\n    transform: scale(0.95);\n    opacity: 0; } }\n\n@keyframes pageEnter {\n  0% {\n    transform: scale(0.98);\n    opacity: 0; }\n  100% {\n    transform: none;\n    opacity: 1; } }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  outline: none; }\n\nhtml, body {\n  height: 100%; }\n\nbody {\n  background-color: #1a1a1b;\n  font-family: 'Roboto', sans-serif;\n  font-size: 15px;\n  line-height: 1em;\n  color: #e4ebee; }\n\na {\n  cursor: pointer;\n  color: #0095ff;\n  text-decoration: none; }\n\nhr {\n  margin: 20px 0;\n  border: none;\n  border-top: 3px solid rgba(202, 204, 227, 0.08); }\n\ndialog {\n  border: none;\n  color: inherit; }\n\n/* ---------------------------------------------------------------------------------\n * Scrollbar\n */\n::-webkit-scrollbar {\n  width: 10px;\n  height: 10px; }\n  ::-webkit-scrollbar-track {\n    background-color: #161617; }\n  ::-webkit-scrollbar-thumb {\n    background-color: #86a5b3; }\n\n.Grid {\n  display: flex;\n  flex: 0 1 auto;\n  flex-direction: row;\n  flex-wrap: wrap; }\n  .Grid--gutter {\n    margin-left: -2vw;\n    margin-right: -2vw; }\n    .Grid--gutter [class*='Col-'] {\n      padding-left: 2vw;\n      padding-right: 2vw; }\n\n.Col-1 {\n  width: 8.33333%;\n  flex-basis: 8.33333%; }\n\n.Col-2 {\n  width: 16.66667%;\n  flex-basis: 16.66667%; }\n\n.Col-3 {\n  width: 25%;\n  flex-basis: 25%; }\n\n.Col-4 {\n  width: 33.33333%;\n  flex-basis: 33.33333%; }\n\n.Col-5 {\n  width: 41.66667%;\n  flex-basis: 41.66667%; }\n\n.Col-6 {\n  width: 50%;\n  flex-basis: 50%; }\n\n.Col-7 {\n  width: 58.33333%;\n  flex-basis: 58.33333%; }\n\n.Col-8 {\n  width: 66.66667%;\n  flex-basis: 66.66667%; }\n\n.Col-9 {\n  width: 75%;\n  flex-basis: 75%; }\n\n.Col-10 {\n  width: 83.33333%;\n  flex-basis: 83.33333%; }\n\n.Col-11 {\n  width: 91.66667%;\n  flex-basis: 91.66667%; }\n\n.Col-12 {\n  width: 100%;\n  flex-basis: 100%; }\n\n.Col-hide {\n  display: none; }\n\n@media (max-width: 1520px) {\n  .Col-1\\@UL {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@UL {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@UL {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@UL {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@UL {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@UL {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@UL {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@UL {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@UL {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@UL {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@UL {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@UL {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@UL {\n    display: none; } }\n\n@media (max-width: 1280px) {\n  .Col-1\\@XL {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@XL {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@XL {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@XL {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@XL {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@XL {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@XL {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@XL {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@XL {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@XL {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@XL {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@XL {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@XL {\n    display: none; } }\n\n@media (max-width: 980px) {\n  .Col-1\\@LG {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@LG {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@LG {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@LG {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@LG {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@LG {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@LG {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@LG {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@LG {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@LG {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@LG {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@LG {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@LG {\n    display: none; } }\n\n@media (max-width: 800px) {\n  .Col-1\\@MD {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@MD {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@MD {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@MD {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@MD {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@MD {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@MD {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@MD {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@MD {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@MD {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@MD {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@MD {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@MD {\n    display: none; } }\n\n@media (max-width: 640px) {\n  .Col-1\\@SM {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@SM {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@SM {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@SM {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@SM {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@SM {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@SM {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@SM {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@SM {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@SM {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@SM {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@SM {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@SM {\n    display: none; } }\n\n@media (max-width: 480px) {\n  .Col-1\\@XS {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@XS {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@XS {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@XS {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@XS {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@XS {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@XS {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@XS {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@XS {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@XS {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@XS {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@XS {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@XS {\n    display: none; } }\n\nh1, h2, h3, h4, h5, h6 {\n  margin-bottom: 1em;\n  font-weight: normal;\n  line-height: 1.6em;\n  color: #fff; }\n  h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {\n    font-weight: bold; }\n\nh1 {\n  font-size: 34px; }\n\nh2 {\n  font-size: 24px;\n  color: #86a5b3; }\n\nh3 {\n  font-size: 20px;\n  font-weight: bold; }\n\nh4 {\n  font-size: 16px;\n  font-weight: bold;\n  letter-spacing: .04em; }\n\np {\n  margin-bottom: 1em; }\n\nsmall {\n  font-size: .9em;\n  color: #86a5b3; }\n\nform {\n  margin-bottom: 5vh;\n  width: 100%; }\n\nlabel {\n  display: block;\n  margin-bottom: 2.5vh;\n  line-height: 1.3em;\n  user-select: none;\n  color: #86a5b3; }\n\ninput,\nselect,\nbutton,\n.Btn {\n  height: 40px; }\n\ninput,\ntextarea,\nselect {\n  width: 100%;\n  border: none;\n  border-bottom: 1px solid rgba(202, 204, 227, 0.2);\n  font-size: 15px;\n  color: #e4ebee;\n  background: none;\n  transition: .2s; }\n  input:focus,\n  textarea:focus,\n  select:focus {\n    border-bottom-color: #0095ff; }\n\nbutton,\n.Btn {\n  display: inline-flex;\n  align-items: center;\n  padding-left: 15px;\n  padding-right: 15px;\n  border: none;\n  font-weight: bold;\n  color: #fff;\n  background-color: #0095ff;\n  cursor: pointer;\n  transition: .2s;\n  will-change: color, background-color, transform; }\n  button:hover,\n  .Btn:hover {\n    background-color: #33aaff; }\n  button:active,\n  .Btn:active {\n    transform: scale(0.9); }\n  button--primary,\n  .Btn--primary {\n    height: 48px;\n    font-size: 16px; }\n  button--hollow,\n  .Btn--hollow {\n    height: 32px;\n    font-size: 13px;\n    font-weight: normal;\n    color: #0095ff;\n    background: none;\n    box-shadow: inset 0 0 0 1px #0095ff; }\n    button--hollow:hover,\n    .Btn--hollow:hover {\n      color: #33aaff;\n      background: none;\n      box-shadow: inset 0 0 0 2px #0095ff; }\n\ninput:-webkit-autofill {\n  -webkit-box-shadow: inset 0 0 0px 9999px #1a1a1b;\n  -webkit-text-fill-color: #a5bdc7 !important;\n  border-color: rgba(202, 204, 227, 0.2) !important; }\n\ntable {\n  margin-bottom: 2vw;\n  width: 100%;\n  border-collapse: collapse; }\n  table th, table td {\n    padding-left: 10px;\n    padding-right: 10px;\n    text-align: left; }\n    table th:first-child, table td:first-child {\n      padding-left: 0; }\n    table th::last-child, table td::last-child {\n      padding-right: 0; }\n  table thead th {\n    padding-top: 14px;\n    padding-bottom: 14px;\n    font-size: 13px;\n    letter-spacing: .04em; }\n  table thead tr:last-child th {\n    border-bottom: 2px solid rgba(202, 204, 227, 0.08); }\n  table tbody td {\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-bottom: 1px solid rgba(202, 204, 227, 0.08); }\n\n.u-Width--full {\n  width: 100%; }\n\n.u-Text--center {\n  text-align: center; }\n\n.u-Error {\n  margin: 20px 0;\n  color: #c64113; }\n\n.u-Info {\n  padding: 20px;\n  background-color: #1a1a1b; }\n\n.v-leave-active {\n  position: absolute !important;\n  width: 100%;\n  animation: pageLeave .7s forwards; }\n\n.v-enter-active {\n  animation: pageEnter .7s forwards; }\n\n.o-Header {\n  display: flex;\n  align-items: center;\n  min-height: 14vh; }\n  .o-Header h1 {\n    margin: 0; }\n  .o-Header__buttons {\n    margin-left: auto; }\n\n.o-Path {\n  list-style-type: none;\n  margin-bottom: 10px;\n  color: #86a5b3; }\n  .o-Path li {\n    position: relative;\n    display: inline-block;\n    padding: 10px 30px 10px 0;\n    font-size: 14px; }\n    .o-Path li:first-child {\n      font-weight: bold; }\n    .o-Path li::before, .o-Path li::after {\n      content: '';\n      position: absolute;\n      right: 10px;\n      width: 6px;\n      height: 1px;\n      background-color: #fff; }\n    .o-Path li::before {\n      top: calc(50% - 2px);\n      transform: rotate(45deg); }\n    .o-Path li::after {\n      top: calc(50% + 2px);\n      transform: rotate(-45deg); }\n", ""]);
+exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n@keyframes pageLeave {\n  0% {\n    transform: none;\n    opacity: 1; }\n  100% {\n    transform: scale(0.95);\n    opacity: 0; } }\n\n@keyframes pageEnter {\n  0% {\n    transform: scale(0.98);\n    opacity: 0; }\n  100% {\n    transform: none;\n    opacity: 1; } }\n\n* {\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  outline: none; }\n\nhtml, body {\n  height: 100%; }\n\nbody {\n  background-color: #1a1a1b;\n  font-family: 'Roboto', sans-serif;\n  font-size: 15px;\n  line-height: 1em;\n  color: #e4ebee; }\n\na {\n  cursor: pointer;\n  color: #0095ff;\n  text-decoration: none; }\n\nhr {\n  margin: 20px 0;\n  border: none;\n  border-top: 3px solid rgba(202, 204, 227, 0.08); }\n\ndialog {\n  border: none;\n  color: inherit; }\n\n/* ---------------------------------------------------------------------------------\n * Scrollbar\n */\n::-webkit-scrollbar {\n  width: 10px;\n  height: 10px; }\n  ::-webkit-scrollbar-track {\n    background-color: #161617; }\n  ::-webkit-scrollbar-thumb {\n    background-color: #86a5b3; }\n\n.Grid {\n  display: flex;\n  flex: 0 1 auto;\n  flex-direction: row;\n  flex-wrap: wrap; }\n  .Grid--gutter {\n    margin-left: -2vw;\n    margin-right: -2vw; }\n    .Grid--gutter [class*='Col-'] {\n      padding-left: 2vw;\n      padding-right: 2vw; }\n\n.Col-1 {\n  width: 8.33333%;\n  flex-basis: 8.33333%; }\n\n.Col-2 {\n  width: 16.66667%;\n  flex-basis: 16.66667%; }\n\n.Col-3 {\n  width: 25%;\n  flex-basis: 25%; }\n\n.Col-4 {\n  width: 33.33333%;\n  flex-basis: 33.33333%; }\n\n.Col-5 {\n  width: 41.66667%;\n  flex-basis: 41.66667%; }\n\n.Col-6 {\n  width: 50%;\n  flex-basis: 50%; }\n\n.Col-7 {\n  width: 58.33333%;\n  flex-basis: 58.33333%; }\n\n.Col-8 {\n  width: 66.66667%;\n  flex-basis: 66.66667%; }\n\n.Col-9 {\n  width: 75%;\n  flex-basis: 75%; }\n\n.Col-10 {\n  width: 83.33333%;\n  flex-basis: 83.33333%; }\n\n.Col-11 {\n  width: 91.66667%;\n  flex-basis: 91.66667%; }\n\n.Col-12 {\n  width: 100%;\n  flex-basis: 100%; }\n\n.Col-hide {\n  display: none; }\n\n@media (max-width: 1520px) {\n  .Col-1\\@UL {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@UL {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@UL {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@UL {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@UL {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@UL {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@UL {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@UL {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@UL {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@UL {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@UL {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@UL {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@UL {\n    display: none; } }\n\n@media (max-width: 1280px) {\n  .Col-1\\@XL {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@XL {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@XL {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@XL {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@XL {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@XL {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@XL {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@XL {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@XL {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@XL {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@XL {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@XL {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@XL {\n    display: none; } }\n\n@media (max-width: 980px) {\n  .Col-1\\@LG {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@LG {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@LG {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@LG {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@LG {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@LG {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@LG {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@LG {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@LG {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@LG {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@LG {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@LG {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@LG {\n    display: none; } }\n\n@media (max-width: 800px) {\n  .Col-1\\@MD {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@MD {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@MD {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@MD {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@MD {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@MD {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@MD {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@MD {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@MD {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@MD {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@MD {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@MD {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@MD {\n    display: none; } }\n\n@media (max-width: 640px) {\n  .Col-1\\@SM {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@SM {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@SM {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@SM {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@SM {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@SM {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@SM {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@SM {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@SM {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@SM {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@SM {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@SM {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@SM {\n    display: none; } }\n\n@media (max-width: 480px) {\n  .Col-1\\@XS {\n    width: 8.33333%;\n    flex-basis: 8.33333%; }\n  .Col-2\\@XS {\n    width: 16.66667%;\n    flex-basis: 16.66667%; }\n  .Col-3\\@XS {\n    width: 25%;\n    flex-basis: 25%; }\n  .Col-4\\@XS {\n    width: 33.33333%;\n    flex-basis: 33.33333%; }\n  .Col-5\\@XS {\n    width: 41.66667%;\n    flex-basis: 41.66667%; }\n  .Col-6\\@XS {\n    width: 50%;\n    flex-basis: 50%; }\n  .Col-7\\@XS {\n    width: 58.33333%;\n    flex-basis: 58.33333%; }\n  .Col-8\\@XS {\n    width: 66.66667%;\n    flex-basis: 66.66667%; }\n  .Col-9\\@XS {\n    width: 75%;\n    flex-basis: 75%; }\n  .Col-10\\@XS {\n    width: 83.33333%;\n    flex-basis: 83.33333%; }\n  .Col-11\\@XS {\n    width: 91.66667%;\n    flex-basis: 91.66667%; }\n  .Col-12\\@XS {\n    width: 100%;\n    flex-basis: 100%; }\n  .Col-hide\\@XS {\n    display: none; } }\n\nh1, h2, h3, h4, h5, h6 {\n  margin-bottom: 1em;\n  font-weight: normal;\n  line-height: 1.6em;\n  color: #fff; }\n  h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong {\n    font-weight: bold; }\n\nh1 {\n  font-size: 34px; }\n\nh2 {\n  font-size: 24px;\n  color: #86a5b3; }\n\nh3 {\n  font-size: 20px;\n  font-weight: bold; }\n\nh4 {\n  font-size: 16px;\n  font-weight: bold;\n  letter-spacing: .04em; }\n\np {\n  margin-bottom: 1em; }\n\nsmall {\n  font-size: .9em;\n  color: #86a5b3; }\n\nform {\n  margin-bottom: 5vh;\n  width: 100%; }\n\nlabel {\n  display: block;\n  margin-bottom: 2.5vh;\n  line-height: 1.3em;\n  user-select: none;\n  color: #86a5b3; }\n\ninput,\nselect,\nbutton,\n.Btn {\n  height: 40px; }\n\ninput,\ntextarea,\nselect {\n  width: 100%;\n  border: none;\n  border-bottom: 1px solid rgba(202, 204, 227, 0.2);\n  font-size: 15px;\n  color: #e4ebee;\n  background: none;\n  transition: .2s; }\n  input:focus,\n  textarea:focus,\n  select:focus {\n    border-bottom-color: #0095ff; }\n\nselect option {\n  background-color: #1d1d1f; }\n\nbutton,\n.Btn {\n  display: inline-flex;\n  align-items: center;\n  padding-left: 15px;\n  padding-right: 15px;\n  border: none;\n  font-weight: bold;\n  color: #fff;\n  background-color: #0095ff;\n  cursor: pointer;\n  transition: .2s;\n  will-change: color, background-color, transform; }\n  button:hover,\n  .Btn:hover {\n    background-color: #33aaff; }\n  button:active,\n  .Btn:active {\n    transform: scale(0.9); }\n  button--primary,\n  .Btn--primary {\n    height: 48px;\n    font-size: 16px; }\n  button--hollow,\n  .Btn--hollow {\n    height: 32px;\n    font-size: 13px;\n    font-weight: normal;\n    color: #0095ff;\n    background: none;\n    box-shadow: inset 0 0 0 1px #0095ff; }\n    button--hollow:hover,\n    .Btn--hollow:hover {\n      color: #33aaff;\n      background: none;\n      box-shadow: inset 0 0 0 2px #0095ff; }\n\ninput:-webkit-autofill {\n  -webkit-box-shadow: inset 0 0 0px 9999px #1a1a1b;\n  -webkit-text-fill-color: #a5bdc7 !important;\n  border-color: rgba(202, 204, 227, 0.2) !important; }\n\ntable {\n  margin-bottom: 2vw;\n  width: 100%;\n  border-collapse: collapse; }\n  table th, table td {\n    padding-left: 10px;\n    padding-right: 10px;\n    text-align: left; }\n    table th:first-child, table td:first-child {\n      padding-left: 0; }\n    table th::last-child, table td::last-child {\n      padding-right: 0; }\n  table thead th {\n    padding-top: 14px;\n    padding-bottom: 14px;\n    font-size: 13px;\n    letter-spacing: .04em; }\n  table thead tr:last-child th {\n    border-bottom: 2px solid rgba(202, 204, 227, 0.08); }\n  table tbody td {\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-bottom: 1px solid rgba(202, 204, 227, 0.08); }\n\n.u-Width--full {\n  width: 100%; }\n\n.u-Text--center {\n  text-align: center; }\n\n.u-Error {\n  margin: 20px 0;\n  color: #c64113; }\n\n.u-Info {\n  padding: 20px;\n  background-color: #1a1a1b; }\n\n.v-leave-active {\n  position: absolute !important;\n  width: 100%;\n  animation: pageLeave .7s forwards; }\n\n.v-enter-active {\n  animation: pageEnter .7s forwards; }\n\n.o-Header {\n  display: flex;\n  align-items: center;\n  min-height: 14vh; }\n  .o-Header h1 {\n    margin: 0; }\n  .o-Header__buttons {\n    margin-left: auto; }\n\n.o-Path {\n  list-style-type: none;\n  margin-bottom: 10px;\n  color: #86a5b3; }\n  .o-Path li {\n    position: relative;\n    display: inline-block;\n    padding: 10px 30px 10px 0;\n    font-size: 14px; }\n    .o-Path li:first-child {\n      font-weight: bold; }\n    .o-Path li::before, .o-Path li::after {\n      content: '';\n      position: absolute;\n      right: 10px;\n      width: 6px;\n      height: 1px;\n      background-color: #fff; }\n    .o-Path li::before {\n      top: calc(50% - 2px);\n      transform: rotate(45deg); }\n    .o-Path li::after {\n      top: calc(50% + 2px);\n      transform: rotate(-45deg); }\n", ""]);
 
 // exports
 
@@ -18861,7 +18892,7 @@ var render = function() {
               staticClass: "c-FormField__error",
               attrs: { title: "This field is required - please fill it" }
             },
-            [_c("icon", { attrs: { glyph: "error" } })],
+            [_c("icon", { attrs: { size: "16", glyph: "error" } })],
             1
           )
         : _vm._e(),
@@ -20853,19 +20884,22 @@ var render = function() {
           on: {
             focus: _vm.onFocus,
             blur: _vm.onBlur,
-            change: function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.fieldValue = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            }
+            change: [
+              function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.fieldValue = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+              _vm.onChange
+            ]
           }
         },
         [_vm._t("default")],
@@ -21194,7 +21228,25 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("header", { staticClass: "o-Header" }, [
+      _c("h1", [_vm._v("Content")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "o-Header__buttons" }, [
+        _c(
+          "a",
+          {
+            staticClass: "Btn",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.openForm($event)
+              }
+            }
+          },
+          [_vm._v("Add content")]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "ul",
@@ -21210,7 +21262,7 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("table", [
-      _vm._m(1),
+      _vm._m(0),
       _vm._v(" "),
       _c(
         "tbody",
@@ -21257,7 +21309,7 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(entry.children))]),
               _vm._v(" "),
-              _vm._m(2, true)
+              _vm._m(1, true)
             ])
           })
         ],
@@ -21267,18 +21319,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("header", { staticClass: "o-Header" }, [
-      _c("h1", [_vm._v("Content")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "o-Header__buttons" }, [
-        _c("a", { staticClass: "Btn" }, [_vm._v("Add content")])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -22445,7 +22485,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n", ""]);
+exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n.c-FormSelect {\n  position: relative;\n  margin-bottom: 20px;\n  padding-top: 20px;\n}\n.c-FormSelect__label {\n    position: absolute;\n    top: 20px;\n    left: 0;\n    z-index: -1;\n    display: flex;\n    align-items: center;\n    height: 40px;\n    cursor: text;\n    transition: .2s;\n}\n.is-Dirty .c-FormSelect__label {\n      transform: translateY(-24px);\n      font-size: .85em;\n      color: #527381;\n      cursor: default;\n}\n", ""]);
 
 // exports
 
@@ -22481,6 +22521,168 @@ exports.default = {
 			required: true
 		}
 	}
+};
+
+/***/ }),
+/* 137 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ContentForm_vue__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ContentForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ContentForm_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ContentForm_vue__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ContentForm_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_70241828_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ContentForm_vue__ = __webpack_require__(138);
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_ContentForm_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_70241828_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_ContentForm_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src\\components\\modules\\ContentForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-70241828", Component.options)
+  } else {
+    hotAPI.reload("data-v-70241828", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 138 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "c-ContentForm" }, [
+    _c("h1", [_vm._v("Add content")]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.sendForm($event)
+          }
+        }
+      },
+      [
+        _c(
+          "form-select",
+          { attrs: { label: "Choose collection" } },
+          _vm._l(_vm.collections, function(collection, index) {
+            return _c(
+              "option",
+              { key: index, domProps: { value: collection.id } },
+              [_vm._v(_vm._s(collection.name))]
+            )
+          })
+        )
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-70241828", esExports)
+  }
+}
+
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _FormField = __webpack_require__(6);
+
+var _FormField2 = _interopRequireDefault(_FormField);
+
+var _FormSelect = __webpack_require__(106);
+
+var _FormSelect2 = _interopRequireDefault(_FormSelect);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+	data: function data() {
+		return {
+			collections: [{
+				id: 'text',
+				name: 'Text'
+			}]
+		};
+	},
+
+
+	methods: {
+		sendForm: function sendForm() {
+			console.log('Send content form');
+		}
+	},
+
+	components: { FormField: _FormField2.default, FormSelect: _FormSelect2.default }
 };
 
 /***/ })
