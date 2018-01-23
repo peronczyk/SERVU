@@ -2,7 +2,7 @@
 
 	<nav class="c-Nav">
 		<div class="c-Nav__top">
-			<h3>Admin</h3>
+			<h4>Servant<br><small>At your service</small></h4>
 		</div>
 
 		<div class="c-Nav__links">
@@ -77,8 +77,13 @@ export default {
 		height: 14vh;
 		min-height: 40px;
 
-		h3 {
+		h4 {
 			margin: 0;
+			line-height: 1em;
+
+			small {
+				font-weight: normal;
+			}
 		}
 	}
 

@@ -2,6 +2,7 @@
 
 	<div class="c-Home">
 		<div class="c-Home__slogan">
+			<p>Hello</p>
 			<h1>{{ siteName }}</h1>
 			<h2>Administration panel</h2>
 		</div>
@@ -47,6 +48,14 @@ export default {
 	&__slogan {
 		h1 {
 			margin: 0;
+		}
+
+		p {
+			margin: 0 0 0 -10px;
+			font-size: 160px;
+			font-weight: bold;
+			line-height: 1em;
+			color: $color-bg-lvl-4;
 		}
 	}
 

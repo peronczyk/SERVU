@@ -37,19 +37,24 @@ class FilesActions {
 				$file_path = $files_dir . $file_name;
 				$file_type = mime_content_type($file_path);
 
-				$arr = [
-					'name' => $file_name,
-					'type' => $file_type,
-				];
+				$arr['type'] = $file_type;
+				$arr['full-name'] = $file_name;
 
+				// Entries for directories
 				if ($file_type == 'directory') {
+					$arr['name'] = $file_name;
 					$arr['children'] = count(scandir($files_dir . $file_name)) - 2;
 				}
+
+				// Entries for files
 				else {
+					$extension = pathinfo($file_name, PATHINFO_EXTENSION);
+
+					$arr['name'] = str_replace('.' . $extension, '', $file_name);
+					$arr['extension'] = $extension;
 					$arr['size'] = filesize($file_path);
 					$arr['path'] = $file_path;
 					$arr['full-path'] = ROOT_URL . $file_path;
-					$arr['extension'] = pathinfo($file_name, PATHINFO_EXTENSION);
 				}
 
 				$files_data[] = $arr;

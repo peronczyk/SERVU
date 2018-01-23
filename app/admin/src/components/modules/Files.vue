@@ -10,28 +10,48 @@
 			<div class="Col-8">
 				<ul class="o-Path">
 					<li>Uploads</li>
-					<li v-for="(index, chunk) in pathChunks" :key="index">{{ chunk }}</li>
+					<li v-for="(chunk, index) in pathChunks" :key="index">
+						{{ chunk }}
+					</li>
 				</ul>
 
 				<table>
 					<thead>
 						<tr>
 							<th>File name</th>
+							<th>File extension</th>
 							<th>Options</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						<tr v-if="pathChunks.length > 0">
 							<td colspan="4">
-								<a @click.prevent="getList(previousParentId)"><strong>Go up</strong></a>
+								<a @click.prevent="getList('../')">
+									<icon size="24" glyph="back" />
+									<strong>Go up</strong>
+								</a>
 							</td>
 						</tr>
-						<tr v-for="file in filesList" :key="file.id">
-							<td v-if="file.type == 'directory'">
-								<a @click.prevent="getList(file.name)">{{ file.name }}</a>
+						<tr v-for="(file, fileIndex) in filesList" :key="fileIndex">
+							<td v-if="file.type == 'directory'" colspan="2">
+								<a @click.prevent="getList(file.name)">
+									<icon size="24" glyph="folder" />
+									{{ file.name }}
+								</a>
 							</td>
-							<td v-else>{{ file.name }}</td>
-							<td><a>delete</a></td>
+							<template v-else>
+								<td>
+									<icon size="24" glyph="" />
+									{{ file.name }}
+								</td>
+								<td>
+									{{ file.extension }}
+								</td>
+							</template>
+							<td>
+								<a @click="copyLink(fileIndex)">copy url</a> /
+								<a @click="deleteFile(fileIndex)">delete</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -42,7 +62,7 @@
 				<form-file-upload />
 
 				<h3>Create directory</h3>
-				<form>
+				<form @submit.prevent="createDirectory">
 					<form-field ref="directory-name">Directory name</form-field>
 
 					<button class="Btn">Create</button>
@@ -70,12 +90,40 @@ export default {
 	},
 
 	methods: {
-		getList() {
-			axios.get(this.nodeUrl + 'list')
+		getList(parent = null) {
+			let action = 'list';
+
+			console.log(parent);
+
+
+			if (parent) {
+				if (parent == '../') {
+					if (this.pathChunks.length > 0) {
+						this.pathChunks.pop();
+						action += '?path=' + this.pathChunks.join('/');
+					}
+				}
+				else {
+					this.pathChunks.push(parent);
+					action += '?path=' + this.pathChunks.join('/');
+				}
+			}
+
+			axios.get(this.nodeUrl + action)
 				.then(result => {
 					this.filesList = result.data.data;
 				});
 		},
+
+		createDirectory() {
+			console.log('Creae dir');
+			console.log(this.$refs);
+
+		},
+
+		deleteFile(fileId) {
+			console.log('Delete: ' . fileId);
+		}
 	},
 
 	created() {
