@@ -2,12 +2,14 @@
 
 	<nav class="c-Nav">
 		<div class="c-Nav__top">
-			<h4>Servant<br><small>At your service</small></h4>
+			<router-link to="/">
+				<svg><use xlink:href="#logo-servant"></use></svg>
+			</router-link>
 		</div>
 
 		<div class="c-Nav__links">
 			<ul>
-				<li v-for="route in $router.options.routes" :key="route.name">
+				<li v-for="route in $router.options.routes" :key="route.name" v-if="route.path != '/'">
 					<router-link :to="route.path">
 						<icon size="24" :glyph="route.icon" />
 						{{ route.name }}
@@ -77,12 +79,28 @@ export default {
 		height: 14vh;
 		min-height: 40px;
 
-		h4 {
-			margin: 0;
-			line-height: 1em;
+		a {
+			display: inline-block;
+			margin: auto;
+			padding: 10px;
 
-			small {
-				font-weight: normal;
+			&:hover {
+				> svg {
+					transform: scale(1.3) rotate(-8deg);
+				}
+			}
+
+			&:active {
+				> svg {
+					transform: scale(1.1) rotate(-12deg);
+				}
+			}
+
+			svg {
+				width: 50px;
+				height: 50px;
+				transition: .4s;
+				will-change: transform;
 			}
 		}
 	}

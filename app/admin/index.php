@@ -44,6 +44,17 @@ $app_modules = $core->get_modules_list();
 
 	<div id="app"></div>
 
+	<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" style="display:none;">
+		<style type="text/css">
+			.logo-top {fill: #21e074; }
+			.logo-bottom {fill: #fff; }
+		</style>
+		<symbol id="logo-servant" viewBox="0 0 50 50">
+			<polygon class="logo-top" points="43,25 18,25 18,0"/>
+			<polygon class="logo-bottom" points="5,25 30,25 30,50"/>
+		</symbol>
+	</svg>
+
 	<script src="<?= $admin_dir ?>dist/app.js" async></script>
 </body>
 

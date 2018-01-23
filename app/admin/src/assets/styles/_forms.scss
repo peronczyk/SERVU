@@ -48,13 +48,14 @@ button,
 	padding-right: 15px;
 	border: none;
 	font-weight: bold;
-	color: $color-white;
+	color: $color-bg-lvl-1;
 	background-color: $color-links;
 	cursor: pointer;
 	transition: .2s;
 	will-change: color, background-color, transform;
 
 	&:hover {
+		color: $color-bg-lvl-1;
 		background-color: $color-links-hover;
 	}
 

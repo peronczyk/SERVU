@@ -32,7 +32,7 @@ $base-font-size      : 15px;
 $color-white         : #fff;
 $color-black         : #000;
 
-$color-base-1        : #0095ff;
+$color-base-1        : #21e074;
 $color-base-2        : #161617;
 $color-base-lines    : #cacce3;
 $color-base-text     : #e4ebee;
@@ -50,7 +50,7 @@ $color-text-lvl-4    : darken($color-base-text, 50);
 $color-text-lvl-5    : darken($color-base-text, 70);
 
 $color-links         : $color-base-1;
-$color-links-hover   : lighten($color-links, 10);
+$color-links-hover   : lighten($color-links, 20);
 
 $color-lines         : rgba($color-base-lines, .08);
 $color-inputs-border : rgba($color-base-lines, .2);
