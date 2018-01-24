@@ -32,6 +32,7 @@ $rest->set('meta', [
 
 	// App version is visible only for logged in users
 	'app-version'     => ($auth->get_lvl() > Auth::LVL_USER) ? APP_VERSION : null,
+	'php-version'     => ($auth->get_lvl() > Auth::LVL_USER) ? phpversion() : null,
 ]);
 
 $rest->send();

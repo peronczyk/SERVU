@@ -25,8 +25,8 @@ export default {
 				if (receivedData.data.meta) {
 					this.$store.commit('appConnected', receivedData.data.meta);
 
-					if (receivedData.data.meta['app-version']) {
-						this.$store.commit('setAppVersion', receivedData.data.meta['app-version']);
+					if (receivedData.data.meta) {
+						this.$store.commit('setMeta', receivedData.data.meta);
 					}
 				}
 				else {

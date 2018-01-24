@@ -10,7 +10,12 @@
 		<ul class="c-Home__bottom">
 			<li>
 				App version:
-				<strong>{{ $store.state.appVersion }}</strong>
+				<strong>{{ $store.state.meta.appVersion }}</strong>
+			</li>
+
+			<li>
+				PHP version:
+				<strong>{{ $store.state.meta.phpVersion }}</strong>
 			</li>
 
 			<li>
@@ -74,17 +79,24 @@ export default {
 		border-top: 1px solid $color-lines;
 
 		li {
-			color: $color-text-lvl-2;
-			line-height: 1.4em;
+			margin-right: $gutter;
+			font-size: 13px;
+			color: $color-text-lvl-3;
+			line-height: 1.7em;
 
 			&:last-child {
 				margin-left: auto;
-				font-size: 12px;
+				margin-right: 0;
+
+				strong {
+					font-size: 1.1em;
+				}
 			}
 
 			strong {
 				display: block;
-				font-size: 1.1em;
+				font-size: 1.2em;
+				letter-spacing: .05em;
 				color: $color-text-lvl-1;
 			}
 		}

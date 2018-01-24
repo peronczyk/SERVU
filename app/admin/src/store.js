@@ -12,7 +12,10 @@ export default new Vuex.Store({
 	state: {
 		connected: false,
 		userAccessLvl: 0,
-		appVersion: null,
+		meta: {
+			appVersion: null,
+			phpVersion: null,
+		},
 		toast: {
 			isVisible: false,
 			content: null
@@ -63,8 +66,9 @@ export default new Vuex.Store({
 			state.userAccessLvl = lvl;
 		},
 
-		setAppVersion(state, version) {
-			state.appVersion = version;
+		setMeta(state, meta) {
+			state.meta.appVersion = meta['app-version'];
+			state.meta.phpVersion = meta['php-version'];
 		},
 
 		openToast(state, content) {

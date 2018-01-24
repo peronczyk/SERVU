@@ -14657,8 +14657,8 @@ exports.default = {
 			if (receivedData.data.meta) {
 				_this.$store.commit('appConnected', receivedData.data.meta);
 
-				if (receivedData.data.meta['app-version']) {
-					_this.$store.commit('setAppVersion', receivedData.data.meta['app-version']);
+				if (receivedData.data.meta) {
+					_this.$store.commit('setMeta', receivedData.data.meta);
 				}
 			} else {
 				console.error('No meta entry in connection data');
@@ -15177,8 +15177,8 @@ exports.default = {
 					} else {
 						_this.$store.commit('changeUserAccessLvl', receivedData.data.meta['access-lvl']);
 
-						if (receivedData.data.meta['app-version']) {
-							_this.$store.commit('setAppVersion', receivedData.data.meta['app-version']);
+						if (receivedData.data.meta) {
+							_this.$store.commit('setMeta', receivedData.data.meta);
 						}
 					}
 				});
@@ -16139,6 +16139,11 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -19724,7 +19729,10 @@ exports.default = new _vuex2.default.Store({
 	state: {
 		connected: false,
 		userAccessLvl: 0,
-		appVersion: null,
+		meta: {
+			appVersion: null,
+			phpVersion: null
+		},
 		toast: {
 			isVisible: false,
 			content: null
@@ -19767,8 +19775,9 @@ exports.default = new _vuex2.default.Store({
 		changeUserAccessLvl: function changeUserAccessLvl(state, lvl) {
 			state.userAccessLvl = lvl;
 		},
-		setAppVersion: function setAppVersion(state, version) {
-			state.appVersion = version;
+		setMeta: function setMeta(state, meta) {
+			state.meta.appVersion = meta['app-version'];
+			state.meta.phpVersion = meta['php-version'];
 		},
 		openToast: function openToast(state, content) {
 			state.toast.isVisible = !state.toast.isVisible;
@@ -22217,7 +22226,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n.c-Home {\n  position: relative;\n  display: flex;\n  align-items: center;\n}\n.c-Home__slogan h1 {\n    margin: 0;\n}\n.c-Home__slogan p {\n    margin: 0 0 0 -10px;\n    font-size: 160px;\n    font-weight: bold;\n    line-height: 1em;\n    color: #212123;\n}\n.c-Home__bottom {\n    list-style-type: none;\n    position: absolute;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    display: flex;\n    align-items: center;\n    padding-left: 2vw;\n    padding-right: 2vw;\n    height: 7vh;\n    min-height: 40px;\n    border-top: 1px solid rgba(202, 204, 227, 0.08);\n}\n.c-Home__bottom li {\n      color: #e4ebee;\n      line-height: 1.4em;\n}\n.c-Home__bottom li:last-child {\n        margin-left: auto;\n        font-size: 12px;\n}\n.c-Home__bottom li strong {\n        display: block;\n        font-size: 1.1em;\n        color: #fff;\n}\n", ""]);
+exports.push([module.i, "/**\n * Sizes\n */\n/**\n * Colors\n */\n.c-Home {\n  position: relative;\n  display: flex;\n  align-items: center;\n}\n.c-Home__slogan h1 {\n    margin: 0;\n}\n.c-Home__slogan p {\n    margin: 0 0 0 -10px;\n    font-size: 160px;\n    font-weight: bold;\n    line-height: 1em;\n    color: #212123;\n}\n.c-Home__bottom {\n    list-style-type: none;\n    position: absolute;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    display: flex;\n    align-items: center;\n    padding-left: 2vw;\n    padding-right: 2vw;\n    height: 7vh;\n    min-height: 40px;\n    border-top: 1px solid rgba(202, 204, 227, 0.08);\n}\n.c-Home__bottom li {\n      margin-right: 2vw;\n      font-size: 13px;\n      color: #86a5b3;\n      line-height: 1.7em;\n}\n.c-Home__bottom li:last-child {\n        margin-left: auto;\n        margin-right: 0;\n}\n.c-Home__bottom li:last-child strong {\n          font-size: 1.1em;\n}\n.c-Home__bottom li strong {\n        display: block;\n        font-size: 1.2em;\n        letter-spacing: .05em;\n        color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -22243,7 +22252,12 @@ var render = function() {
     _c("ul", { staticClass: "c-Home__bottom" }, [
       _c("li", [
         _vm._v("\n\t\t\tApp version:\n\t\t\t"),
-        _c("strong", [_vm._v(_vm._s(_vm.$store.state.appVersion))])
+        _c("strong", [_vm._v(_vm._s(_vm.$store.state.meta.appVersion))])
+      ]),
+      _vm._v(" "),
+      _c("li", [
+        _vm._v("\n\t\t\tPHP version:\n\t\t\t"),
+        _c("strong", [_vm._v(_vm._s(_vm.$store.state.meta.phpVersion))])
       ]),
       _vm._v(" "),
       _vm._m(0)

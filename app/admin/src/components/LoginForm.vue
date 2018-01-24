@@ -68,8 +68,8 @@ export default {
 						else {
 							this.$store.commit('changeUserAccessLvl', receivedData.data.meta['access-lvl']);
 
-							if (receivedData.data.meta['app-version']) {
-								this.$store.commit('setAppVersion', receivedData.data.meta['app-version']);
+							if (receivedData.data.meta) {
+								this.$store.commit('setMeta', receivedData.data.meta);
 							}
 						}
 					});
