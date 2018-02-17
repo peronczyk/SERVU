@@ -3,6 +3,7 @@
 class FilesActions {
 
 	protected $uploads_dir;
+	protected $max_depth = 8;
 
 	private $ignored_files = ['.', '..', '.htaccess'];
 
@@ -50,10 +51,10 @@ class FilesActions {
 				else {
 					$extension = pathinfo($file_name, PATHINFO_EXTENSION);
 
-					$arr['name'] = str_replace('.' . $extension, '', $file_name);
+					$arr['name']      = str_replace('.' . $extension, '', $file_name);
 					$arr['extension'] = $extension;
-					$arr['size'] = filesize($file_path);
-					$arr['path'] = $file_path;
+					$arr['size']      = filesize($file_path);
+					$arr['path']      = $file_path;
 					$arr['full-path'] = ROOT_URL . $file_path;
 				}
 
@@ -69,24 +70,60 @@ class FilesActions {
 	 */
 
 	public function remove_file($file) {
+		if (empty($file)) {
+			throw new Exception('File to be removed was not specified.');
+		}
+
 		$file_path = $this->uploads_dir . $file;
 
 		if (!file_exists($file_path)) {
 			throw new Exception("File {$file} does not exist in specified location of uploads.");
 		}
-		else {
-			$result = unlink($file_path);
 
-			if ($result) return true;
+		$result = unlink($file_path);
+
+		if ($result) return true;
+		else {
+			$last_error = error_get_last();
+			if (is_array($last_error)) {
+				throw new Exception("Error occured while trying to remove file `{$file_path}`: {$last_error['message']}.");
+			}
 			else {
-				$last_error = error_get_last();
-				if (is_array($last_error)) {
-					throw new Exception("Error occured while trying to remove file `{$file_path}`: {$last_error['message']}");
-				}
-				else {
-					throw new Exception("Unknown error occured while trying to remove file `{$file_path}`");
-				}
+				throw new Exception("Unknown error occured while trying to remove file `{$file_path}`");
 			}
 		}
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Create directory
+	 */
+
+	public function create_dir($path) {
+		// Check if path was provided
+		if (empty($path)) {
+			throw new Exception("Name of the directory to be created was not provided.");
+		}
+		$path_chunks = explode('/', trim($path, '/'));
+
+		// Check if this directory will be too deep
+		if (count($path_chunks) > $this->max_depth) {
+			throw new Exception("Could not create directory because of maximal upload depth.");
+		}
+
+		// Validate each path chunk
+		foreach($path_chunks as $chunk) {
+			if (strpbrk($chunk, "/?%*:|\"<>") !== FALSE) {
+				throw new Exception("Provided directory path is not valid because of illegal characters.");
+			}
+		}
+
+		$dir_path = $this->uploads_dir . implode('/', $path_chunks);
+
+		if (file_exists($dir_path)) {
+			throw new Exception("Directory with this name exists in provided location.");
+		}
+
+		return mkdir($dir_path);
 	}
 }

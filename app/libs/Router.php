@@ -115,7 +115,7 @@ class Router {
 		 * Run method
 		 */
 
-		$method_name = $this->get_first_request();
+		$method_name = str_replace('-', '_', $this->get_first_request());
 		if (empty($method_name) || is_numeric($method_name)) {
 			$method_name = $this->options['default_method'];
 		}

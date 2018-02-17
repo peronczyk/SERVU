@@ -43,11 +43,23 @@ class FilesController extends ModulesController {
 	 */
 
 	public function remove() {
-		if (!$this->require_auth(Auth::LVL_ADMIN)) return false;
-		if (empty($_GET['file'])) {
-			throw new Exception('You need to specify which file you want to remove by adding query param `file`.');
-		}
+		$this->require_auth(Auth::LVL_ADMIN);
+		$this->require_request_method('POST');
 
-		$this->_rest->set('file-remove-status', $this->actions->remove_file($_GET['file']));
+		$result = $this->actions->remove_file(@$_POST['file']);
+		$this->_rest->set('success', $result);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Create directory
+	 */
+
+	public function create_dir() {
+		$this->require_auth(Auth::LVL_ADMIN);
+		$this->require_request_method('POST');
+
+		$result = $this->actions->create_dir(@$_POST['path']);
+		$this->_rest->set('success', $result);
 	}
 }

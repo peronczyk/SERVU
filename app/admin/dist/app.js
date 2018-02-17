@@ -15961,8 +15961,6 @@ exports.default = {
 
 			var action = 'list';
 
-			console.log(parent);
-
 			if (parent) {
 				if (parent == '../') {
 					if (this.pathChunks.length > 0) {
@@ -15980,8 +15978,12 @@ exports.default = {
 			});
 		},
 		createDirectory: function createDirectory() {
-			console.log('Creae dir');
-			console.log(this.$refs);
+			if (this.$refs['directory-name'].fieldValue) {
+				console.log(this.$refs['directory-name'].fieldValue);
+				_axios2.default.post(this.nodeUrl + 'create-dir', 'path=' + this.$refs['directory-name'].fieldValue).then(function (result) {
+					console.log(result['data']);
+				});
+			}
 		},
 		deleteFile: function deleteFile(fileId) {
 			console.log('Delete: '.fileId);

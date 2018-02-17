@@ -11,7 +11,7 @@ class ModulesController {
 
 	protected function require_auth($lvl) {
 		if ($this->_auth->get_lvl() < $lvl) {
-			throw new Exception("Your authentication level is lower than required by this method");
+			throw new Exception("Authentication level is lower than required by this method.");
 			return false;
 		}
 		else {
@@ -26,10 +26,10 @@ class ModulesController {
 
 	protected function require_request_method($method) {
 		if (!in_array($method, $this->available_methods)) {
-			throw new Exception("Unknown request method {$method} was required to run controller method");
+			throw new Exception("Unknown request method {$method} was required to run controller method.");
 		}
 		elseif ($_SERVER['REQUEST_METHOD'] !== $method) {
-			throw new Exception("Controller method requires to be run with request method {$method}");
+			throw new Exception("This operation could not be run with {$_SERVER['REQUEST_METHOD']} method.");
 		}
 		else {
 			return true;

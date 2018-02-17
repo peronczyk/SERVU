@@ -93,9 +93,6 @@ export default {
 		getList(parent = null) {
 			let action = 'list';
 
-			console.log(parent);
-
-
 			if (parent) {
 				if (parent == '../') {
 					if (this.pathChunks.length > 0) {
@@ -116,9 +113,13 @@ export default {
 		},
 
 		createDirectory() {
-			console.log('Creae dir');
-			console.log(this.$refs);
-
+			if (this.$refs['directory-name'].fieldValue) {
+				console.log(this.$refs['directory-name'].fieldValue);
+				axios.post(this.nodeUrl + 'create-dir', 'path=' + this.$refs['directory-name'].fieldValue)
+					.then(result => {
+						console.log(result['data']);
+					});
+			}
 		},
 
 		deleteFile(fileId) {
