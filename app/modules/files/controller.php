@@ -59,7 +59,7 @@ class FilesController extends ModulesController {
 		$this->require_auth(Auth::LVL_ADMIN);
 		$this->require_request_method('POST');
 
-		$result = $this->actions->create_dir(@$_POST['path']);
+		$result = $this->actions->create_dir(@$_POST['dirname'], @$_POST['location']);
 		$this->_rest->set('success', $result);
 	}
 }

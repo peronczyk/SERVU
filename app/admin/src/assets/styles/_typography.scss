@@ -32,6 +32,11 @@ h4 {
 
 p {
 	margin-bottom: 1em;
+	line-height: 1.5em;
+
+	&:last-of-type {
+		margin-bottom: 0;
+	}
 }
 
 

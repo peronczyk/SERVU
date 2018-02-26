@@ -99,9 +99,9 @@ class FilesActions {
 	 * Create directory
 	 */
 
-	public function create_dir($path) {
+	public function create_dir($dirname, $path) {
 		// Check if path was provided
-		if (empty($path)) {
+		if (empty($dirname)) {
 			throw new Exception("Name of the directory to be created was not provided.");
 		}
 		$path_chunks = explode('/', trim($path, '/'));

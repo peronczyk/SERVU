@@ -58,15 +58,29 @@
 			</div>
 
 			<div class="Col-4">
-				<h3>Upload files</h3>
-				<form-file-upload />
+				<form-control
+					:fields="[
+						{
+							type: 'files',
+							name: 'files',
+							required: true,
+							max: 5,
+						}
+					]"
+					:uri="nodeUrl + 'upload-files/'"
+					ref="uploadFilesForm"
+					title="Upload files"
+					cta="Upload"
+				/>
 
-				<h3>Create directory</h3>
-				<form @submit.prevent="createDirectory">
-					<form-field ref="directory-name">Directory name</form-field>
-
-					<button class="Btn">Create</button>
-				</form>
+				<form-control
+					:fields="createDirectoryFields"
+					:uri="nodeUrl + 'create-dir/'"
+					:success="onCreateDirectorySuccess"
+					ref="createDirectoryForm"
+					title="Create directory"
+					cta="Create"
+				/>
 			</div>
 		</div>
 	</div>
@@ -77,8 +91,7 @@
 <script>
 
 import axios from 'axios';
-import FormField from '../elements/FormField.vue';
-import FormFileUpload from '../elements/FormFileUpload.vue';
+import FormControl from '../elements/FormControl.vue';
 
 export default {
 	data() {
@@ -86,6 +99,31 @@ export default {
 			nodeUrl: window.appConfig.apiBaseUrl + 'files/',
 			pathChunks: [],
 			filesList: [],
+		}
+	},
+
+	computed: {
+		createDirectoryFields() {
+			return [
+				{
+					type: 'hidden',
+					name: 'location',
+					fieldValue: this.pathChunks,
+				},
+				{
+					type: 'text',
+					name: 'dirname',
+					label: 'Directory name',
+					required: true,
+				}
+			];
+		},
+
+		actualPath() {
+			return 'DUPA';
+			return (this.pathChunks.length)
+				? join('/')
+				: '';
 		}
 	},
 
@@ -97,13 +135,15 @@ export default {
 				if (parent == '../') {
 					if (this.pathChunks.length > 0) {
 						this.pathChunks.pop();
-						action += '?path=' + this.pathChunks.join('/');
 					}
 				}
 				else {
 					this.pathChunks.push(parent);
-					action += '?path=' + this.pathChunks.join('/');
 				}
+			}
+
+			if (this.pathChunks.length > 0) {
+				action += '?location=' + this.actualPath;
 			}
 
 			axios.get(this.nodeUrl + action)
@@ -112,13 +152,14 @@ export default {
 				});
 		},
 
-		createDirectory() {
-			if (this.$refs['directory-name'].fieldValue) {
-				console.log(this.$refs['directory-name'].fieldValue);
-				axios.post(this.nodeUrl + 'create-dir', 'path=' + this.$refs['directory-name'].fieldValue)
-					.then(result => {
-						console.log(result['data']);
-					});
+		onCreateDirectorySuccess(result) {
+			if (result.errors) {
+				this.$store.commit('openToast', 'Direcotory creation failed.<br>Returned error: ' + result.errors[0].message);
+			}
+			else {
+				this.$store.commit('openToast', 'Directory created');
+				this.$refs.createDirectoryForm.resetForm();
+				this.getList();
 			}
 		},
 
@@ -131,7 +172,7 @@ export default {
 		this.getList();
 	},
 
-	components: { FormFileUpload, FormField }
+	components: { FormControl }
 }
 
 </script>

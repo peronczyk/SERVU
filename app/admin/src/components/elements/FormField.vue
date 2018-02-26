@@ -11,38 +11,38 @@
 		</span>
 
 		<textarea
-		 v-if="type == 'textarea'"
-		 v-model="fieldValue"
-		 :aria-invalid="!isValid"
-		 @focus="onFocus"
-		 @blur="onBlur"
+			v-if="type == 'textarea'"
+			v-model="value"
+			:aria-invalid="!isValid"
+			@focus="onFocus"
+			@blur="onBlur"
 		/>
 
 		<input
-		 v-else-if="type == 'text'"
-		 v-model="fieldValue"
-		 :aria-invalid="!isValid"
-		 @focus="onFocus"
-		 @blur="onBlur"
-		 type="text"
+			v-else-if="type == 'text'"
+			v-model="value"
+			:aria-invalid="!isValid"
+			@focus="onFocus"
+			@blur="onBlur"
+			type="text"
 		>
 
 		<input
-		 v-else-if="type == 'email'"
-		 v-model="fieldValue"
-		 :aria-invalid="!isValid"
-		 @focus="onFocus"
-		 @blur="onBlur"
-		 type="email"
+			v-else-if="type == 'email'"
+			v-model="value"
+			:aria-invalid="!isValid"
+			@focus="onFocus"
+			@blur="onBlur"
+			type="email"
 		>
 
 		<input
-		 v-else-if="type == 'password'"
-		 v-model="fieldValue"
-		 :aria-invalid="!isValid"
-		 @focus="onFocus"
-		 @blur="onBlur"
-		 type="password"
+			v-else-if="type == 'password'"
+			v-model="value"
+			:aria-invalid="!isValid"
+			@focus="onFocus"
+			@blur="onBlur"
+			type="password"
 		>
 	</label>
 
@@ -66,7 +66,7 @@ export default {
 
 	data() {
 		return {
-			fieldValue: '',
+			value: '',
 			isDirty: false,
 			isValid: true,
 		}
@@ -76,10 +76,10 @@ export default {
 		validate() {
 			this.isValid = true;
 
-			if (this.required && this.fieldValue.length < 2) {
+			if (this.required && this.value.length < 1) {
 				this.isValid = false;
 			}
-			else if (this.type == 'email' && !/\S+@\S+/.test(this.fieldValue)) {
+			else if (this.type == 'email' && !/\S+@\S+/.test(this.value)) {
 				this.isValid = false;
 			}
 
@@ -92,7 +92,7 @@ export default {
 		},
 
 		onBlur() {
-			if (this.fieldValue.length < 1) {
+			if (this.value.length < 1) {
 				this.isDirty = false;
 			}
 			else {

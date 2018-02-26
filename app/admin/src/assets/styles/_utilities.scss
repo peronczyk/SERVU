@@ -8,12 +8,21 @@
 	}
 }
 
-.u-Error {
-	margin: 20px 0;
+p.u-Error {
+	margin-bottom: 20px;
 	color: $color-errors;
 }
 
 .u-Info {
 	padding: 20px;
 	background-color: $color-bg-lvl-2;
+}
+
+.u-Required {
+	display: inline-block;
+	margin: 10px;
+	width: 6px;
+	height: 6px;
+	background-color: $color-errors;
+	border-radius: 50%;
 }

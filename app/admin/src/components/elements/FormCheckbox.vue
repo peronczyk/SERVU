@@ -1,8 +1,8 @@
 <template>
 
-	<label class="c-FormCheckbox" :class="{'is-Checked': fieldValue, 'is-Error': !isValid}">
+	<label class="c-FormCheckbox" :class="{'is-Checked': value, 'is-Error': !isValid}">
 		<div class="c-FormCheckbox__input">
-			<input type="checkbox" v-model="fieldValue" @change="onChange">
+			<input type="checkbox" v-model="value" @change="onChange">
 		</div>
 		<div class="c-FormCheckbox__desc">
 			<slot />
@@ -18,7 +18,7 @@
 export default {
 	data() {
 		return {
-			fieldValue: false,
+			value: false,
 			isValid: true,
 		}
 	},
@@ -34,7 +34,7 @@ export default {
 		validate() {
 			this.isValid = true;
 
-			if (this.required && !this.fieldValue) {
+			if (this.required && !this.value) {
 				this.isValid = false;
 			}
 
@@ -42,7 +42,7 @@ export default {
 		},
 
 		onChange(event) {
-			if (this.required && this.fieldValue) {
+			if (this.required && this.value) {
 				this.isValid = true;
 			}
 		}
@@ -50,7 +50,7 @@ export default {
 
 	mounted() {
 		if (this.$el.attributes.getNamedItem('checked')) {
-			this.fieldValue = true;
+			this.value = true;
 		}
 	}
 }

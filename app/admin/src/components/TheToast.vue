@@ -1,8 +1,11 @@
 <template>
 
 	<dialog class="c-Toast" :class="{'is-Visible': isToastVisible}">
-		<div class="c-Toast__content" v-html="toastContent"></div>
-		<a class="c-Toast__close" @click.prevent="closeToast">x</a>
+		<p v-html="toastContent" class="c-Toast__content"></p>
+
+		<a @click.prevent="closeToast" class="c-Toast__close">
+			<icon size="16" glyph="times"></icon>
+		</a>
 	</dialog>
 
 </template>
@@ -43,8 +46,8 @@ export default {
 	visibility: hidden;
 	display: flex;
 	align-items: center;
-	padding-right: 20px;
-	max-width: 300px;
+	padding: #{$gutter * .5} 50px #{$gutter * .5} #{$gutter * .7};
+	max-width: 400px;
 	min-height: 60px;
 	color: $color-white;
 	background-color: $color-bg-lvl-4;
@@ -58,15 +61,11 @@ export default {
 		transform: none;
 	}
 
-	&__content {
-		padding: #{$gutter * .5} #{$gutter * .7};
-		line-height: 1.2em;
-	}
-
 	&__close {
 		position: absolute;
 		top: 10px;
 		right: 10px;
+		padding: 6px;
 	}
 }
 

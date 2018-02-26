@@ -32,6 +32,10 @@ select {
 	&:focus {
 		border-bottom-color: $color-links;
 	}
+
+	.is-Error & {
+		border-color: $color-errors;
+	}
 }
 
 select {

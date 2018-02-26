@@ -3,16 +3,14 @@
 	<div class="c-LoginForm">
 
 		<div class="c-LoginForm__wrapper">
-			<form @submit.prevent="login">
-				<h4>Provide your credentials</h4>
-
-				<form-field type="email" name="email" ref="email" :required="true">Email</form-field>
-				<form-field type="password" name="password" ref="password" :required="true">Password</form-field>
-
-				<button type="submit" class="u-Width--full">Login</button>
-
-				<p class="u-Error" v-if="loginErrorText">{{ loginErrorText }}</p>
-			</form>
+			<form-control
+			 :fields="loginFields"
+			 :uri="loginUri"
+			 :success="onSuccess"
+			 :error="onError"
+			 title="Provide your credentials"
+			 cta="Login"
+			/>
 
 			<a @click.prevent="passwordRecovery">Password recovery</a>
 		</div>
@@ -29,54 +27,51 @@
 <script>
 
 import axios from 'axios';
-import querystring from 'querystring';
+import FormControl from './elements/FormControl.vue';
+import queryString from 'querystring';
 import FormField from './elements/FormField.vue';
 
 export default {
 	data() {
 		return {
-			isFormValid: true,
-			loginErrorText: null
+			loginFields: [
+				{
+					type: 'email',
+					name: 'email',
+					label: 'Email address',
+					required: true,
+				},
+				{
+					type: 'password',
+					name: 'password',
+					label: 'Password',
+					required: true,
+				}
+			],
+			loginUri: window.appConfig.apiBaseUrl + 'users/login',
+			loginErrorText: null,
 		}
 	},
 
 	methods: {
-		login() {
-			this.isFormValid = true;
-
-			let formData = {};
-
-			for (let refName in this.$refs) {
-				let ref = this.$refs[refName];
-				formData[refName] = ref.fieldValue;
-
-				if (!ref.validate()) {
-					this.isFormValid = false;
-				}
+		onSuccess(result) {
+			if (result.errors) {
+				this.loginErrorText = result.errors[0].message;
 			}
-
-			if (this.isFormValid) {
-				axios.post(window.appConfig.apiBaseUrl + 'users/login', querystring.stringify(formData))
-					.then(receivedData => {
-						if (receivedData.data.errors) {
-							this.loginErrorText = receivedData.data.errors[0].message;
-						}
-						else if (receivedData.data.status !== true) {
-							this.loginErrorText = 'Login process failed';
-							console.log(receivedData.data);
-						}
-						else {
-							this.$store.commit('changeUserAccessLvl', receivedData.data.meta['access-lvl']);
-
-							if (receivedData.data.meta) {
-								this.$store.commit('setMeta', receivedData.data.meta);
-							}
-						}
-					});
+			else if (result.status !== true) {
+				this.loginErrorText = 'API refuses to log you in because of unhandled error.';
 			}
 			else {
-				this.loginErrorText = 'Please fill in both login fields';
+				this.$store.commit('changeUserAccessLvl', result.meta['access-lvl']);
+
+				if (result.meta) {
+					this.$store.commit('setMeta', result.meta);
+				}
 			}
+		},
+
+		onError(error) {
+			this.loginErrorText = 'Cannot connect to API';
 		},
 
 		passwordRecovery() {
@@ -84,7 +79,7 @@ export default {
 		},
 	},
 
-	components: { FormField }
+	components: { FormControl }
 }
 
 </script>
