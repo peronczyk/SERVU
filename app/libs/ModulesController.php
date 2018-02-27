@@ -2,7 +2,7 @@
 
 class ModulesController {
 
-	private $available_methods = ['GET', 'POST', 'DEL'];
+	private $available_methods = ['GET', 'POST', 'PUT', 'DELETE'];
 
 
 	/**

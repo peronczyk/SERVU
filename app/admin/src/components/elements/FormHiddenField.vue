@@ -1,6 +1,6 @@
 <template>
 
-	<input type="hidden" v-model="value">
+	<input type="hidden" :value="value">
 
 </template>
 
@@ -14,14 +14,8 @@ export default {
 		}
 	},
 
-	data() {
-		return {
-		}
-	},
-
 	methods: {
 		validate() {
-			console.log(this.value);
 			return true;
 		}
 	},

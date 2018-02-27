@@ -31,23 +31,58 @@
 			</div>
 
 			<div class="Col-4 Col-12@LG">
-				<h3>Add user</h3>
-				<form @submit.prevent="addUser">
-					<form-field type="email" name="email">Email address</form-field>
-					<form-checkbox name="inform" checked>Send email to this user with registration informations.</form-checkbox>
+				<form-control
+					:fields="[
+						{
+							type: 'email',
+							name: 'email',
+							label: 'Email address',
+							required: true,
+						},
+						{
+							type: 'checkbox',
+							name: 'inform',
+							label: 'Send email to this user with registration informations'
+						}
+					]"
+					:uri="nodeUrl + 'add-user/'"
+					ref="addUserForm"
+					title="Add user"
+					cta="Add"
+				/>
 
-					<button class="Btn" type="submit">Add</button>
-				</form>
-
-				<h3>Change your data</h3>
-				<form @submit.prevent="modifyData">
-					<form-field type="email" name="email">Your email address</form-field>
-					<form-field type="password" name="password-actual">Actual password</form-field>
-					<form-field type="password" name="password-new">New password</form-field>
-					<form-field type="password" name="password-repeat">Repeat new password</form-field>
-
-					<button class="Btn" type="submit">Change</button>
-				</form>
+				<form-control
+					:fields="[
+						{
+							type: 'email',
+							name: 'email',
+							label: 'Your email address',
+							required: true,
+						},
+						{
+							type: 'password',
+							name: 'password-actual',
+							label: 'Actual password',
+							required: true,
+						},
+						{
+							type: 'password',
+							name: 'password-new',
+							label: 'New password',
+							required: true,
+						},
+						{
+							type: 'password',
+							name: 'password-repeat',
+							label: 'Repeat new password',
+							required: true,
+						},
+					]"
+					:uri="nodeUrl + 'change-data/'"
+					ref="changeCurrentUserDataForm"
+					title="Change your data"
+					cta="Change"
+				/>
 			</div>
 
 		</div>
@@ -59,8 +94,7 @@
 <script>
 
 import axios from 'axios';
-import FormField from '../elements/FormField.vue';
-import FormCheckbox from '../elements/FormCheckbox.vue';
+import FormControl from '../elements/FormControl.vue';
 
 export default {
 	data() {
@@ -83,7 +117,7 @@ export default {
 		this.getList();
 	},
 
-	components: { FormField, FormCheckbox }
+	components: { FormControl }
 }
 
 </script>

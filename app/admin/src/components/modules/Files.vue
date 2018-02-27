@@ -32,27 +32,39 @@
 								</a>
 							</td>
 						</tr>
-						<tr v-for="(file, fileIndex) in filesList" :key="fileIndex">
-							<td v-if="file.type == 'directory'" colspan="2">
+
+						<!--
+							Directories
+						-->
+						<tr v-for="(file, fileIndex) in filesList" v-if="file.type == 'directory'" :key="fileIndex">
+							<td colspan="2">
 								<a @click.prevent="getList(file.name)">
 									<icon size="24" glyph="folder" />
 									{{ file.name }}
 								</a>
 							</td>
-							<template v-else>
-								<td>
-									<icon size="24" glyph="" />
-									{{ file.name }}
-								</td>
-								<td>
-									{{ file.extension }}
-								</td>
-							</template>
 							<td>
-								<a @click="copyLink(fileIndex)">copy url</a> /
-								<a @click="deleteFile(fileIndex)">delete</a>
+								<a @click.prevent="deleteFile(file)">delete</a>
 							</td>
 						</tr>
+
+						<!--
+							Files
+						-->
+						<tr v-for="(file, fileIndex) in filesList" v-if="file.type != 'directory'" :key="fileIndex">
+							<td>
+								<icon size="24" glyph="file" />
+								{{ file.name }}
+							</td>
+							<td>
+								{{ file.extension }}
+							</td>
+							<td>
+								<a @click.prevent="copyLink(fileIndex)">copy url</a> /
+								<a @click.prevent="deleteFile(file)">delete</a>
+							</td>
+						</tr>
+
 					</tbody>
 				</table>
 			</div>
@@ -68,13 +80,26 @@
 						}
 					]"
 					:uri="nodeUrl + 'upload-files/'"
+					:success="onUploadFilesSuccess"
 					ref="uploadFilesForm"
 					title="Upload files"
 					cta="Upload"
 				/>
 
 				<form-control
-					:fields="createDirectoryFields"
+					:fields="[
+						{
+							type: 'hidden',
+							name: 'location',
+							value: actualPath,
+						},
+						{
+							type: 'text',
+							name: 'name',
+							label: 'Directory name',
+							required: true,
+						}
+					]"
 					:uri="nodeUrl + 'create-dir/'"
 					:success="onCreateDirectorySuccess"
 					ref="createDirectoryForm"
@@ -92,6 +117,7 @@
 
 import axios from 'axios';
 import FormControl from '../elements/FormControl.vue';
+import queryString from 'querystring';
 
 export default {
 	data() {
@@ -103,33 +129,20 @@ export default {
 	},
 
 	computed: {
-		createDirectoryFields() {
-			return [
-				{
-					type: 'hidden',
-					name: 'location',
-					fieldValue: this.pathChunks,
-				},
-				{
-					type: 'text',
-					name: 'dirname',
-					label: 'Directory name',
-					required: true,
-				}
-			];
-		},
-
 		actualPath() {
-			return 'DUPA';
 			return (this.pathChunks.length)
-				? join('/')
+				? this.pathChunks.join('/')
 				: '';
-		}
+		},
 	},
 
 	methods: {
+		/**
+		 * Get files list from specified path
+		 */
 		getList(parent = null) {
 			let action = 'list';
+
 
 			if (parent) {
 				if (parent == '../') {
@@ -152,6 +165,21 @@ export default {
 				});
 		},
 
+		/**
+		 * Delete file
+		 */
+		deleteFile(file) {
+			console.log(file);
+			axios.post(this.nodeUrl + 'delete', 'name=' + file['full-name'] + '&location=' + this.actualPath)
+				.then(result => {
+					console.log('Deleted: ' + file['full-name']);
+					console.log(result);
+				})
+		},
+
+		/**
+		 * Form Control Success : Create directory
+		 */
 		onCreateDirectorySuccess(result) {
 			if (result.errors) {
 				this.$store.commit('openToast', 'Direcotory creation failed.<br>Returned error: ' + result.errors[0].message);
@@ -163,8 +191,12 @@ export default {
 			}
 		},
 
-		deleteFile(fileId) {
-			console.log('Delete: ' . fileId);
+		/**
+		 * Form Control Success : Upload Files
+		 */
+		onUploadFilesSuccess(result) {
+			console.log('Files uploaded');
+			console.log(result);
 		}
 	},
 
@@ -176,12 +208,3 @@ export default {
 }
 
 </script>
-
-
-<style lang="scss">
-
-@import '../../assets/styles/_variables';
-
-
-
-</style>

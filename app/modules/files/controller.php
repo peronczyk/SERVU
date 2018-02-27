@@ -24,29 +24,25 @@ class FilesController extends ModulesController {
 	 */
 
 	public function get_list() {
-		$path = null;
-		if (!empty($_GET['path'])) {
-			if (!preg_match('/(\.\.)/i', $_GET['path'])) {
-				$path = $_GET['path'];
-			}
-			else {
-				throw new Exception("Parameter `path` have not acceptable value: `{$_GET['path']}`");
-			}
-		}
-		$files_list = $this->actions->get_files_list($path);
+		$location = (!empty($_GET['location'])) ? $_GET['location'] : null;
+
+		$files_list = $this->actions->get_files_list($location);
 		$this->_rest->set('data', $files_list);
 	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * Remove file
+	 * Delete file or directory
 	 */
 
-	public function remove() {
+	public function delete() {
 		$this->require_auth(Auth::LVL_ADMIN);
 		$this->require_request_method('POST');
 
-		$result = $this->actions->remove_file(@$_POST['file']);
+		$file_name = (!empty($_POST['name']))     ? $_POST['name'] : null;
+		$location  = (!empty($_POST['location'])) ? $_POST['location'] : null;
+
+		$result = $this->actions->delete_file($file_name, $location);
 		$this->_rest->set('success', $result);
 	}
 
@@ -59,7 +55,10 @@ class FilesController extends ModulesController {
 		$this->require_auth(Auth::LVL_ADMIN);
 		$this->require_request_method('POST');
 
-		$result = $this->actions->create_dir(@$_POST['dirname'], @$_POST['location']);
+		$dir_name = (!empty($_POST['name']))     ? $_POST['name']     : null;
+		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
+
+		$result = $this->actions->create_dir($dir_name, $location);
 		$this->_rest->set('success', $result);
 	}
 }

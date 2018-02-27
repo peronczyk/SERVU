@@ -23,11 +23,19 @@ class FilesActions {
 	 * Get files list
 	 */
 
-	public function get_files_list($sub_dir = '') {
-		$files_dir = trim($this->uploads_dir . $sub_dir, '/') . '/';
+	public function get_files_list($location = '') {
+
+		// Validate $location
+		if (!empty($location)) {
+			if (preg_match('/(\.\.)/i', $location)) {
+				throw new Exception("Provided `location` is invalid: `{$location}`");
+			}
+		}
+
+		$files_dir = trim($this->uploads_dir . $location, '/') . '/';
 
 		if (!is_dir($files_dir)) {
-			return false;
+			throw new Exception("Provided `location` does not exist");
 		}
 
 		$files_list = scandir($files_dir);
@@ -66,45 +74,15 @@ class FilesActions {
 
 
 	/** ----------------------------------------------------------------------------
-	 * Remove file
-	 */
-
-	public function remove_file($file) {
-		if (empty($file)) {
-			throw new Exception('File to be removed was not specified.');
-		}
-
-		$file_path = $this->uploads_dir . $file;
-
-		if (!file_exists($file_path)) {
-			throw new Exception("File {$file} does not exist in specified location of uploads.");
-		}
-
-		$result = unlink($file_path);
-
-		if ($result) return true;
-		else {
-			$last_error = error_get_last();
-			if (is_array($last_error)) {
-				throw new Exception("Error occured while trying to remove file `{$file_path}`: {$last_error['message']}.");
-			}
-			else {
-				throw new Exception("Unknown error occured while trying to remove file `{$file_path}`");
-			}
-		}
-	}
-
-
-	/** ----------------------------------------------------------------------------
 	 * Create directory
 	 */
 
-	public function create_dir($dirname, $path) {
-		// Check if path was provided
-		if (empty($dirname)) {
+	public function create_dir($dir_name, $location) {
+		// Check if new directory name was provided
+		if (empty($dir_name)) {
 			throw new Exception("Name of the directory to be created was not provided.");
 		}
-		$path_chunks = explode('/', trim($path, '/'));
+		$path_chunks = explode('/', trim($location, '/'));
 
 		// Check if this directory will be too deep
 		if (count($path_chunks) > $this->max_depth) {
@@ -118,12 +96,43 @@ class FilesActions {
 			}
 		}
 
-		$dir_path = $this->uploads_dir . implode('/', $path_chunks);
+		$dir_path = $this->uploads_dir . implode('/', $path_chunks) . $dir_name;
 
 		if (file_exists($dir_path)) {
 			throw new Exception("Directory with this name exists in provided location.");
 		}
 
 		return mkdir($dir_path);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Delete file
+	 */
+
+	public function delete_file($file_name, $location) {
+		if (empty($file_name)) {
+			throw new Exception('File to be removed was not specified.');
+		}
+
+		$file_path = $_SERVER['DOCUMENT_ROOT'] . trim($this->uploads_dir . $location, '/') . '/' . $file_name;
+		return $file_path;
+
+		if (!file_exists($file_path)) {
+			throw new Exception("File `{$file_name}` does not exist in specified location of uploads.");
+		}
+
+		$result = @unlink($file_path);
+
+		if ($result) return true;
+		else {
+			$last_error = error_get_last();
+			if (is_array($last_error)) {
+				throw new Exception("Error occured while trying to remove file `{$file_path}`: {$last_error['message']}.");
+			}
+			else {
+				throw new Exception("Unknown error occured while trying to remove file `{$file_path}`");
+			}
+		}
 	}
 }

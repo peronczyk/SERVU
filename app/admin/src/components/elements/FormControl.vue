@@ -33,9 +33,15 @@
 					:max="field.max"
 				></form-files>
 
+				<form-checkbox
+					v-if="field.type == 'checkbox'"
+					:ref="field.name"
+					:required="field.required"
+				>{{ field.label }}</form-checkbox>
+
 				<form-hidden-field
 					v-if="field.type == 'hidden'"
-					:fieldValue="field.value"
+					:value="field.value"
 					:ref="field.name"
 				/>
 
@@ -58,6 +64,7 @@ import axios from 'axios';
 import FormField from '../elements/FormField.vue';
 import FormFiles from '../elements/FormFiles.vue';
 import FormSelect from '../elements/FormSelect.vue';
+import FormCheckbox from '../elements/FormCheckbox.vue';
 import FormHiddenField from '../elements/FormHiddenField.vue';
 import queryString from 'querystring';
 
@@ -133,7 +140,7 @@ export default {
 						console.log(result);
 
 						// Check if there are errors in response
-						if (result.data.errors.length) {
+						if (result.data.errors && result.data.errors.length) {
 
 							// Fire error hook
 							if (typeof this.error === 'function') {
@@ -164,7 +171,7 @@ export default {
 		}
 	},
 
-	components: { FormField, FormFiles, FormSelect, FormHiddenField }
+	components: { FormField, FormFiles, FormSelect, FormCheckbox, FormHiddenField }
 }
 
 </script>
