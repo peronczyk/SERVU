@@ -32,22 +32,6 @@ class FilesController extends ModulesController {
 
 
 	/** ----------------------------------------------------------------------------
-	 * Delete file or directory
-	 */
-
-	public function delete() {
-		$this->require_auth(Auth::LVL_ADMIN);
-		$this->require_request_method('POST');
-
-		$file_name = (!empty($_POST['name']))     ? $_POST['name'] : null;
-		$location  = (!empty($_POST['location'])) ? $_POST['location'] : null;
-
-		$result = $this->actions->delete_file($file_name, $location);
-		$this->_rest->set('success', $result);
-	}
-
-
-	/** ----------------------------------------------------------------------------
 	 * Create directory
 	 */
 
@@ -59,6 +43,34 @@ class FilesController extends ModulesController {
 		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
 
 		$result = $this->actions->create_dir($dir_name, $location);
+		$this->_rest->set('success', $result);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Upload files
+	 */
+
+	public function upload() {
+		$this->require_auth(Auth::LVL_ADMIN);
+		$this->require_request_method('POST');
+
+		$result = $this->actions->upload($files, $location);
+		$this->_rest->set('success', $result);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Delete file or directory
+	 */
+
+	public function delete() {
+		$this->require_auth(Auth::LVL_ADMIN);
+		$this->require_request_method('POST');
+
+		$location  = (!empty($_POST['location'])) ? $_POST['location'] : null;
+
+		$result = $this->actions->delete_file($_FILES, $location);
 		$this->_rest->set('success', $result);
 	}
 }

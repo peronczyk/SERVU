@@ -115,19 +115,29 @@ export default {
 
 		submitForm() {
 			this.isFormValid = true;
-			let formData = {};
+
+			let formData    = {};
+			let filesData   = new FormData();
+			let axiosConfig = {};
+
 			console.info('Form submit');
 
 			// Validate all fields
 			for (let refName in this.$refs) {
 				let ref = this.$refs[refName][0];
+
+				if (!ref.validate()) {
+					this.isFormValid = false;
+				}
+
+
 				console.log(' - ' + refName + ': ' + ref.value);
 
-				formData[refName] = ref.value;
+				if (ref.value instanceof File) {
 
-				let isFieldValid = ref.validate();
-				if (!isFieldValid) {
-					this.isFormValid = false;
+				}
+				else {
+					formData[refName] = ref.value;
 				}
 			}
 

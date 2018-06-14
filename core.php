@@ -11,10 +11,12 @@
 
 /**
  * DEFAULT CONFIGURATION
+ *
  * All keys will be turned to constants.
  * This configuration can be overwritten by file 'config.php' placed in main
  * directory, which should return array with variables that you want to change.
- * Remember that each of the setting names should start with underscore.
+ *
+ * Remember that each of the setting names should start with underscore "_".
  */
 
 $default_config = [
@@ -63,9 +65,11 @@ class Core {
 	public function init() {
 		$this->load_configuration();
 
-		error_reporting(_DEBUG ? E_ALL : 0);
-		session_start();
+		if (_DEBUG === true) {
+			$this->force_display_php_errors();
+		}
 
+		$this->start_session();
 		$this->define_paths();
 		$this->define_autoloader();
 
@@ -85,13 +89,39 @@ class Core {
 	private function load_configuration() {
 		$config = $GLOBALS['default_config'];
 		if (file_exists('config.php')) {
-			$overwrite = include_once('config.php');
+			$overwrite = include_once 'config.php';
 			$config = array_merge($config, $overwrite);
 		}
 
 		foreach($config as $key => $val) {
 			define($key, $val);
 		}
+	}
+
+
+	/**
+	 * Force display PHP errors
+	 */
+
+	private function force_display_php_errors() {
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+	}
+
+
+	/**
+	 * Start session
+	 */
+
+	private function start_session() {
+		// Force to use the HTTP-Only and Secure flags when sending the session
+		// identifier cookie, which prevents a successful XSS attack from stealing
+		// users' cookies and forces them to only be sent over HTTPS, respectively.
+		session_start([
+			'cookie_httponly' => true,
+			'cookie_secure' => true
+		]);
 	}
 
 
@@ -179,7 +209,9 @@ class Core {
 	public function define_autoloader() {
 		spl_autoload_register(function($class) {
 			$class_path = __DIR__ . '/' . _APP_DIR . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
-			if (file_exists($class_path)) include_once($class_path);
+			if (file_exists($class_path)) {
+				include_once $class_path;
+			}
 		});
 	}
 
@@ -199,7 +231,7 @@ class Core {
 			$module_config_file = _APP_DIR . _MODULES_DIR . $dir . '/_config.php';
 
 			if (is_file($module_config_file)) {
-				$modules[$index] = include_once($module_config_file);
+				$modules[$index] = include_once $module_config_file;
 				$modules[$index]['node'] = $dir;
 				$index++;
 			}

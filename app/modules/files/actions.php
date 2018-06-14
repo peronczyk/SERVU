@@ -107,6 +107,15 @@ class FilesActions {
 
 
 	/** ----------------------------------------------------------------------------
+	 * Upload files
+	 */
+
+	public function upload($files, $location) {
+		return print_r($files, true);
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * Delete file
 	 */
 

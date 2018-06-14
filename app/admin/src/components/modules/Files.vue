@@ -79,7 +79,7 @@
 							max: 5,
 						}
 					]"
-					:uri="nodeUrl + 'upload-files/'"
+					:uri="nodeUrl + 'upload/'"
 					:success="onUploadFilesSuccess"
 					ref="uploadFilesForm"
 					title="Upload files"

@@ -64,14 +64,15 @@ export default {
 		},
 
 		fileInputChange(event) {
-			console.log(event);
-			if (event.target.files.length + this.value.length > this.max) {
+			let addedFiles = event.target.files;
+
+			if (addedFiles.length + this.value.length > this.max) {
 				this.$store.commit('openToast', 'Maximal number of files reached: ' + this.max);
 				event.target.value = '';
 			}
 			else {
-				for (let i = 0; i < event.target.files.length; i++) {
-					this.value.push(event.target.files[i]);
+				for (let i = 0; i < addedFiles.length; i++) {
+					this.value.push(addedFiles[i]);
 				}
 			}
 		},

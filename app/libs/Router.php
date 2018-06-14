@@ -91,7 +91,7 @@ class Router {
 
 		$controller_file = $this->options['controllers_dir'] . $controller_dir . '/controller.php';
 		if (file_exists($controller_file)) {
-			include_once($controller_file);
+			include_once $controller_file;
 		}
 		else {
 			throw new Exception("`{$controller_name}` controller file does not exist: `{$controller_file}");

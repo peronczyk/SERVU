@@ -23,7 +23,7 @@ define('APP_INDEX', true);
  * Initiate core
  */
 
-require_once('core.php');
+require_once 'core.php';
 $core = new Core();
 $core->init();
 
@@ -59,4 +59,4 @@ elseif ($base_module != _DEFAULT_BASE_MODULE) {
 	$router->shift_request();
 }
 
-require _APP_DIR . $base_module . '/index.php';
+require_once _APP_DIR . $base_module . '/index.php';
