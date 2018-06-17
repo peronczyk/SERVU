@@ -18,7 +18,7 @@ class DependencyContainer {
 			$dependencies[$name] = $dependency;
 		}
 		else {
-			throw new Exception('');
+			throw new Exception("");
 		}
 	}
 

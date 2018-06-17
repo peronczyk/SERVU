@@ -37,26 +37,13 @@ $db = new Sqlite($db_file, ['debug' => _DEBUG]);
 
 
 /**
- * Initiate router
+ * Load base module - api or admin
  */
 
-$router = new Router(REQUEST_URI, [
-	'controllers_dir'    => _APP_DIR . _MODULES_DIR,
-	'default_controller' => 'default',
-]);
-
-
-/**
- * Load base module
- */
-
-$base_module = $router->get_first_request();
-
-if (empty($base_module) || !is_dir(_APP_DIR . $base_module)) {
-	$base_module = _DEFAULT_BASE_MODULE;
+$request_chunks = explode('/', trim(REQUEST_URI, '/'));
+if ($request_chunks[0] && is_dir(_APP_DIR . $request_chunks[0])) {
+	require_once _APP_DIR . $request_chunks[0] . '/index.php';
 }
-elseif ($base_module != _DEFAULT_BASE_MODULE) {
-	$router->shift_request();
+else {
+	require_once _APP_DIR . _DEFAULT_BASE_MODULE . '/index.php';
 }
-
-require_once _APP_DIR . $base_module . '/index.php';

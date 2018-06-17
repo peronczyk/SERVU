@@ -5,19 +5,19 @@ class Auth {
 	const LVL_USER  = 0;
 	const LVL_ADMIN = 1;
 
+	// User lvl store and it's default state
+	protected $lvl = self::LVL_USER;
+
 	// Dependencies
 	protected $_db;
-
-	// Default user lvl
-	protected $lvl = self::LVL_USER;
 
 
 	/**
 	 * Constructor
 	 */
 
-	public function __construct($db) {
-		$this->_db = $db;
+	public function __construct(Sqlite $db) {
+		$this->_db = $db; // Database dependancy
 
 		if (isset($_SESSION['servant_auth_lvl']) && is_numeric($_SESSION['servant_auth_lvl']) && $_SESSION['servant_auth_lvl'] > self::LVL_USER) {
 			$this->set_lvl($_SESSION['servant_auth_lvl']);

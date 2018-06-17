@@ -2,15 +2,16 @@
 
 define('SERVANT_API', true);
 
-$rest = new Rest();
-
+$router = new Router();
+$rest_store = new RestStore();
+$rest_exception_handler = new RestExceptionHandler($rest_store);
 $auth = new Auth($db);
 
 $dependencies = new DependencyContainer();
 $dependencies->add([
-	'db'   => $db,
-	'rest' => $rest,
-	'auth' => $auth,
+	'db'         => $db,
+	'rest_store' => $rest_store,
+	'auth'       => $auth,
 ]);
 
 $router->run($dependencies);
@@ -20,7 +21,7 @@ $router->run($dependencies);
  * Meta data
  */
 
-$rest->set('meta', [
+$rest_store->set('meta', [
 	'site-name'       => _SITE_NAME,
 	'debug-mode'      => _DEBUG,
 	'request-method'  => $_SERVER['REQUEST_METHOD'],
@@ -35,4 +36,4 @@ $rest->set('meta', [
 	'php-version'     => ($auth->get_lvl() > Auth::LVL_USER) ? phpversion() : null,
 ]);
 
-$rest->send();
+$rest_store->output();

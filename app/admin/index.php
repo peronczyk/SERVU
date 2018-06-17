@@ -7,8 +7,8 @@ $admin_url = ROOT_URL . 'admin/';
 $admin_dir = ROOT_URL . _APP_DIR . _ADMIN_DIR;
 
 $app_config = [
-	'siteName' => _SITE_NAME,
-	'rootUrl' => $admin_url,
+	'siteName'   => _SITE_NAME,
+	'rootUrl'    => $admin_url,
 	'apiBaseUrl' => ROOT_URL . ((_DEFAULT_BASE_MODULE == 'api' ? '' : 'api/')),
 ];
 

@@ -62,10 +62,15 @@ $default_config = [
  */
 
 class Core {
+
+	/** ----------------------------------------------------------------------------
+	 * Init Core
+	 */
+
 	public function init() {
 		$this->load_configuration();
 
-		if (_DEBUG === true) {
+		if (_DEBUG) {
 			$this->force_display_php_errors();
 		}
 
@@ -99,11 +104,11 @@ class Core {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Force display PHP errors
 	 */
 
-	private function force_display_php_errors() {
+	public function force_display_php_errors() {
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
 		error_reporting(E_ALL);
