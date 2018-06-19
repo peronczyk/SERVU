@@ -32,8 +32,8 @@ $core->init();
  * Prepare database object
  */
 
-$db_file = _STORAGE_DIR . 'database/' . _DB_FILE_NAME;
-$db = new Sqlite($db_file, ['debug' => _DEBUG]);
+$db_file = _CONFIG['storage_dir'] . 'database/' . _CONFIG['db_file_name'];
+$db = new Sqlite($db_file, ['debug' => _CONFIG['debug']]);
 
 
 /**
@@ -41,9 +41,9 @@ $db = new Sqlite($db_file, ['debug' => _DEBUG]);
  */
 
 $request_chunks = explode('/', trim(REQUEST_URI, '/'));
-if ($request_chunks[0] && is_dir(_APP_DIR . $request_chunks[0])) {
-	require_once _APP_DIR . $request_chunks[0] . '/index.php';
+if ($request_chunks[0] && is_dir(_CONFIG['app_dir'] . $request_chunks[0])) {
+	require_once _CONFIG['app_dir'] . $request_chunks[0] . '/index.php';
 }
 else {
-	require_once _APP_DIR . _DEFAULT_BASE_MODULE . '/index.php';
+	require_once _CONFIG['app_dir'] . _CONFIG['default_base_module'] . '/index.php';
 }

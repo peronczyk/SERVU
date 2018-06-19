@@ -1,6 +1,6 @@
 <?php
 
-class UsersController extends ModulesController {
+class UsersController {
 
 	private $actions;
 

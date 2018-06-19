@@ -10,7 +10,7 @@ class DependencyContainer {
 	 * Add
 	 */
 
-	public function add($name, $dependency = null) {
+	public function add($name, $dependency = null) : object {
 		if (is_array($name)) {
 			$this->dependencies = array_merge($this->dependencies, $name);
 		}
@@ -20,6 +20,8 @@ class DependencyContainer {
 		else {
 			throw new Exception("");
 		}
+
+		return $this;
 	}
 
 
@@ -29,7 +31,7 @@ class DependencyContainer {
 	 * @param object $object
 	 */
 
-	public function register($object) {
+	public function register($object) : void {
 		foreach ($this->dependencies as $name => $dependency) {
 			$name = $this->prefix . $name;
 

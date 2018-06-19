@@ -19,8 +19,9 @@ class RestStore {
 	 * Set store variable
 	 */
 
-	public function set($key, $value) {
+	public function set($key, $value) : object {
 		$this->store[$key] = $value;
+		return $this;
 	}
 
 
@@ -28,7 +29,7 @@ class RestStore {
 	 * Display JSON
 	 */
 
-	public function output() {
+	public function output() : void {
 		header('Content-type: application/json');
 		echo json_encode($this->store);
 		exit;

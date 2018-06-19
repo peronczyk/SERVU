@@ -1,6 +1,6 @@
 <?php
 
-class FilesController extends ModulesController {
+class FilesController {
 
 	private $actions;
 

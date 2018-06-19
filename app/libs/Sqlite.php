@@ -34,7 +34,7 @@ class Sqlite {
 	 * Constructor
 	 */
 
-	public function __construct($file, $options = []) {
+	public function __construct(string $file, array $options = []) {
 		$this->file = $file;
 
 		if (count($options) > 0) {
@@ -51,10 +51,9 @@ class Sqlite {
 	 * Connect to database file
 	 * This method can be performed manually or it will be run automatically
 	 * at first use of method `all()`
-	 * @param string $file - path to sqlite file
 	 */
 
-	public function connect() {
+	public function connect() : void {
 		$this->connection = new PDO('sqlite:./' . $this->file);
 		$this->connection->setAttribute(
 			PDO::ATTR_ERRMODE,
@@ -68,7 +67,7 @@ class Sqlite {
 	 * @param string|array $fields
 	 */
 
-	public function select($fields = '*') {
+	public function select(string $fields = '*') : object {
 		$this->query_type = 'select';
 		$this->fields = $fields;
 		return $this;
@@ -79,7 +78,7 @@ class Sqlite {
 	 * INSERT
 	 */
 
-	public function insert($arr) {
+	public function insert(array $arr) : object {
 		if (!is_array($arr) || count($arr) < 1) {
 			throw new Exception("There are no valid data passed to method `insert` that can be inserted into database.");
 		}
@@ -95,7 +94,7 @@ class Sqlite {
 	 * Shortcut to 'SELECT'
 	 */
 
-	public function count() {
+	public function count() : int {
 		return $this->select('COUNT(*) as count');
 	}
 
@@ -105,7 +104,7 @@ class Sqlite {
 	 * @param string $table
 	 */
 
-	public function from($table) {
+	public function from(string $table) : object {
 		$this->table = $table;
 		return $this;
 	}
@@ -115,7 +114,7 @@ class Sqlite {
 	 * WHERE
 	 */
 
-	public function where($conditions) {
+	public function where(string $conditions) : object {
 		$this->conditions = $conditions;
 		return $this;
 	}
@@ -125,7 +124,7 @@ class Sqlite {
 	 * ORDER BY
 	 */
 
-	public function order_by($order, $dir = 'ASC') {
+	public function order_by(string $order, string $dir = 'ASC') {
 		$this->order_by = $order;
 		$this->order_dir = strtoupper($dir);
 		return $this;
@@ -136,7 +135,7 @@ class Sqlite {
 	 * Perform query
 	 */
 
-	public function query($query_string) {
+	public function query(string $query_string) : object {
 		$this->result = $this->connection->query($query_string);
 		$this->log[] = $query_string;
 		$this->reset();
@@ -149,9 +148,11 @@ class Sqlite {
 	 * Perform query and return array of elements
 	 */
 
-	public function all() {
+	public function all() : array {
 		// Autoconnect to DB if there is no open connection
-		if (!$this->connection) $this->connect();
+		if (!$this->connection) {
+			$this->connect();
+		}
 
 		// Perform query
 		$this->query($this->prepare_query());
@@ -165,7 +166,7 @@ class Sqlite {
 	 * Perform insertion
 	 */
 
-	public function into($table) {
+	public function into(string $table) : bool {
 		if ($this->query_type != 'insert') {
 			throw new Exception("Method `into` can be used only with `insert` query type.");
 		}
@@ -184,7 +185,7 @@ class Sqlite {
 	 * Prepare query
 	 */
 
-	protected function prepare_query() {
+	protected function prepare_query() : string {
 		switch ($this->query_type) {
 
 			/**
@@ -236,7 +237,7 @@ class Sqlite {
 	 * Reset prepared query data
 	 */
 
-	public function reset() {
+	public function reset() : void {
 		$this->query_type = null;
 		$this->fields = null;
 		$this->insert_data = null;
@@ -251,7 +252,7 @@ class Sqlite {
 	 * Get queries log
 	 */
 
-	public function get_log() {
+	public function get_log() : array {
 		return $this->log;
 	}
 }

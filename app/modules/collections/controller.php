@@ -1,6 +1,6 @@
 <?php
 
-class CollectionsController extends ModulesController {
+class CollectionsController {
 
 	private $actions;
 

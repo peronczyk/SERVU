@@ -19,42 +19,42 @@
  * Remember that each of the setting names should start with underscore "_".
  */
 
-$default_config = [
+define('DEFAULT_APP_CONFIG', [
 	// This variable will be added to meta section of all api request. It also will
 	// be displayed on front page of admin panel
-	'_SITE_NAME' => $_SERVER['SERVER_NAME'],
+	'site_name' => $_SERVER['SERVER_NAME'],
 
 	// Force displaying all errors, warnings and notices
 	// by default this mode is turned on when working on localhost
-	'_DEBUG' => preg_match('/(localhost|::1|\.dev)$/', @$_SERVER['SERVER_NAME']),
+	'debug' => preg_match('/(localhost|::1|\.dev)$/', @$_SERVER['SERVER_NAME']),
 
 	// Send security headers and remove ones that can potentially expose
 	// vulnerabilities. Learn more: https://securityheaders.io
-	'_SECURE_HEADERS' => true,
+	'secure_headers' => true,
 
 	// Force HTTPS
-	'_FORCE_HTTPS' => true,
+	'force_https' => true,
 
 	// Primary module, that will be displayed to user when he enters root app path
-	'_DEFAULT_BASE_MODULE' => 'api',
+	'default_base_module' => 'api',
 
 	// Storage directory
 	// It contains SQLite database and uploaded files
-	'_STORAGE_DIR' => 'storage/',
+	'storage_dir' => 'storage/',
 
 	// App directory
-	'_APP_DIR' => 'app/',
+	'app_dir' => 'app/',
 
 	// Subdirectories of app directory
-	'_ADMIN_DIR' => 'admin/',
-	'_API_DIR' => 'api/',
-	'_LIBS_DIR' => 'libs/',
-	'_MODULES_DIR' => 'modules/',
+	'admin_dir' => 'admin/',
+	'api_dir' => 'api/',
+	'libs_dir' => 'libs/',
+	'modules_dir' => 'modules/',
 
 	// Database file name. You can change this file name to something more complex
 	// if you want to be more sure no one will access it from browser.
-	'_DB_FILE_NAME' => 'db.sqlite',
-];
+	'db_file_name' => 'db.sqlite',
+]);
 
 
 /**
@@ -63,14 +63,17 @@ $default_config = [
 
 class Core {
 
+	private $autoloaded_classes = [];
+
+
 	/** ----------------------------------------------------------------------------
 	 * Init Core
 	 */
 
-	public function init() {
+	public function init() : void {
 		$this->load_configuration();
 
-		if (_DEBUG) {
+		if (_CONFIG['debug']) {
 			$this->force_display_php_errors();
 		}
 
@@ -78,11 +81,11 @@ class Core {
 		$this->define_paths();
 		$this->define_autoloader();
 
-		if (_SECURE_HEADERS) {
+		if (_CONFIG['secure_headers']) {
 			$this->secure_headers();
 		}
 
-		if (_FORCE_HTTPS) {
+		if (_CONFIG['force_https']) {
 			$this->force_https();
 		}
 	}
@@ -91,15 +94,16 @@ class Core {
 	 * Configuration defines
 	 */
 
-	private function load_configuration() {
-		$config = $GLOBALS['default_config'];
+	private function load_configuration() : bool {
 		if (file_exists('config.php')) {
 			$overwrite = include_once 'config.php';
-			$config = array_merge($config, $overwrite);
+			$config = array_merge(DEFAULT_APP_CONFIG, $overwrite);
+			define('_CONFIG', $config);
+			return true;
 		}
-
-		foreach($config as $key => $val) {
-			define($key, $val);
+		else {
+			define('_CONFIG', DEFAULT_APP_CONFIG);
+			return false;
 		}
 	}
 
@@ -108,7 +112,7 @@ class Core {
 	 * Force display PHP errors
 	 */
 
-	public function force_display_php_errors() {
+	public function force_display_php_errors() : void {
 		ini_set('display_errors', 1);
 		ini_set('display_startup_errors', 1);
 		error_reporting(E_ALL);
@@ -119,7 +123,7 @@ class Core {
 	 * Start session
 	 */
 
-	private function start_session() {
+	private function start_session() : void {
 		// Force to use the HTTP-Only and Secure flags when sending the session
 		// identifier cookie, which prevents a successful XSS attack from stealing
 		// users' cookies and forces them to only be sent over HTTPS, respectively.
@@ -134,7 +138,7 @@ class Core {
 	 * App paths definitions required to proper rooting
 	 */
 
-	private function define_paths() {
+	private function define_paths() : void {
 
 		/**
 		 * PROTOCOL (http or https)
@@ -151,7 +155,9 @@ class Core {
 
 		$root_uri = $_SERVER['SERVER_NAME'];
 		$script_dirname = dirname($_SERVER['SCRIPT_NAME']);
-		if ($script_dirname != '/') $root_uri .= $script_dirname;
+		if ($script_dirname != '/') {
+			$root_uri .= $script_dirname;
+		}
 
 		define('ROOT_URI', $root_uri . '/');
 
@@ -177,7 +183,7 @@ class Core {
 	 * vulnerabilities. Learn more: https://securityheaders.io
 	 */
 
-	private function secure_headers() {
+	private function secure_headers() : void {
 		// Enables XSS filtering. Rather than sanitizing the page,
 		// the browser will prevent rendering of the page if an attack is detected.
 		header('X-XSS-Protection: 1; mode=block');
@@ -199,7 +205,7 @@ class Core {
 	 * Force using of HTTPS
 	 */
 
-	private function force_https() {
+	private function force_https() : void {
 		// The HTTP Strict-Transport-Security response header (HSTS) lets a web site
 		// tell browsers that it should only be accessed using HTTPS,
 		// instead of using HTTP.
@@ -211,11 +217,12 @@ class Core {
 	 * Autoload libs (PSR-0)
 	 */
 
-	public function define_autoloader() {
+	public function define_autoloader() : void {
 		spl_autoload_register(function($class) {
-			$class_path = __DIR__ . '/' . _APP_DIR . _LIBS_DIR . str_replace('\\', '/', $class) . '.php';
+			$class_path = __DIR__ . '/' . _CONFIG['app_dir'] . _CONFIG['libs_dir'] . str_replace('\\', '/', $class) . '.php';
 			if (file_exists($class_path)) {
 				include_once $class_path;
+				array_push($this->autoloaded_classes, $class);
 			}
 		});
 	}
@@ -225,15 +232,15 @@ class Core {
 	 * Get modules list
 	 */
 
-	public function get_modules_list() {
-		$directories = scandir(_APP_DIR . _MODULES_DIR);
+	public function get_modules_list() : array {
+		$directories = scandir(_CONFIG['app_dir'] . _CONFIG['modules_dir']);
 		$modules = [];
 		$index = 0;
 
 		foreach($directories as $key => $dir) {
 			if ($dir == '.' || $dir == '..' || $dir == 'default') continue;
 
-			$module_config_file = _APP_DIR . _MODULES_DIR . $dir . '/_config.php';
+			$module_config_file = _CONFIG['app_dir'] . _CONFIG['modules_dir'] . $dir . '/_config.php';
 
 			if (is_file($module_config_file)) {
 				$modules[$index] = include_once $module_config_file;

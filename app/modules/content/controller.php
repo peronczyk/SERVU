@@ -1,6 +1,6 @@
 <?php
 
-class ContentController extends ModulesController {
+class ContentController {
 
 	private $actions;
 

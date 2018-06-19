@@ -29,7 +29,7 @@ class Auth {
 	 * Get auth lvl
 	 */
 
-	public function get_lvl() {
+	public function get_lvl() : int {
 		return $this->lvl;
 	}
 
@@ -38,7 +38,7 @@ class Auth {
 	 * Set auth lvl
 	 */
 
-	public function set_lvl($lvl) {
+	public function set_lvl($lvl) : void {
 		$_SESSION['servant_auth_lvl'] = $lvl;
 		$this->lvl = $lvl;
 	}
@@ -48,7 +48,7 @@ class Auth {
 	 * Validate email
 	 */
 
-	public function email_validate($email) {
+	public function email_validate($email) : bool {
 		return (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) ? true : false;
 	}
 
@@ -57,7 +57,7 @@ class Auth {
 	 * Validate password
 	 */
 
-	public function password_validate($password) {
+	public function password_validate($password) : bool {
 		return strlen($password) > 6;
 	}
 
@@ -66,7 +66,7 @@ class Auth {
 	 * Password encode
 	 */
 
-	public function password_encode($password) {
+	public function password_encode($password) : string {
 		return password_hash($password, PASSWORD_BCRYPT);
 	}
 
@@ -75,7 +75,7 @@ class Auth {
 	 * Verify password
 	 */
 
-	public function password_verify($password, $hash) {
+	public function password_verify($password, $hash) : bool {
 		return password_verify($password, $hash);
 	}
 
@@ -84,7 +84,7 @@ class Auth {
 	 * Login
 	 */
 
-	public function login($email, $password) {
+	public function login($email, $password) : bool {
 		if (empty($email)) {
 			throw new Exception("Email not provided");
 		}
@@ -114,16 +114,17 @@ class Auth {
 			$this->set_lvl($user[0]['access-lvl']);
 			return true;
 		}
+
+		return false;
 	}
 
 
 	/**
-	 * Login
+	 * Logout
 	 */
 
-	public function logout() {
+	public function logout() : bool {
 		$this->set_lvl(self::LVL_USER);
-
 		return ($this->get_lvl() === self::LVL_USER);
 	}
 

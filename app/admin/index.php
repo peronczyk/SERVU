@@ -4,12 +4,12 @@
 $admin_url = ROOT_URL . 'admin/';
 
 // Physical address of admin app
-$admin_dir = ROOT_URL . _APP_DIR . _ADMIN_DIR;
+$admin_dir = ROOT_URL . _CONFIG['app_dir'] . _CONFIG['admin_dir'];
 
 $app_config = [
-	'siteName'   => _SITE_NAME,
+	'siteName'   => _CONFIG['site_name'],
 	'rootUrl'    => $admin_url,
-	'apiBaseUrl' => ROOT_URL . ((_DEFAULT_BASE_MODULE == 'api' ? '' : 'api/')),
+	'apiBaseUrl' => ROOT_URL . ((_CONFIG['default_base_module'] == 'api' ? '' : 'api/')),
 ];
 
 $app_modules = $core->get_modules_list();
