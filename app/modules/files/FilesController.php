@@ -12,9 +12,9 @@ class FilesController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		require 'helpers.php';
+		require 'files_helpers.php';
 
-		require 'actions.php';
+		require 'FilesActions.php';
 		$this->actions = new FilesActions($dependencies);
 	}
 
@@ -36,9 +36,6 @@ class FilesController {
 	 */
 
 	public function create_dir() {
-		$this->require_auth(Auth::LVL_ADMIN);
-		$this->require_request_method('POST');
-
 		$dir_name = (!empty($_POST['name']))     ? $_POST['name']     : null;
 		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
 
@@ -52,9 +49,6 @@ class FilesController {
 	 */
 
 	public function upload() {
-		$this->require_auth(Auth::LVL_ADMIN);
-		$this->require_request_method('POST');
-
 		$result = $this->actions->upload($files, $location);
 		$this->_rest->set('success', $result);
 	}
@@ -65,10 +59,7 @@ class FilesController {
 	 */
 
 	public function delete() {
-		$this->require_auth(Auth::LVL_ADMIN);
-		$this->require_request_method('POST');
-
-		$location  = (!empty($_POST['location'])) ? $_POST['location'] : null;
+		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
 
 		$result = $this->actions->delete_file($_FILES, $location);
 		$this->_rest->set('success', $result);

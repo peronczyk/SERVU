@@ -9,10 +9,10 @@ class UsersController {
 	 * Constructor
 	 */
 
-	public function __construct($dependencies) {
+	public function __construct(DependencyContainer $dependencies) {
 		$dependencies->register($this);
 
-		require 'actions.php';
+		require 'UsersActions.php';
 		$this->actions = new UsersActions($dependencies);
 	}
 
@@ -22,8 +22,6 @@ class UsersController {
 	 */
 
 	public function login() {
-		$this->require_request_method('POST');
-
 		$login_status = $this->_auth->login(@$_POST['email'], @$_POST['password']);
 		$this->_rest->set('status', $login_status);
 	}
@@ -45,7 +43,7 @@ class UsersController {
 
 	public function get_list() {
 		$users_list = $this->actions->get_list();
-		$this->_rest->set('data', $users_list);
+		$this->_rest_store->set('data', $users_list);
 	}
 
 
@@ -54,8 +52,6 @@ class UsersController {
 	 */
 
 	public function create() {
-		$this->require_auth(Auth::LVL_ADMIN);
-
 		if (empty($_GET['email'])) {
 			throw new Exception("Email not provided");
 		}
@@ -72,7 +68,11 @@ class UsersController {
 			throw new Exception("Provided password does not meet the requirements");
 		}
 
-		$result = $this->actions->create_user($_GET['email'], $this->_auth->password_encode($_GET['password']), Auth::LVL_ADMIN);
+		$result = $this->actions->create_user(
+			$_GET['email'],
+			$this->_auth->password_encode($_GET['password']),
+			Auth::LVL_ADMIN
+		);
 
 		if (!$result) {
 			throw new Exception("Unknown error occured while adding new user");

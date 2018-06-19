@@ -15,8 +15,6 @@
  * All keys will be turned to constants.
  * This configuration can be overwritten by file 'config.php' placed in main
  * directory, which should return array with variables that you want to change.
- *
- * Remember that each of the setting names should start with underscore "_".
  */
 
 define('DEFAULT_APP_CONFIG', [
@@ -50,6 +48,9 @@ define('DEFAULT_APP_CONFIG', [
 	'api_dir' => 'api/',
 	'libs_dir' => 'libs/',
 	'modules_dir' => 'modules/',
+
+	// Each of the modules config filename
+	'modules_config_filename' => 'config.php',
 
 	// Database file name. You can change this file name to something more complex
 	// if you want to be more sure no one will access it from browser.
@@ -97,8 +98,7 @@ class Core {
 	private function load_configuration() : bool {
 		if (file_exists('config.php')) {
 			$overwrite = include_once 'config.php';
-			$config = array_merge(DEFAULT_APP_CONFIG, $overwrite);
-			define('_CONFIG', $config);
+			define('_CONFIG', array_merge(DEFAULT_APP_CONFIG, $overwrite));
 			return true;
 		}
 		else {
@@ -250,5 +250,14 @@ class Core {
 		}
 
 		return $modules;
+	}
+
+
+	/**
+	 * Get list of autoloaded classes
+	 */
+
+	public function get_autoloaded_classes() : array {
+		return $this->autoloaded_classes;
 	}
 }

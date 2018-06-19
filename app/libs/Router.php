@@ -27,25 +27,27 @@ class Router {
 	}
 
 
+	/**
+	 * Prepare regexp
+	 */
+
+	private function prepare_regexp(string $path) : string {
+		return $path;
+	}
+
+
 	/** ----------------------------------------------------------------------------
 	 * Run route that matches actual path
 	 */
 
 	public function run() {
 		foreach ($this->routes as $route) {
-			if (isset($route['controller'])) {
-				$controller = new $route['controller']();
-
-				if (isset($route['method'])) {
-					return $controller->$route['method'];
-				}
-
-				return $controller;
-			}
-			if (isset($route['callback'])) {
-				return $route['callback']($this->dependencies);
-			}
+			echo $route['path'] . '<br>';
+			// if (isset($route['callback'])) {
+			// 	return $route['callback']($this->dependencies);
+			// }
 		}
+		exit;
 
 		throw new Exception("Selected route has no callable function or method.");
 	}

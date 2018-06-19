@@ -2,32 +2,15 @@
 
 class ModulesHandler {
 	private $modules_configs = [];
+	private $request;
 	private $modules_dir;
 	private $config_file_name;
 
 
-	public function __construct(string $modules_dir, string $config_file_name) {
+	public function __construct(string $request, string $modules_dir, string $config_file_name) {
+		$this->request = $request;
 		$this->modules_dir = $modules_dir;
 		$this->config_file_name = $config_file_name;
-	}
-
-
-	/**
-	 * Collect configs
-	 */
-
-	public function collect_configs() {
-		$directories = scandir($this->modules_dir);
-
-		foreach($directories as $key => $dir) {
-			if ($dir == '.' || $dir == '..' || $dir == 'default') continue;
-
-			$module_config_file = $this->modules_dir . $dir . '/' . $this->config_file_name;
-
-			if (is_file($module_config_file)) {
-				$this->modules_configs[$dir] = include_once $module_config_file;
-			}
-		}
 	}
 
 
@@ -35,9 +18,21 @@ class ModulesHandler {
 	 * Get configs
 	 */
 
-	public function get_configs() {
+	public function get_configs() : array {
 		if (!$this->modules_configs) {
-			$this->collect_configs();
+			$directories = scandir($this->modules_dir);
+
+			foreach($directories as $key => $dir) {
+				if ($dir == '.' || $dir == '..' || $dir == 'default') {
+					continue;
+				}
+
+				$module_config_file = $this->modules_dir . $dir . '/' . $this->config_file_name;
+
+				if (is_file($module_config_file)) {
+					$this->modules_configs[$dir] = include_once $module_config_file;
+				}
+			}
 		}
 
 		return $this->modules_configs;

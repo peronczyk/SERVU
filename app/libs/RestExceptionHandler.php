@@ -3,9 +3,11 @@
 class RestExceptionHandler {
 
 	private $store;
+	private $debug;
 
-	public function __construct(RestStore $rest_store) {
+	public function __construct(RestStore $rest_store, bool $debug = false) {
 		$this->store = $rest_store;
+		$this->debug = $debug;
 
 		// Add custom handlers for all errors and exceptions
 		// to allow of displaying them in restfull way
@@ -44,7 +46,7 @@ class RestExceptionHandler {
 			'file'       => str_replace('\\', '/', $exception->getFile()),
 			'line'       => $exception->getLine(),
 			'code'       => $exception->getCode(),
-			'trace'      => _CONFIG['debug'] ? $exception->getTrace() : 'Available only in debug mode',
+			'trace'      => $this->debug ? $exception->getTrace() : 'Available only in debug mode',
 		]]);
 		$this->store->output();
 	}

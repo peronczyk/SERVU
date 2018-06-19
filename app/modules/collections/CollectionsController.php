@@ -12,7 +12,7 @@ class CollectionsController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		require 'actions.php';
+		require 'CollectionsActions.php';
 		$this->actions = new CollectionsActions($dependencies);
 	}
 

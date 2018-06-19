@@ -12,7 +12,7 @@ class ContentController {
 	public function __construct($dependencies) {
 		$dependencies->register($this);
 
-		require 'actions.php';
+		require 'ContentActions.php';
 		$this->actions = new ContentActions($dependencies);
 	}
 

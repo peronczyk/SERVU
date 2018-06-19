@@ -42,6 +42,7 @@ $db = new Sqlite($db_file, ['debug' => _CONFIG['debug']]);
 
 $request_chunks = explode('/', trim(REQUEST_URI, '/'));
 if ($request_chunks[0] && is_dir(_CONFIG['app_dir'] . $request_chunks[0])) {
+	array_shift($request_chunks);
 	require_once _CONFIG['app_dir'] . $request_chunks[0] . '/index.php';
 }
 else {
