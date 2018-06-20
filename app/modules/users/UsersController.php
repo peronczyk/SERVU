@@ -22,7 +22,10 @@ class UsersController {
 	 */
 
 	public function login() {
-		$login_status = $this->_auth->login(@$_POST['email'], @$_POST['password']);
+		$login_status = $this->_auth->login(
+			$_POST['email'] ?? null,
+			$_POST['password'] ?? null
+		);
 		$this->_rest->set('status', $login_status);
 	}
 

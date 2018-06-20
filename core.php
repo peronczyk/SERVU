@@ -24,7 +24,7 @@ define('DEFAULT_APP_CONFIG', [
 
 	// Force displaying all errors, warnings and notices
 	// by default this mode is turned on when working on localhost
-	'debug' => preg_match('/(localhost|::1|\.dev)$/', @$_SERVER['SERVER_NAME']),
+	'debug' => preg_match('/(localhost|::1|\.dev)$/', $_SERVER['SERVER_NAME'] ?? ''),
 
 	// Send security headers and remove ones that can potentially expose
 	// vulnerabilities. Learn more: https://securityheaders.io
@@ -64,6 +64,11 @@ define('DEFAULT_APP_CONFIG', [
 
 class Core {
 
+	// Stores actual request as an array.
+	// This could be altered by method 'shift_processed_request'
+	private $processed_request = [];
+
+	// Stores list of classes that was autoloaded.
 	private $autoloaded_classes = [];
 
 
@@ -92,7 +97,9 @@ class Core {
 	}
 
 	/** ----------------------------------------------------------------------------
-	 * Configuration defines
+	 * Define configuration constant _CONFIG
+	 *
+	 * @return bool - true if overwriting config file exist
 	 */
 
 	private function load_configuration() : bool {
@@ -174,7 +181,8 @@ class Core {
 		 * app_request is created by Mod Rewrite configured in .htaccess file
 		 */
 
-		define('REQUEST_URI', @$_GET['app_request']);
+		define('REQUEST_URI', $_GET['app_request'] ?? '');
+		$this->processed_request = explode('/', trim(REQUEST_URI, '/'));
 	}
 
 
@@ -228,28 +236,30 @@ class Core {
 	}
 
 
-	/** ----------------------------------------------------------------------------
-	 * Get modules list
+	/**
+	 * Shift processed request
 	 */
 
-	public function get_modules_list() : array {
-		$directories = scandir(_CONFIG['app_dir'] . _CONFIG['modules_dir']);
-		$modules = [];
-		$index = 0;
+	public function shift_processed_request() : void {
+		array_shift($this->processed_request);
+	}
 
-		foreach($directories as $key => $dir) {
-			if ($dir == '.' || $dir == '..' || $dir == 'default') continue;
 
-			$module_config_file = _CONFIG['app_dir'] . _CONFIG['modules_dir'] . $dir . '/_config.php';
+	/**
+	 * Get first element of processed request
+	 */
 
-			if (is_file($module_config_file)) {
-				$modules[$index] = include_once $module_config_file;
-				$modules[$index]['node'] = $dir;
-				$index++;
-			}
-		}
+	public function get_first_of_processed_request() : string {
+		return $this->processed_request[0] ?? null;
+	}
 
-		return $modules;
+
+	/**
+	 * Get full processed request
+	 */
+
+	public function get_processed_request() : string {
+		return implode('/', $this->processed_request);
 	}
 
 

@@ -8,19 +8,21 @@ $auth = new Auth($db);
 
 $dependencies = new DependencyContainer();
 $dependencies->add([
+	'core'       => $core,
 	'db'         => $db,
 	'rest_store' => $rest_store,
 	'auth'       => $auth,
 ]);
 
 $router = new Router($dependencies);
+$router->add_requirement('auth_lvl', '>=', $auth->get_lvl());
 
-$modules_dir = _CONFIG['app_dir'] . _CONFIG['modules_dir'];
-$modules = new ModulesHandler(implode('/', $request_chunks), $modules_dir, _CONFIG['modules_config_filename']);
+$modules_path = _CONFIG['app_dir'] . _CONFIG['modules_dir'];
+$modules = new ModulesHandler($dependencies, $modules_path, _CONFIG['modules_config_filename']);
 $modules->get_configs();
 $modules->create_routes($router);
 
-$router->run();
+$router->run($core->get_processed_request());
 
 
 /**

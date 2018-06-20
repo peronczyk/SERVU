@@ -1,36 +1,23 @@
-<?php
-
-$module_controller_file = _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
-
-return [
+<?php return [
 	'name' => 'Users',
 	'icon' => 'users',
 	'routes' => [
 		[
-			'path' => 'list/',
+			'path' => 'list(/)',
 			'callback' => function($dependencies) {
-				require_once $module_controller_file;
+				require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
 				$controller = new UsersController($dependencies);
 				$controller->get_list();
 			},
-			'options' => [
-				'auth_lvl' => Auth::LVL_ADMIN
-			]
+			'auth_lvl' => Auth::LVL_USER
 		],
 		[
 			'method' => 'POST',
-			'path' => 'login/',
+			'path' => 'login(/)',
 			'callback' => function($dependencies) {
-				require_once $module_controller_file;
+				require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
 				$controller = new UsersController($dependencies);
 				$controller->login();
-			},
-		],
-		[
-			'method' => 'GET',
-			'path' => 'test/:number',
-			'callback' => function($dependencies) {
-				die('TEST OK');
 			},
 		],
 	],

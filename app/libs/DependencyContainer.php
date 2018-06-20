@@ -18,7 +18,7 @@ class DependencyContainer {
 			$dependencies[$name] = $dependency;
 		}
 		else {
-			throw new Exception("");
+			throw new Exception("There is no dependency provided in method 'add' in DependencyContainer");
 		}
 
 		return $this;
@@ -31,7 +31,7 @@ class DependencyContainer {
 	 * @param object $object
 	 */
 
-	public function register($object) : void {
+	public function register(object $object) : void {
 		foreach ($this->dependencies as $name => $dependency) {
 			$name = $this->prefix . $name;
 
