@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class ModulesHandler {
 	private $active_module;
 	private $modules_configs = [];

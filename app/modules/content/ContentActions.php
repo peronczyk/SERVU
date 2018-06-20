@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class ContentActions {
 
 	private $db_table_name = 'content';

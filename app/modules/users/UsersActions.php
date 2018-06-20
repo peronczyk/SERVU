@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class UsersActions {
 
 	private $db_table_name = 'users';

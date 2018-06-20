@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class RestStore {
 
 	// Storage for data that will be

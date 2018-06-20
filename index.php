@@ -15,6 +15,8 @@
  * =================================================================================
  */
 
+declare(strict_types=1);
+
 define('APP_START', microtime(true));
 define('APP_VERSION', '0.0.1');
 define('APP_INDEX', true);
