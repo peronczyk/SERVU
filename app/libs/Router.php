@@ -57,8 +57,10 @@ class Router {
 		}
 
 		foreach ($this->requirements as list($var_name, $operator, $compare_to)) {
-			// echo $compare_to . ' ' . $operator . ' ' . $route[$var_name];
-			// continue;
+			if (!isset($route[$var_name])) {
+				return true;
+			}
+
 			switch ($operator) {
 				case '==':
 					if ($compare_to == $route[$var_name]) return true; break;
@@ -79,7 +81,6 @@ class Router {
 					if ($compare_to <= $route[$var_name]) return true; break;
 			}
 		}
-		//exit;
 
 		return false;
 	}

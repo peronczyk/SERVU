@@ -90,8 +90,7 @@ class UsersController {
 	 * Remove user
 	 */
 
-	public function remove() {
-		$this->require_auth(Auth::LVL_ADMIN);
+	public function remove($params) {
 		/** @todo */
 	}
 }
