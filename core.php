@@ -15,7 +15,6 @@ declare(strict_types=1);
 /**
  * DEFAULT CONFIGURATION
  *
- * All keys will be turned to constants.
  * This configuration can be overwritten by file 'config.php' placed in main
  * directory, which should return array with variables that you want to change.
  */
@@ -151,10 +150,10 @@ class Core {
 	private function define_paths() : void {
 
 		/**
-		 * PROTOCOL (http or https)
+		 * Request protocol (http or https)
 		 */
 
-		define('PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http');
+		define('REQUEST_PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http');
 
 
 		/**
@@ -176,7 +175,7 @@ class Core {
 		 * ROOT URL
 		 */
 
-		define('ROOT_URL', PROTOCOL . '://' . ROOT_URI);
+		define('ROOT_URL', REQUEST_PROTOCOL . '://' . ROOT_URI);
 
 
 		/**
@@ -184,8 +183,8 @@ class Core {
 		 * app_request is created by Mod Rewrite configured in .htaccess file
 		 */
 
-		define('REQUEST_URI', $_GET['app_request'] ?? '');
-		$this->processed_request = explode('/', trim(REQUEST_URI, '/'));
+		define('REQUEST_TARGET', $_GET['app_request'] ?? '');
+		$this->processed_request = explode('/', trim(REQUEST_TARGET, '/'));
 	}
 
 
@@ -239,16 +238,7 @@ class Core {
 	}
 
 
-	/**
-	 * Shift processed request
-	 */
-
-	public function shift_processed_request() : void {
-		array_shift($this->processed_request);
-	}
-
-
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Get first element of processed request
 	 */
 
@@ -257,7 +247,7 @@ class Core {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Get full processed request
 	 */
 
@@ -266,7 +256,16 @@ class Core {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
+	 * Shift processed request
+	 */
+
+	public function shift_processed_request() : void {
+		array_shift($this->processed_request);
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * Get list of autoloaded classes
 	 */
 

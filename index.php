@@ -39,13 +39,24 @@ $db = new Sqlite($db_file, ['debug' => _CONFIG['debug']]);
 
 
 /**
- * Load base module - api or admin
+ * Initiate dependancy container
  */
 
-$request_chunks = explode('/', trim(REQUEST_URI, '/'));
-if ($request_chunks[0] && is_dir(_CONFIG['app_dir'] . $request_chunks[0])) {
-	array_shift($request_chunks);
-	require_once _CONFIG['app_dir'] . $request_chunks[0] . '/index.php';
+$dependencies = new DependencyContainer();
+$dependencies->add([
+	'core' => $core,
+	'db'   => $db,
+]);
+
+
+/**
+ * Load base module: api or admin
+ */
+
+$request_first_chunk = $core->get_first_of_processed_request();
+if ($request_first_chunk != _CONFIG['default_base_module'] && in_array($request_first_chunk, ['api', 'admin'])) {
+	require_once _CONFIG['app_dir'] . $request_first_chunk . '/index.php';
+	$core->shift_processed_request();
 }
 else {
 	require_once _CONFIG['app_dir'] . _CONFIG['default_base_module'] . '/index.php';

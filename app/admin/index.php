@@ -1,5 +1,10 @@
 <?php
 
+// Check if admin JS app files exists
+if (!file_exists(__DIR__ . '/dist/app.js')) {
+	throw new Exception('Administration panel application is missing. Probably it was not builded properly. To do this you should follow instructions available in admin panel readme.md file located in `app/admin/` directory.');
+}
+
 // URL visible in browser address bar
 $admin_url = ROOT_URL . 'admin/';
 
@@ -12,7 +17,9 @@ $app_config = [
 	'apiBaseUrl' => ROOT_URL . ((_CONFIG['default_base_module'] == 'api' ? '' : 'api/')),
 ];
 
-$app_modules = $core->get_modules_list();
+$modules_path = _CONFIG['app_dir'] . _CONFIG['modules_dir'];
+$modules = new ModulesHandler($dependencies, $modules_path, _CONFIG['modules_config_filename']);
+$app_modules = $modules->get_configs();
 
 ?><!DOCTYPE html>
 <html lang="en">

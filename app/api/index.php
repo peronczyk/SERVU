@@ -6,10 +6,7 @@ $rest_store = new RestStore();
 $rest_exception_handler = new RestExceptionHandler($rest_store, _CONFIG['debug']);
 $auth = new Auth($db);
 
-$dependencies = new DependencyContainer();
 $dependencies->add([
-	'core'       => $core,
-	'db'         => $db,
 	'rest_store' => $rest_store,
 	'auth'       => $auth,
 ]);
@@ -34,7 +31,7 @@ $rest_store->set('meta', [
 	'debug-mode'      => _CONFIG['debug'],
 	'request-method'  => $_SERVER['REQUEST_METHOD'],
 	'root-uri'        => ROOT_URI,
-	'request-uri'     => REQUEST_URI,
+	'request-target'  => REQUEST_TARGET,
 	'load-time'       => round(microtime(true) - APP_START, 4),
 	'queries'         => count($db->get_log()),
 	'access-lvl'      => $auth->get_lvl(),

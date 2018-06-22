@@ -15,14 +15,14 @@ const routes = [{
 }];
 
 // Add modules routes
-window.appModules.forEach(module => {
+for (let moduleId in window.appModules) {
 	routes.push({
-		path: '/' + module.node,
-		name: module.name,
-		component: modulesComponents[module.node],
-		icon: module.icon,
+		path: '/' + moduleId,
+		name: window.appModules.name,
+		component: modulesComponents[moduleId],
+		icon: window.appModules.icon,
 	});
-});
+};
 
 export default new VueRouter({
 	routes,

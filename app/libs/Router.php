@@ -116,9 +116,7 @@ class Router {
 	 */
 
 	public function run(string $actual_path) {
-		echo '<pre>';
 		foreach ($this->routes as $route) {
-			//echo $actual_path . ' | ' . $route['path'] . ' &nbsp;&nbsp;|&nbsp;&nbsp; ' . $this->prepare_regexp($route['path']) . '<br>';
 			if (
 				$route['method'] == $_SERVER['REQUEST_METHOD'] &&
 				$this->check_custom_requirements($route) &&
@@ -129,6 +127,6 @@ class Router {
 			}
 		}
 
-		throw new Exception("There is no route that matches path: {$actual_path} or that meet the requirements.");
+		throw new Exception("There is no route that matches path: '{$actual_path}' or that meet the requirements.");
 	}
 }
