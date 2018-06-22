@@ -25,7 +25,7 @@ class FilesActions {
 	 * Get files list
 	 */
 
-	public function get_files_list($location = '') {
+	public function getFilesList($location = '') {
 
 		// Validate $location
 		if (!empty($location)) {
@@ -79,7 +79,7 @@ class FilesActions {
 	 * Create directory
 	 */
 
-	public function create_dir($dir_name, $location) {
+	public function createDir($dir_name, $location) {
 		// Check if new directory name was provided
 		if (empty($dir_name)) {
 			throw new Exception("Name of the directory to be created was not provided.");
@@ -121,7 +121,7 @@ class FilesActions {
 	 * Delete file
 	 */
 
-	public function delete_file($file_name, $location) {
+	public function delete($file_name, $location) {
 		if (empty($file_name)) {
 			throw new Exception('File to be removed was not specified.');
 		}

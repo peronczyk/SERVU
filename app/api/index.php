@@ -12,12 +12,12 @@ $dependencies->add([
 ]);
 
 $router = new Router($dependencies);
-$router->add_requirement('auth_lvl', '>=', $auth->get_lvl());
+$router->addRequirement('auth_lvl', '>=', $auth->getLvl());
 
 $modules_path = _CONFIG['app_dir'] . _CONFIG['modules_dir'];
 $modules = new ModulesHandler($dependencies, $modules_path, _CONFIG['modules_config_filename']);
-$modules->get_configs();
-$modules->create_routes($router);
+$modules->getConfigs();
+$modules->createRoutes($router);
 
 $router->run($core->get_processed_request());
 
@@ -33,13 +33,13 @@ $rest_store->set('meta', [
 	'root-uri'        => ROOT_URI,
 	'request-target'  => REQUEST_TARGET,
 	'load-time'       => round(microtime(true) - APP_START, 4),
-	'queries'         => count($db->get_log()),
-	'access-lvl'      => $auth->get_lvl(),
+	'queries'         => count($db->getLog()),
+	'access-lvl'      => $auth->getLvl(),
 	'classes-loaded'  => $core->get_autoloaded_classes(),
 
 	// App version is visible only for logged in users
-	'app-version'     => ($auth->get_lvl() > Auth::LVL_USER) ? APP_VERSION : null,
-	'php-version'     => ($auth->get_lvl() > Auth::LVL_USER) ? phpversion() : null,
+	'app-version'     => ($auth->getLvl() > Auth::LVL_USER) ? APP_VERSION : null,
+	'php-version'     => ($auth->getLvl() > Auth::LVL_USER) ? phpversion() : null,
 ]);
 
 $rest_store->output();

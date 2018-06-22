@@ -2,7 +2,7 @@
 
 // Check if admin JS app files exists
 if (!file_exists(__DIR__ . '/dist/app.js')) {
-	throw new Exception('Administration panel application is missing. Probably it was not builded properly. To do this you should follow instructions available in admin panel readme.md file located in `app/admin/` directory.');
+	throw new Exception("Administration panel application is missing. Probably it was not builded properly. To do this you should follow instructions available in admin panel readme.md file located in `app/admin/` directory.");
 }
 
 // URL visible in browser address bar
@@ -19,7 +19,7 @@ $app_config = [
 
 $modules_path = _CONFIG['app_dir'] . _CONFIG['modules_dir'];
 $modules = new ModulesHandler($dependencies, $modules_path, _CONFIG['modules_config_filename']);
-$app_modules = $modules->get_configs();
+$app_modules = $modules->getConfigs();
 
 ?><!DOCTYPE html>
 <html lang="en">

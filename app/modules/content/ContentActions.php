@@ -20,7 +20,7 @@ class ContentActions {
 	 * Get one content details
 	 */
 
-	public function get_details($id) {
+	public function getDetails($id) {
 		$result = $this->_db
 			->select()
 			->from($this->db_table_name)
@@ -35,7 +35,7 @@ class ContentActions {
 	 * Get number of children
 	 */
 
-	public function get_number_of_children($parent_id) {
+	public function getNumberOfChildren($parent_id) {
 		$count_children = $this->_db
 			->count()
 			->from($this->db_table_name)
@@ -52,17 +52,17 @@ class ContentActions {
 	 * @param int $parent_id - default parent is root (0)
 	 */
 
-	public function get_children($parent_id = 0) {
+	public function getChildren($parent_id = 0) {
 		$result = $this->_db
 			->select()
 			->from($this->db_table_name)
 			->where("`parent-id` = {$parent_id}")
-			->order_by('order')
+			->orderBy('order')
 			->all();
 
 		// Add number of children
 		foreach ($result as $key => $val) {
-			$result[$key]['children'] = $this->get_number_of_children($val['id']);
+			$result[$key]['children'] = $this->getNumberOfChildren($val['id']);
 		}
 
 		return $result;

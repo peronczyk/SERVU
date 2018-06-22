@@ -25,10 +25,10 @@ class FilesController {
 	 * List
 	 */
 
-	public function get_list() {
+	public function getList() {
 		$location = (!empty($_GET['location'])) ? $_GET['location'] : null;
 
-		$files_list = $this->actions->get_files_list($location);
+		$files_list = $this->actions->getFilesList($location);
 		$this->_rest->set('data', $files_list);
 	}
 
@@ -37,11 +37,11 @@ class FilesController {
 	 * Create directory
 	 */
 
-	public function create_dir() {
+	public function createDir() {
 		$dir_name = (!empty($_POST['name']))     ? $_POST['name']     : null;
 		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
 
-		$result = $this->actions->create_dir($dir_name, $location);
+		$result = $this->actions->createDir($dir_name, $location);
 		$this->_rest->set('success', $result);
 	}
 
@@ -50,7 +50,7 @@ class FilesController {
 	 * Upload files
 	 */
 
-	public function upload() {
+	public function uploadFile() {
 		$result = $this->actions->upload($files, $location);
 		$this->_rest->set('success', $result);
 	}
@@ -60,10 +60,10 @@ class FilesController {
 	 * Delete file or directory
 	 */
 
-	public function delete() {
+	public function deleteFile() {
 		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
 
-		$result = $this->actions->delete_file($_FILES, $location);
+		$result = $this->actions->deleteFile($_FILES, $location);
 		$this->_rest->set('success', $result);
 	}
 }

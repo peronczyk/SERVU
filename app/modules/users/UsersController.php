@@ -46,8 +46,8 @@ class UsersController {
 	 * List
 	 */
 
-	public function get_list() {
-		$users_list = $this->actions->get_list();
+	public function getList() {
+		$users_list = $this->actions->getList();
 		$this->_rest_store->set('data', $users_list);
 	}
 
@@ -65,17 +65,17 @@ class UsersController {
 			throw new Exception("Password not provided");
 		}
 
-		if (!$this->_auth->email_validate($_GET['email'])) {
+		if (!$this->_auth->emailValidate($_GET['email'])) {
 			throw new Exception("Provided email address is incorrect");
 		}
 
-		if (!$this->_auth->password_validate($_GET['password'])) {
+		if (!$this->_auth->passwordValidate($_GET['password'])) {
 			throw new Exception("Provided password does not meet the requirements");
 		}
 
-		$result = $this->actions->create_user(
+		$result = $this->actions->createUser(
 			$_GET['email'],
-			$this->_auth->password_encode($_GET['password']),
+			$this->_auth->passwordEncode($_GET['password']),
 			Auth::LVL_ADMIN
 		);
 

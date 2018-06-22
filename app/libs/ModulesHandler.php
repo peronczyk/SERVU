@@ -22,7 +22,7 @@ class ModulesHandler {
 	 * Get configs
 	 */
 
-	public function get_configs() : array {
+	public function getConfigs() : array {
 		if (!$this->modules_configs) {
 			$directories = scandir($this->modules_dir);
 
@@ -47,7 +47,7 @@ class ModulesHandler {
 	 * Create routes
 	 */
 
-	public function create_routes(Router $router) {
+	public function createRoutes(Router $router) {
 		$module = $this->active_module;
 
 		if (!empty($module)) {

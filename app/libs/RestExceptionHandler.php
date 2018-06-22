@@ -13,9 +13,9 @@ class RestExceptionHandler {
 
 		// Add custom handlers for all errors and exceptions
 		// to allow of displaying them in restfull way
-		set_error_handler([$this, 'handle_error']);
-		set_exception_handler([$this, 'handle_exception']);
-		register_shutdown_function([$this, 'handle_shutdown']);
+		set_error_handler([$this, 'handleError']);
+		set_exception_handler([$this, 'handleException']);
+		register_shutdown_function([$this, 'handleShutdown']);
 	}
 
 
@@ -24,7 +24,7 @@ class RestExceptionHandler {
 	 * Mostly usable for catching all notices
 	 */
 
-	public function handle_error($code, $message, $filename = '', $line = 0, $context = []) : void {
+	public function handleError($code, $message, $filename = '', $line = 0, $context = []) : void {
 		$this->store->set('errors', [[
 			'message'    => $message,
 			'catched-by' => 'Error handler: ' . str_replace('\\', '/', __FILE__),
@@ -41,7 +41,7 @@ class RestExceptionHandler {
 	 * Used to catch all custom exceptions thrown by `throw new Exception()`
 	 */
 
-	public function handle_exception($exception) : void {
+	public function handleException($exception) : void {
 		$this->store->set('errors', [[
 			'message'    => $exception->getMessage(),
 			'catched-by' => 'Exception handler: ' . str_replace('\\', '/', __FILE__),
@@ -58,7 +58,7 @@ class RestExceptionHandler {
 	 * Handle script shutdown
 	 */
 
-	public function handle_shutdown() : void {
+	public function handleShutdown() : void {
 		// Check if there was any critical error before the shutdown
 		if (!is_null($error = error_get_last()) && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE])) {
 			ob_end_clean();

@@ -22,7 +22,7 @@ class Auth {
 		$this->_db = $db; // Database dependancy
 
 		if (isset($_SESSION['servant_auth_lvl']) && is_numeric($_SESSION['servant_auth_lvl']) && $_SESSION['servant_auth_lvl'] > self::LVL_USER) {
-			$this->set_lvl($_SESSION['servant_auth_lvl']);
+			$this->setLvl($_SESSION['servant_auth_lvl']);
 		}
 	}
 
@@ -31,7 +31,7 @@ class Auth {
 	 * Get auth lvl
 	 */
 
-	public function get_lvl() : int {
+	public function getLvl() : int {
 		return $this->lvl;
 	}
 
@@ -40,7 +40,7 @@ class Auth {
 	 * Set auth lvl
 	 */
 
-	public function set_lvl($lvl) : void {
+	public function setLvl($lvl) : void {
 		$_SESSION['servant_auth_lvl'] = $lvl;
 		$this->lvl = $lvl;
 	}
@@ -50,7 +50,7 @@ class Auth {
 	 * Validate email
 	 */
 
-	public function email_validate($email) : bool {
+	public function emailValidate($email) : bool {
 		return (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) ? true : false;
 	}
 
@@ -59,7 +59,7 @@ class Auth {
 	 * Validate password
 	 */
 
-	public function password_validate($password) : bool {
+	public function passwordValidate($password) : bool {
 		return strlen($password) > 6;
 	}
 
@@ -68,7 +68,7 @@ class Auth {
 	 * Password encode
 	 */
 
-	public function password_encode($password) : string {
+	public function passwordEncode($password) : string {
 		return password_hash($password, PASSWORD_BCRYPT);
 	}
 
@@ -77,7 +77,7 @@ class Auth {
 	 * Verify password
 	 */
 
-	public function password_verify($password, $hash) : bool {
+	public function passwordVerify($password, $hash) : bool {
 		return password_verify($password, $hash);
 	}
 
@@ -95,7 +95,7 @@ class Auth {
 			throw new Exception("Password not provided");
 		}
 
-		if (!$this->email_validate($email)) {
+		if (!$this->emailValidate($email)) {
 			throw new Exception("Provided email address is incorrect");
 		}
 
@@ -109,11 +109,11 @@ class Auth {
 			throw new Exception("User with this email addres does not exist");
 		}
 
-		if (!$this->password_verify($password, $user[0]['password'])) {
+		if (!$this->passwordVerify($password, $user[0]['password'])) {
 			throw new Exception("Provided password is incorrect");
 		}
 		else {
-			$this->set_lvl($user[0]['access-lvl']);
+			$this->setLvl($user[0]['access-lvl']);
 			return true;
 		}
 
@@ -126,8 +126,8 @@ class Auth {
 	 */
 
 	public function logout() : bool {
-		$this->set_lvl(self::LVL_USER);
-		return ($this->get_lvl() === self::LVL_USER);
+		$this->setLvl(self::LVL_USER);
+		return ($this->getLvl() === self::LVL_USER);
 	}
 
 }

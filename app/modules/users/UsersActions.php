@@ -20,7 +20,7 @@ class UsersActions {
 	 * Get list of users
 	 */
 
-	public function get_list() {
+	public function getList() {
 		$result = $this->_db
 			->select()
 			->from($this->db_table_name)
@@ -34,8 +34,8 @@ class UsersActions {
 	 * Create user
 	 */
 
-	public function create_user($email, $password_hash, $lvl = Auth::LVL_USER) {
-		if ($this->user_exists($email)) {
+	public function createUser($email, $password_hash, $lvl = Auth::LVL_USER) {
+		if ($this->userExists($email)) {
 			throw new Exception('User with this email address already exist.');
 		}
 
@@ -51,11 +51,11 @@ class UsersActions {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Check if user with specified email address exists
 	 */
 
-	public function user_exists($email) {
+	public function userExists($email) {
 		$result = $this->_db
 			->count()
 			->from($this->db_table_name)

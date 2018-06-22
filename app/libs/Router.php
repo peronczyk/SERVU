@@ -44,7 +44,7 @@ class Router {
 	 * Add requirement
 	 */
 
-	public function add_requirement($name, $operator, $to) : void {
+	public function addRequirement($name, $operator, $to) : void {
 		array_push($this->requirements, [$name, $operator, $to]);
 	}
 
@@ -53,7 +53,7 @@ class Router {
 	 * Check custom requirements
 	 */
 
-	private function check_custom_requirements($route) : bool {
+	private function checkCustomRequirements($route) : bool {
 		if (!$this->requirements) {
 			return true;
 		}
@@ -92,7 +92,7 @@ class Router {
 	 * Prepare regexp
 	 */
 
-	private function prepare_regexp(string $pattern) : string {
+	private function prepareRegexp(string $pattern) : string {
 		// Turn "(/)" into "/?"
 		$pattern = preg_replace('#\(/\)#', '/?', $pattern);
 
@@ -119,8 +119,8 @@ class Router {
 		foreach ($this->routes as $route) {
 			if (
 				$route['method'] == $_SERVER['REQUEST_METHOD'] &&
-				$this->check_custom_requirements($route) &&
-				preg_match($this->prepare_regexp($route['path']), $actual_path, $matches)
+				$this->checkCustomRequirements($route) &&
+				preg_match($this->prepareRegexp($route['path']), $actual_path, $matches)
 			) {
 				$route['callback']($this->dependencies, $matches);
 				return true;

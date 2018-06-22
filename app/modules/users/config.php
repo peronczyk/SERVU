@@ -8,7 +8,7 @@
 			'callback' => function($dependencies) {
 				require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
 				$controller = new UsersController($dependencies);
-				$controller->get_list();
+				$controller->getList();
 			},
 		],
 		[

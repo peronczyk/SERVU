@@ -126,7 +126,7 @@ class Sqlite {
 	 * ORDER BY
 	 */
 
-	public function order_by(string $order, string $dir = 'ASC') {
+	public function orderBy(string $order, string $dir = 'ASC') {
 		$this->order_by = $order;
 		$this->order_dir = strtoupper($dir);
 		return $this;
@@ -157,7 +157,7 @@ class Sqlite {
 		}
 
 		// Perform query
-		$this->query($this->prepare_query());
+		$this->query($this->prepareQuery());
 
 		// Fetch and return result
 		return $this->result->fetchAll(PDO::FETCH_ASSOC);
@@ -179,7 +179,7 @@ class Sqlite {
 		$this->table = $table;
 
 		// Perform query
-		return $this->query($this->prepare_query());
+		return $this->query($this->prepareQuery());
 	}
 
 
@@ -187,7 +187,7 @@ class Sqlite {
 	 * Prepare query
 	 */
 
-	protected function prepare_query() : string {
+	protected function prepareQuery() : string {
 		switch ($this->query_type) {
 
 			/**
@@ -254,7 +254,7 @@ class Sqlite {
 	 * Get queries log
 	 */
 
-	public function get_log() : array {
+	public function getLog() : array {
 		return $this->log;
 	}
 }

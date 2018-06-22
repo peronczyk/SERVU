@@ -23,7 +23,7 @@ class CollectionsController {
 	 * List
 	 */
 
-	public function get_list() {
+	public function getList() {
 		$collections_list = $this->_db->select()->from('collections')->all();
 		foreach($collections_list as $key => $val) {
 			$collections_list[$key]['fields'] = json_decode($val['fields']);
