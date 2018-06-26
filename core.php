@@ -66,10 +66,6 @@ define('DEFAULT_APP_CONFIG', [
 
 class Core {
 
-	// Stores actual request as an array.
-	// This could be altered by method 'shift_processed_request'
-	private $processed_request = [];
-
 	// Stores list of classes that was autoloaded.
 	private $autoloaded_classes = [];
 
@@ -79,22 +75,22 @@ class Core {
 	 */
 
 	public function init() : void {
-		$this->load_configuration();
+		$this->loadConfiguration();
 
 		if (_CONFIG['debug']) {
-			$this->force_display_php_errors();
+			$this->forceDisplayPhpErrors();
 		}
 
-		$this->start_session();
-		$this->define_paths();
-		$this->define_autoloader();
+		$this->startSession();
+		$this->definePaths();
+		$this->defineAutoloader();
 
 		if (_CONFIG['secure_headers']) {
-			$this->secure_headers();
+			$this->sendSecureHeaders();
 		}
 
 		if (_CONFIG['force_https']) {
-			$this->force_https();
+			$this->forceHttps();
 		}
 	}
 
@@ -104,7 +100,7 @@ class Core {
 	 * @return bool - true if overwriting config file exist
 	 */
 
-	private function load_configuration() : bool {
+	private function loadConfiguration() : bool {
 		if (file_exists('config.php')) {
 			$overwrite = include_once 'config.php';
 			define('_CONFIG', array_merge(DEFAULT_APP_CONFIG, $overwrite));
@@ -121,7 +117,7 @@ class Core {
 	 * Force display PHP errors
 	 */
 
-	public function force_display_php_errors() : void {
+	public function forceDisplayPhpErrors() : void {
 		ini_set('display_errors', '1');
 		ini_set('display_startup_errors', '1');
 		error_reporting(E_ALL);
@@ -132,7 +128,7 @@ class Core {
 	 * Start session
 	 */
 
-	private function start_session() : void {
+	private function startSession() : void {
 		// Force to use the HTTP-Only and Secure flags when sending the session
 		// identifier cookie, which prevents a successful XSS attack from stealing
 		// users' cookies and forces them to only be sent over HTTPS, respectively.
@@ -147,7 +143,7 @@ class Core {
 	 * App paths definitions required to proper rooting
 	 */
 
-	private function define_paths() : void {
+	private function definePaths() : void {
 
 		/**
 		 * Request protocol (http or https)
@@ -193,7 +189,7 @@ class Core {
 	 * vulnerabilities. Learn more: https://securityheaders.io
 	 */
 
-	private function secure_headers() : void {
+	private function sendSecureHeaders() : void {
 		// Enables XSS filtering. Rather than sanitizing the page,
 		// the browser will prevent rendering of the page if an attack is detected.
 		header('X-XSS-Protection: 1; mode=block');
@@ -215,7 +211,7 @@ class Core {
 	 * Force using of HTTPS
 	 */
 
-	private function force_https() : void {
+	private function forceHttps() : void {
 		// The HTTP Strict-Transport-Security response header (HSTS) lets a web site
 		// tell browsers that it should only be accessed using HTTPS,
 		// instead of using HTTP.
@@ -227,7 +223,7 @@ class Core {
 	 * Autoload libs (PSR-0)
 	 */
 
-	public function define_autoloader() : void {
+	public function defineAutoloader() : void {
 		spl_autoload_register(function($class) {
 			$class_path = __DIR__ . '/' . _CONFIG['app_dir'] . _CONFIG['libs_dir'] . str_replace('\\', '/', $class) . '.php';
 			if (file_exists($class_path)) {
@@ -239,37 +235,10 @@ class Core {
 
 
 	/** ----------------------------------------------------------------------------
-	 * Get first element of processed request
-	 */
-
-	public function get_first_of_processed_request() : string {
-		return $this->processed_request[0] ?? null;
-	}
-
-
-	/** ----------------------------------------------------------------------------
-	 * Get full processed request
-	 */
-
-	public function get_processed_request() : string {
-		return implode('/', $this->processed_request);
-	}
-
-
-	/** ----------------------------------------------------------------------------
-	 * Shift processed request
-	 */
-
-	public function shift_processed_request() : void {
-		array_shift($this->processed_request);
-	}
-
-
-	/** ----------------------------------------------------------------------------
 	 * Get list of autoloaded classes
 	 */
 
-	public function get_autoloaded_classes() : array {
+	public function getAutoloadedClassesList() : array {
 		return $this->autoloaded_classes;
 	}
 }

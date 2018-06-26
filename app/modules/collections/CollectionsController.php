@@ -2,20 +2,25 @@
 
 declare(strict_types=1);
 
-class CollectionsController {
+final class CollectionsController {
 
 	private $actions;
+
+	// Dependencies
+	private $_db;
+	private $_rest_store;
 
 
 	/** ----------------------------------------------------------------------------
 	 * Constructor
 	 */
 
-	public function __construct($dependencies) {
-		$dependencies->register($this);
+	public function __construct(DependencyContainer $container) {
+		$this->_db         = $container->get('db');
+		$this->_rest_store = $container->get('rest_store');
 
 		require 'CollectionsActions.php';
-		$this->actions = new CollectionsActions($dependencies);
+		$this->actions = new CollectionsActions($container);
 	}
 
 
@@ -28,7 +33,7 @@ class CollectionsController {
 		foreach($collections_list as $key => $val) {
 			$collections_list[$key]['fields'] = json_decode($val['fields']);
 		}
-		$this->_rest->set('data', $collections_list);
+		$this->_rest_store->set('data', $collections_list);
 	}
 
 

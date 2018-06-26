@@ -2,20 +2,23 @@
 
 declare(strict_types=1);
 
-class ContentController {
+final class ContentController {
 
 	private $actions;
+
+	// Dependencies
+	private $_rest_store;
 
 
 	/** ----------------------------------------------------------------------------
 	 * Constructor
 	 */
 
-	public function __construct($dependencies) {
-		$dependencies->register($this);
+	public function __construct(DependencyContainer $container) {
+		$this->_rest_store = $container->get('rest_store');
 
 		require 'ContentActions.php';
-		$this->actions = new ContentActions($dependencies);
+		$this->actions = new ContentActions($container);
 	}
 
 
@@ -25,7 +28,7 @@ class ContentController {
 
 	public function index($request) {
 		if (is_numeric($request[0])) {
-			$this->_rest->set('details', $this->actions->getDetails($request[0]));
+			$this->_rest_store->set('details', $this->actions->getDetails($request[0]));
 		}
 		else {
 			throw new Exception('Requested content id should be numeric');
@@ -55,6 +58,6 @@ class ContentController {
 			$content_list = $this->actions->getChildren();
 		}
 
-		$this->_rest->set('data', $content_list);
+		$this->_rest_store->set('data', $content_list);
 	}
 }

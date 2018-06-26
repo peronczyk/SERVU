@@ -14,9 +14,7 @@ class FilesActions {
 	 * Constructor
 	 */
 
-	public function __construct($dependencies) {
-		$dependencies->register($this);
-
+	public function __construct(DependencyContainer $container) {
 		$this->uploads_dir = _CONFIG['storage_dir'] . 'uploads/';
 	}
 

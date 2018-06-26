@@ -31,33 +31,48 @@ $core->init();
 
 
 /**
+ * Initiate dependancy container
+ */
+
+$container = new DependencyContainer();
+$container->add('core', $core);
+
+
+/**
  * Prepare database object
  */
 
 $db_file = _CONFIG['storage_dir'] . 'database/' . _CONFIG['db_file_name'];
 $db = new Sqlite($db_file, ['debug' => _CONFIG['debug']]);
+$container->add('db', $db);
 
 
 /**
- * Initiate dependancy container
+ * Initiate authentication object
  */
 
-$dependencies = new DependencyContainer();
-$dependencies->add([
-	'core' => $core,
-	'db'   => $db,
-]);
+$auth = new Auth($container);
+$container->add('auth', $auth);
 
 
 /**
- * Load base module: api or admin
+ * Initiate router and add base routes
  */
 
-$request_first_chunk = $core->get_first_of_processed_request();
-if ($request_first_chunk != _CONFIG['default_base_module'] && in_array($request_first_chunk, ['api', 'admin'])) {
-	require_once _CONFIG['app_dir'] . $request_first_chunk . '/index.php';
-	$core->shift_processed_request();
+$router = new Router($container);
+$router->addRequirement('auth_lvl', '>=', $auth->getLvl());
+
+switch (_CONFIG['default_base_module']) {
+	case 'api':
+		$router->add(['path' => '(/)', 'callback' => function() {
+			die('API');
+		}]);
+
+		$router->add(['path' => 'admin(/)', 'callback' => function() {
+			die('ADMIN');
+		}]);
+
+		break;
 }
-else {
-	require_once _CONFIG['app_dir'] . _CONFIG['default_base_module'] . '/index.php';
-}
+
+$router->run(REQUEST_TARGET);

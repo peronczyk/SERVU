@@ -18,8 +18,8 @@ class Auth {
 	 * Constructor
 	 */
 
-	public function __construct(Sqlite $db) {
-		$this->_db = $db; // Database dependancy
+	public function __construct(DependencyContainer $container) {
+		$this->_db = $container->get('db');
 
 		if (isset($_SESSION['servant_auth_lvl']) && is_numeric($_SESSION['servant_auth_lvl']) && $_SESSION['servant_auth_lvl'] > self::LVL_USER) {
 			$this->setLvl($_SESSION['servant_auth_lvl']);

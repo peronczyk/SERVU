@@ -6,13 +6,16 @@ class ContentActions {
 
 	private $db_table_name = 'content';
 
+	// Dependencies
+	private $_db;
+
 
 	/** ----------------------------------------------------------------------------
 	 * Constructor
 	 */
 
-	public function __construct($dependencies) {
-		$dependencies->register($this);
+	public function __construct(DependencyContainer $container) {
+		$this->_db = $container->get('db');
 	}
 
 

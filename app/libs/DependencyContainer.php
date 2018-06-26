@@ -8,7 +8,7 @@ class DependencyContainer {
 	protected $prefix = '_';
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Add
 	 */
 
@@ -17,7 +17,7 @@ class DependencyContainer {
 			$this->dependencies = array_merge($this->dependencies, $name);
 		}
 		elseif ($dependency) {
-			$dependencies[$name] = $dependency;
+			$this->dependencies[$name] = $dependency;
 		}
 		else {
 			throw new Exception("There is no dependency provided in method 'add' in DependencyContainer");
@@ -27,8 +27,30 @@ class DependencyContainer {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
+	 * Get (PSR-11 requirement)
+	 */
+
+	public function get(string $id) {
+		if (!$this->has($id)) {
+			throw new Exception("DependencyContainer does not contain instance of '{$id}'");
+		}
+		return $this->dependencies[$id];
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Has (PSR-11 requirement)
+	 */
+
+	public function has(string $id) {
+		return isset($this->dependencies[$id]);
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * Dependencies registrator
+	 * Adds all stored dependencies to an existing object.
 	 *
 	 * @param object $object
 	 */

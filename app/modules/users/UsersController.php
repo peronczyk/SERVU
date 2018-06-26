@@ -2,20 +2,25 @@
 
 declare(strict_types=1);
 
-class UsersController {
+final class UsersController {
 
 	private $actions;
+
+	// Dependencies
+	private $_auth;
+	private $_rest_store;
 
 
 	/** ----------------------------------------------------------------------------
 	 * Constructor
 	 */
 
-	public function __construct(DependencyContainer $dependencies) {
-		$dependencies->register($this);
+	public function __construct(DependencyContainer $container) {
+		$this->_auth = $container->get('auth');
+		$this->_rest_store = $container->get('rest');
 
 		require 'UsersActions.php';
-		$this->actions = new UsersActions($dependencies);
+		$this->actions = new UsersActions($container);
 	}
 
 
@@ -28,7 +33,7 @@ class UsersController {
 			$_POST['email'] ?? null,
 			$_POST['password'] ?? null
 		);
-		$this->_rest->set('status', $login_status);
+		$this->_rest_store->set('status', $login_status);
 	}
 
 
@@ -38,7 +43,7 @@ class UsersController {
 
 	public function logout() {
 		$logout_status = $this->_auth->logout();
-		$this->_rest->set('status', $logout_status);
+		$this->_rest_store->set('status', $logout_status);
 	}
 
 
@@ -83,7 +88,7 @@ class UsersController {
 			throw new Exception("Unknown error occured while adding new user");
 		}
 		else {
-			$this->_rest->set('status', true);
+			$this->_rest_store->set('status', true);
 		}
 	}
 

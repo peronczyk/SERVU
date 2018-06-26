@@ -2,22 +2,25 @@
 
 declare(strict_types=1);
 
-class FilesController {
+final class FilesController {
 
 	private $actions;
+
+	// Dependencies
+	private $_rest_store;
 
 
 	/** ----------------------------------------------------------------------------
 	 * Constructor
 	 */
 
-	public function __construct($dependencies) {
-		$dependencies->register($this);
+	public function __construct(DependencyContainer $container) {
+		$this->_rest_store = $container->get('rest_store');
 
 		require 'files_helpers.php';
 
 		require 'FilesActions.php';
-		$this->actions = new FilesActions($dependencies);
+		$this->actions = new FilesActions($container);
 	}
 
 
@@ -29,7 +32,7 @@ class FilesController {
 		$location = (!empty($_GET['location'])) ? $_GET['location'] : null;
 
 		$files_list = $this->actions->getFilesList($location);
-		$this->_rest->set('data', $files_list);
+		$this->_rest_store->set('data', $files_list);
 	}
 
 
@@ -42,7 +45,7 @@ class FilesController {
 		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
 
 		$result = $this->actions->createDir($dir_name, $location);
-		$this->_rest->set('success', $result);
+		$this->_rest_store->set('success', $result);
 	}
 
 
@@ -52,7 +55,7 @@ class FilesController {
 
 	public function uploadFile() {
 		$result = $this->actions->upload($files, $location);
-		$this->_rest->set('success', $result);
+		$this->_rest_store->set('success', $result);
 	}
 
 
@@ -64,6 +67,6 @@ class FilesController {
 		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
 
 		$result = $this->actions->deleteFile($_FILES, $location);
-		$this->_rest->set('success', $result);
+		$this->_rest_store->set('success', $result);
 	}
 }

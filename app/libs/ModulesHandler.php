@@ -9,7 +9,7 @@ class ModulesHandler {
 	private $config_file_name;
 
 
-	public function __construct(object $dependencies, string $modules_dir, string $config_file_name) {
+	public function __construct(DependencyContainer $dependencies, string $modules_dir, string $config_file_name) {
 		$dependencies->register($this);
 
 		$this->active_module = $this->_core->get_first_of_processed_request();

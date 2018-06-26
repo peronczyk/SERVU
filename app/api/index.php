@@ -4,18 +4,10 @@ define('SERVANT_API', true);
 
 $rest_store = new RestStore();
 $rest_exception_handler = new RestExceptionHandler($rest_store, _CONFIG['debug']);
-$auth = new Auth($db);
-
-$dependencies->add([
-	'rest_store' => $rest_store,
-	'auth'       => $auth,
-]);
-
-$router = new Router($dependencies);
-$router->addRequirement('auth_lvl', '>=', $auth->getLvl());
+$container->add('rest_store', $rest_store);
 
 $modules_path = _CONFIG['app_dir'] . _CONFIG['modules_dir'];
-$modules = new ModulesHandler($dependencies, $modules_path, _CONFIG['modules_config_filename']);
+$modules = new ModulesHandler($container, $modules_path, _CONFIG['modules_config_filename']);
 $modules->getConfigs();
 $modules->createRoutes($router);
 

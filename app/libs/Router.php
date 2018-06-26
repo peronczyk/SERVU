@@ -13,8 +13,8 @@ class Router {
 	private $requirements = [];
 
 
-	public function __construct(DependencyContainer $dependencies) {
-		$this->dependencies = $dependencies;
+	public function __construct(DependencyContainer $container) {
+		$this->dependencies = $container;
 	}
 
 
@@ -115,18 +115,20 @@ class Router {
 	 * Run route that matches actual path
 	 */
 
-	public function run(string $actual_path) {
+	public function run(string $request_target) {
+		// Find route that matches actual path
 		foreach ($this->routes as $route) {
 			if (
 				$route['method'] == $_SERVER['REQUEST_METHOD'] &&
 				$this->checkCustomRequirements($route) &&
-				preg_match($this->prepareRegexp($route['path']), $actual_path, $matches)
+				preg_match($this->prepareRegexp($route['path']), $request_target, $matches)
 			) {
+				// Run callback and inject dependencies and params
 				$route['callback']($this->dependencies, $matches);
 				return true;
 			}
 		}
 
-		throw new Exception("There is no route that matches path: '{$actual_path}' or that meet the requirements.");
+		throw new Exception("There is no route that matches path: '{$request_target}' or that meet the requirements.");
 	}
 }
