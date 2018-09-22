@@ -13,7 +13,7 @@ class RestExceptionHandler {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Initiate all handlers
 	 * Add custom handlers for all errors and exceptions
 	 * to allow of displaying them in restfull way
@@ -26,7 +26,7 @@ class RestExceptionHandler {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Hendle errors
 	 * Mostly usable for catching all notices
 	 */
@@ -43,7 +43,7 @@ class RestExceptionHandler {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Hendle an uncaught exception
 	 * Used to catch all custom exceptions thrown by `throw new Exception()`
 	 */
@@ -61,7 +61,7 @@ class RestExceptionHandler {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Handle script shutdown
 	 */
 
@@ -82,7 +82,7 @@ class RestExceptionHandler {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Process file path to prevent FPD (Full Path Disclolsure) attack
 	 */
 

@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 class ModulesHandler {
-	private $active_module;
 	private $modules_configs = [];
 	private $modules_dir;
 	private $config_file_name;
@@ -45,21 +44,11 @@ class ModulesHandler {
 	 */
 
 	public function createRoutes(Router $router) {
-		$module = $this->active_module;
-
-		if (!empty($module)) {
-			if (!isset($this->modules_configs[$module]) || !is_array($this->modules_configs[$module])) {
-				throw new Exception("Selected module '{$module}' does not have valid configuration.");
-			}
-
-			$module_config = $this->modules_configs[$module];
-
-			if (!isset($module_config['routes']) || !is_array($module_config['routes']) || count($module_config['routes']) < 1) {
-				throw new Exception("Selected module '{$module}' does not have any routes set.");
-			}
-
-			foreach ($module_config['routes'] as $route) {
-				$router->add($route);
+		foreach ($this->modules_configs as $dirname => $module_config) {
+			if (!empty($module_config['routes']) && is_array($module_config['routes'])) {
+				foreach ($module_config['routes'] as $route) {
+					$router->add($route);
+				}
 			}
 		}
 	}

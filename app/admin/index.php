@@ -18,7 +18,7 @@ $app_config = [
 ];
 
 $modules_path = _CONFIG['app_dir'] . _CONFIG['modules_dir'];
-$modules = new ModulesHandler($container, $modules_path, _CONFIG['modules_config_filename']);
+$modules = new ModulesHandler($modules_path, _CONFIG['modules_config_filename']);
 $app_modules = $modules->getConfigs();
 
 ?><!DOCTYPE html>

@@ -17,7 +17,7 @@ final class UsersController {
 
 	public function __construct(DependencyContainer $container) {
 		$this->_auth = $container->get('auth');
-		$this->_rest_store = $container->get('rest');
+		$this->_rest_store = $container->get('rest_store');
 
 		require 'UsersActions.php';
 		$this->actions = new UsersActions($container);

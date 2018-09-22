@@ -1,51 +1,66 @@
-<?php return [
+<?php
+
+/** --------------------------------------------------------------------------------
+ * Register action defaults
+ */
+function register_users_action_defaults($dependencies) {
+	$controller_file = _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
+
+	if (file_exists($controller_file)) {
+		require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
+		return new UsersController($dependencies);
+	}
+	else {
+		throw new Exception('Controller for module "users" does not exist');
+	}
+}
+
+/** --------------------------------------------------------------------------------
+ * Module config
+ */
+return [
 	'name' => 'Users',
 	'icon' => 'users',
 	'routes' => [
 		[
-			'path' => 'list(/)',
+			'path' => 'users/list(/)',
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => function($dependencies) {
-				require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
-				$controller = new UsersController($dependencies);
-				$controller->getList();
+				$users = register_users_action_defaults($dependencies);
+				$users->getList();
 			},
 		],
 		[
 			'method' => 'POST',
-			'path' => 'login(/)',
+			'path' => 'users/login(/)',
 			'callback' => function($dependencies) {
-				require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
-				$controller = new UsersController($dependencies);
-				$controller->login();
+				$users = register_users_action_defaults($dependencies);
+				$users->login();
 			},
 		],
 		[
-			'path' => 'logout(/)',
+			'path' => 'users/logout(/)',
 			'callback' => function($dependencies) {
-				require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
-				$controller = new UsersController($dependencies);
-				$controller->logout();
+				$users = register_users_action_defaults($dependencies);
+				$users->logout();
 			},
 		],
 		[
 			'method' => 'POST',
-			'path' => 'create(/)',
+			'path' => 'users/create(/)',
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => function($dependencies) {
-				require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
-				$controller = new UsersController($dependencies);
-				$controller->create();
+				$users = register_users_action_defaults($dependencies);
+				$users->create();
 			},
 		],
 		[
 			'method' => 'POST',
-			'path' => 'remove/:id(/)',
+			'path' => 'users/remove/:id(/)',
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => function($dependencies, $params) {
-				require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
-				$controller = new UsersController($dependencies);
-				$controller->remove($params);
+				$users = register_users_action_defaults($dependencies);
+				$users->remove($params);
 			},
 		],
 	],

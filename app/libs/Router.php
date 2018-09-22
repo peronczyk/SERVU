@@ -131,4 +131,8 @@ class Router {
 
 		throw new Exception("There is no route that matches path: '{$request_target}' or that meet the requirements.");
 	}
+
+	public function getRoutes() {
+		return $this->routes;
+	}
 }
