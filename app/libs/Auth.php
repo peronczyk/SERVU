@@ -7,7 +7,7 @@ class Auth {
 	const LVL_USER  = 0;
 	const LVL_ADMIN = 1;
 
-	// User lvl store and it's default state
+	// User lvl and it's default state
 	protected $lvl = self::LVL_USER;
 
 	// Dependencies
@@ -40,7 +40,7 @@ class Auth {
 	 * Set auth lvl
 	 */
 
-	public function setLvl($lvl) : void {
+	public function setLvl($lvl) {
 		$_SESSION['servant_auth_lvl'] = $lvl;
 		$this->lvl = $lvl;
 	}

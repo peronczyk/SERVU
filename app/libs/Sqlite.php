@@ -32,7 +32,7 @@ class Sqlite {
 	];
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Constructor
 	 */
 
@@ -49,13 +49,13 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Connect to database file
 	 * This method can be performed manually or it will be run automatically
 	 * at first use of method `all()`
 	 */
 
-	public function connect() : void {
+	public function connect() {
 		$this->connection = new PDO('sqlite:./' . $this->file);
 		$this->connection->setAttribute(
 			PDO::ATTR_ERRMODE,
@@ -64,7 +64,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * SELECT
 	 * @param string|array $fields
 	 */
@@ -76,7 +76,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * INSERT
 	 */
 
@@ -91,7 +91,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * COUNT
 	 * Shortcut to 'SELECT'
 	 */
@@ -101,7 +101,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * FROM
 	 * @param string $table
 	 */
@@ -112,7 +112,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * WHERE
 	 */
 
@@ -122,7 +122,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * ORDER BY
 	 */
 
@@ -133,7 +133,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Perform query
 	 */
 
@@ -146,7 +146,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Perform query and return array of elements
 	 */
 
@@ -164,7 +164,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Perform insertion
 	 */
 
@@ -183,7 +183,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Prepare query
 	 */
 
@@ -235,11 +235,11 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Reset prepared query data
 	 */
 
-	public function reset() : void {
+	public function reset() {
 		$this->query_type = null;
 		$this->fields = null;
 		$this->insert_data = null;
@@ -250,7 +250,7 @@ class Sqlite {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Get queries log
 	 */
 

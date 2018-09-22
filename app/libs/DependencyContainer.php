@@ -55,7 +55,7 @@ class DependencyContainer {
 	 * @param object $object
 	 */
 
-	public function register(object $object) : void {
+	public function register(object $object) {
 		foreach ($this->dependencies as $name => $dependency) {
 			$name = $this->prefix . $name;
 

@@ -13,54 +13,6 @@ declare(strict_types=1);
 
 
 /**
- * DEFAULT CONFIGURATION
- *
- * This configuration can be overwritten by file 'config.php' placed in main
- * directory, which should return array with variables that you want to change.
- */
-
-define('DEFAULT_APP_CONFIG', [
-	// This variable will be added to meta section of all api request. It also will
-	// be displayed on front page of admin panel
-	'site_name' => $_SERVER['SERVER_NAME'],
-
-	// Force displaying all errors, warnings and notices
-	// by default this mode is turned on when working on localhost
-	'debug' => preg_match('/(localhost|::1|\.dev)$/', $_SERVER['SERVER_NAME'] ?? ''),
-
-	// Send security headers and remove ones that can potentially expose
-	// vulnerabilities. Learn more: https://securityheaders.io
-	'secure_headers' => true,
-
-	// Force HTTPS
-	'force_https' => true,
-
-	// Primary module, that will be displayed to user when he enters root app path
-	'default_base_module' => 'api',
-
-	// Storage directory
-	// It contains SQLite database and uploaded files
-	'storage_dir' => 'storage/',
-
-	// App directory
-	'app_dir' => 'app/',
-
-	// Subdirectories of app directory
-	'admin_dir' => 'admin/',
-	'api_dir' => 'api/',
-	'libs_dir' => 'libs/',
-	'modules_dir' => 'modules/',
-
-	// Each of the modules config filename
-	'modules_config_filename' => 'config.php',
-
-	// Database file name. You can change this file name to something more complex
-	// if you want to be more sure no one will access it from browser.
-	'db_file_name' => 'db.sqlite',
-]);
-
-
-/**
  * CORE CLASS
  */
 
@@ -74,7 +26,7 @@ class Core {
 	 * Init Core
 	 */
 
-	public function init() : void {
+	public function init() {
 		$this->loadConfiguration();
 
 		if (_CONFIG['debug']) {
@@ -101,13 +53,19 @@ class Core {
 	 */
 
 	private function loadConfiguration() : bool {
+		if (!file_exists('config-defaults.php')) {
+			throw new Exception('Default configuration file is missing');
+		}
+
+		$defaults = require_once 'config-defaults.php';
+
 		if (file_exists('config.php')) {
-			$overwrite = include_once 'config.php';
-			define('_CONFIG', array_merge(DEFAULT_APP_CONFIG, $overwrite));
+			$overwrite = require_once 'config.php';
+			define('_CONFIG', array_merge($defaults, $overwrite));
 			return true;
 		}
 		else {
-			define('_CONFIG', DEFAULT_APP_CONFIG);
+			define('_CONFIG', $defaults);
 			return false;
 		}
 	}
@@ -117,7 +75,7 @@ class Core {
 	 * Force display PHP errors
 	 */
 
-	public function forceDisplayPhpErrors() : void {
+	public function forceDisplayPhpErrors() {
 		ini_set('display_errors', '1');
 		ini_set('display_startup_errors', '1');
 		error_reporting(E_ALL);
@@ -128,7 +86,7 @@ class Core {
 	 * Start session
 	 */
 
-	private function startSession() : void {
+	private function startSession() {
 		// Force to use the HTTP-Only and Secure flags when sending the session
 		// identifier cookie, which prevents a successful XSS attack from stealing
 		// users' cookies and forces them to only be sent over HTTPS, respectively.
@@ -143,7 +101,7 @@ class Core {
 	 * App paths definitions required to proper rooting
 	 */
 
-	private function definePaths() : void {
+	private function definePaths() {
 
 		/**
 		 * Request protocol (http or https)
@@ -175,12 +133,12 @@ class Core {
 
 
 		/**
-		 * REQUEST URI
+		 * REQUEST TARGET
 		 * app_request is created by Mod Rewrite configured in .htaccess file
 		 */
 
 		define('REQUEST_TARGET', $_GET['app_request'] ?? '');
-		$this->processed_request = explode('/', trim(REQUEST_TARGET, '/'));
+		define('REQUEST_TARGET_CHUNKS', explode('/', trim(REQUEST_TARGET, '/')));
 	}
 
 
@@ -189,7 +147,7 @@ class Core {
 	 * vulnerabilities. Learn more: https://securityheaders.io
 	 */
 
-	private function sendSecureHeaders() : void {
+	private function sendSecureHeaders() {
 		// Enables XSS filtering. Rather than sanitizing the page,
 		// the browser will prevent rendering of the page if an attack is detected.
 		header('X-XSS-Protection: 1; mode=block');
@@ -211,7 +169,7 @@ class Core {
 	 * Force using of HTTPS
 	 */
 
-	private function forceHttps() : void {
+	private function forceHttps() {
 		// The HTTP Strict-Transport-Security response header (HSTS) lets a web site
 		// tell browsers that it should only be accessed using HTTPS,
 		// instead of using HTTP.
@@ -223,7 +181,7 @@ class Core {
 	 * Autoload libs (PSR-0)
 	 */
 
-	public function defineAutoloader() : void {
+	public function defineAutoloader() {
 		spl_autoload_register(function($class) {
 			$class_path = __DIR__ . '/' . _CONFIG['app_dir'] . _CONFIG['libs_dir'] . str_replace('\\', '/', $class) . '.php';
 			if (file_exists($class_path)) {

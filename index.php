@@ -9,9 +9,9 @@
  * \__/\___|_|    \_/ \__,_|_| |_|\__|
  *
  * SERVANT SAYS HELLO
- * Headless Content Canagement System
+ * Headless Content Management System
  *
- * @author Bartosz Perończyk
+ * @author Bartosz Perończyk (peronczyk.com)
  * =================================================================================
  */
 
@@ -35,15 +35,16 @@ $core->init();
  */
 
 $container = new DependencyContainer();
-$container->add('core', $core);
 
 
 /**
- * Prepare database object
+ * Initiate database handler
  */
 
 $db_file = _CONFIG['storage_dir'] . 'database/' . _CONFIG['db_file_name'];
-$db = new Sqlite($db_file, ['debug' => _CONFIG['debug']]);
+$db = new Sqlite($db_file, [
+	'debug' => _CONFIG['debug']
+]);
 $container->add('db', $db);
 
 
@@ -56,23 +57,15 @@ $container->add('auth', $auth);
 
 
 /**
- * Initiate router and add base routes
+ * Load base madule
  */
-
-$router = new Router($container);
-$router->addRequirement('auth_lvl', '>=', $auth->getLvl());
 
 switch (_CONFIG['default_base_module']) {
 	case 'api':
-		$router->add(['path' => '(/)', 'callback' => function() {
-			die('API');
-		}]);
+		require_once _CONFIG['app_dir'] . ((REQUEST_TARGET_CHUNKS[0] == 'admin') ? '/admin' : '/api') . '/index.php';
+		break;
 
-		$router->add(['path' => 'admin(/)', 'callback' => function() {
-			die('ADMIN');
-		}]);
-
+	case 'admin':
+		require_once _CONFIG['app_dir'] . ((REQUEST_TARGET_CHUNKS[0] == 'api') ? '/api' : '/admin') . '/index.php';
 		break;
 }
-
-$router->run(REQUEST_TARGET);

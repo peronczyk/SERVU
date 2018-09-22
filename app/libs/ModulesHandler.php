@@ -9,16 +9,13 @@ class ModulesHandler {
 	private $config_file_name;
 
 
-	public function __construct(DependencyContainer $dependencies, string $modules_dir, string $config_file_name) {
-		$dependencies->register($this);
-
-		$this->active_module = $this->_core->get_first_of_processed_request();
+	public function __construct(string $modules_dir, string $config_file_name) {
 		$this->modules_dir = $modules_dir;
 		$this->config_file_name = $config_file_name;
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Get configs
 	 */
 
@@ -43,7 +40,7 @@ class ModulesHandler {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Create routes
 	 */
 
@@ -60,8 +57,6 @@ class ModulesHandler {
 			if (!isset($module_config['routes']) || !is_array($module_config['routes']) || count($module_config['routes']) < 1) {
 				throw new Exception("Selected module '{$module}' does not have any routes set.");
 			}
-
-			$this->_core->shift_processed_request();
 
 			foreach ($module_config['routes'] as $route) {
 				$router->add($route);

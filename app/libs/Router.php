@@ -20,10 +20,10 @@ class Router {
 
 	/** ----------------------------------------------------------------------------
 	 * Add route
-	 * @param $params - array that describes route.
+	 * @param Array $params - array that describes route.
 	 */
 
-	public function add(array $params) : void {
+	public function add(array $params) {
 		if (!isset($params['path'])) {
 			throw new Exception("Path is missing in route definition: " . print_r($params, true));
 		}
@@ -40,16 +40,16 @@ class Router {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Add requirement
 	 */
 
-	public function addRequirement($name, $operator, $to) : void {
+	public function addRequirement($name, $operator, $to) {
 		array_push($this->requirements, [$name, $operator, $to]);
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Check custom requirements
 	 */
 
@@ -88,7 +88,7 @@ class Router {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Prepare regexp
 	 */
 
@@ -99,8 +99,8 @@ class Router {
 		// Create capture group for ":parameter"
 		$allowed_param_chars = '[a-zA-Z0-9\_\-]+';
 		$pattern = preg_replace(
-			'/:(' . $allowed_param_chars . ')/',   # Replace ":parameter"
-			'(?<$1>' . $allowed_param_chars . ')', # with "(?<parameter>[a-zA-Z0-9\_\-]+)"
+			'/:(' . $allowed_param_chars . ')/',   // Replace ":parameter"
+			'(?<$1>' . $allowed_param_chars . ')', // with "(?<parameter>[a-zA-Z0-9\_\-]+)"
 			$pattern
 		);
 
