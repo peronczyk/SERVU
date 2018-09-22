@@ -69,7 +69,7 @@ class Sqlite {
 	 * @param string|array $fields
 	 */
 
-	public function select(string $fields = '*') : object {
+	public function select($fields = '*') : object {
 		$this->query_type = 'select';
 		$this->fields = $fields;
 		return $this;

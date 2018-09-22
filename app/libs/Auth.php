@@ -14,7 +14,7 @@ class Auth {
 	protected $_db;
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Constructor
 	 */
 
@@ -22,13 +22,14 @@ class Auth {
 		$this->_db = $container->get('db');
 
 		if (isset($_SESSION['servant_auth_lvl']) && is_numeric($_SESSION['servant_auth_lvl']) && $_SESSION['servant_auth_lvl'] > self::LVL_USER) {
-			$this->setLvl($_SESSION['servant_auth_lvl']);
+			$this->setLvl((int) $_SESSION['servant_auth_lvl']);
 		}
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Get auth lvl
+	 * @return integer
 	 */
 
 	public function getLvl() : int {
@@ -36,7 +37,7 @@ class Auth {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Set auth lvl
 	 */
 
@@ -46,8 +47,9 @@ class Auth {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Validate email
+	 * @return boolean
 	 */
 
 	public function emailValidate($email) : bool {
@@ -55,8 +57,9 @@ class Auth {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Validate password
+	 * @return boolean
 	 */
 
 	public function passwordValidate($password) : bool {
@@ -64,8 +67,9 @@ class Auth {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Password encode
+	 * @return string
 	 */
 
 	public function passwordEncode($password) : string {
@@ -73,8 +77,9 @@ class Auth {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Verify password
+	 * @return boolean
 	 */
 
 	public function passwordVerify($password, $hash) : bool {
@@ -82,7 +87,7 @@ class Auth {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Login
 	 */
 
@@ -113,7 +118,7 @@ class Auth {
 			throw new Exception("Provided password is incorrect");
 		}
 		else {
-			$this->setLvl($user[0]['access-lvl']);
+			$this->setLvl((int) $user[0]['access-lvl']);
 			return true;
 		}
 
@@ -121,7 +126,7 @@ class Auth {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Logout
 	 */
 
