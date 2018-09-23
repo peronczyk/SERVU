@@ -22,7 +22,7 @@ Vue.component('Icon', Icon);
  * Initiate VUE instance
  */
 
-new Vue({
+window.servantAdminApp = new Vue({
 	el: '#app',
 	store,
 	router,

@@ -21,13 +21,22 @@ function register_files_action_defaults($dependencies) {
 return [
 	'name' => 'Files',
 	'icon' => 'files',
-	'routes' => [[
-		'path' => 'files/list(/)',
-		'callback' => function($dependencies) {
-			$files = register_files_action_defaults($dependencies);
-			$files->getList();
-		},
-	],
-
+	'routes' => [
+		[
+			'path' => 'files/list(/)',
+			'callback' => function($dependencies) {
+				$files = register_files_action_defaults($dependencies);
+				$files->getList();
+			},
+		],
+		[
+			'method' => 'POST',
+			'path' => 'files/create-dir(/)',
+			'auth_lvl' => Auth::LVL_ADMIN,
+			'callback' => function($dependencies) {
+				$files = register_files_action_defaults($dependencies);
+				$files->createDir();
+			},
+		],
 	],
 ];

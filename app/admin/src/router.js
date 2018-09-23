@@ -18,9 +18,9 @@ const routes = [{
 for (let moduleId in window.appModules) {
 	routes.push({
 		path: '/' + moduleId,
-		name: window.appModules.name,
+		name: window.appModules[moduleId].name,
 		component: modulesComponents[moduleId],
-		icon: window.appModules.icon,
+		icon: window.appModules[moduleId].icon,
 	});
 };
 

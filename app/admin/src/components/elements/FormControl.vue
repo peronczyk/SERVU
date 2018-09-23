@@ -159,7 +159,7 @@ export default {
 
 							// Or show toast message
 							else {
-								this.$store.commit('openToast', 'This action rusults following error:<br>' + result.data.errors[0].message);
+								this.$store.commit('openToast', '<small>This action caused the following error:</small><br>' + result.data.errors[0].message);
 							}
 						}
 

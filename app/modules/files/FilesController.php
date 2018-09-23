@@ -29,7 +29,7 @@ final class FilesController {
 	 */
 
 	public function getList() {
-		$location = (!empty($_GET['location'])) ? $_GET['location'] : null;
+		$location = $_GET['location'] ?? null;
 
 		$files_list = $this->actions->getFilesList($location);
 		$this->_rest_store->set('data', $files_list);
@@ -41,8 +41,8 @@ final class FilesController {
 	 */
 
 	public function createDir() {
-		$dir_name = (!empty($_POST['name']))     ? $_POST['name']     : null;
-		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
+		$dir_name = $_POST['name']     ?? null;
+		$location = $_POST['location'] ?? null;
 
 		$result = $this->actions->createDir($dir_name, $location);
 		$this->_rest_store->set('success', $result);

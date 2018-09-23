@@ -7,7 +7,7 @@
 
 		<div class="Grid Grid--gutter">
 
-			<div class="Col-8">
+			<div class="Col-8 Col-12@LG">
 				<ul class="o-Path">
 					<li>Uploads</li>
 					<li v-for="(chunk, index) in pathChunks" :key="index">
@@ -19,8 +19,8 @@
 					<thead>
 						<tr>
 							<th>File name</th>
-							<th>File extension</th>
-							<th>Options</th>
+							<th style="width: 50px;">Extension</th>
+							<th style="width: 80px;">Options</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -69,7 +69,7 @@
 				</table>
 			</div>
 
-			<div class="Col-4">
+			<div class="Col-4 Col-12@LG">
 				<form-control
 					:fields="[
 						{
@@ -142,7 +142,6 @@ export default {
 		 */
 		getList(parent = null) {
 			let action = 'list';
-
 
 			if (parent) {
 				if (parent == '../') {

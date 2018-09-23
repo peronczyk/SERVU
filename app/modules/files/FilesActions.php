@@ -82,27 +82,38 @@ class FilesActions {
 		if (empty($dir_name)) {
 			throw new Exception("Name of the directory to be created was not provided.");
 		}
-		$path_chunks = explode('/', trim($location, '/'));
+
+		$path_chunks = [];
+		if ($location && strlen($location) > 0) {
+			$path_chunks = explode('/', trim($location, '/'));
+		}
 
 		// Check if this directory will be too deep
 		if (count($path_chunks) > $this->max_depth) {
-			throw new Exception("Could not create directory because of maximal upload depth.");
+			throw new Exception("Could not create directory because the maximum upload depth is reached.");
 		}
 
 		// Validate each path chunk
 		foreach($path_chunks as $chunk) {
-			if (strpbrk($chunk, "/?%*:|\"<>") !== FALSE) {
+			if (strpbrk($chunk, "/?%*:|\"<>") !== false) {
 				throw new Exception("Provided directory path is not valid because of illegal characters.");
 			}
 		}
 
-		$dir_path = $this->uploads_dir . implode('/', $path_chunks) . $dir_name;
+		$dir_path = $this->uploads_dir . implode('/', $path_chunks) . '/' . $dir_name;
 
 		if (file_exists($dir_path)) {
-			throw new Exception("Directory with this name exists in provided location.");
+			throw new Exception("Directory with this name exists in location: {$dir_path}");
 		}
 
-		return mkdir($dir_path);
+		$result = mkdir($dir_path);
+
+		if ($result) {
+			return true;
+		}
+		else {
+			throw new Exception("Directory creation failed in {$dir_path}. " . error_get_last());
+		}
 	}
 
 

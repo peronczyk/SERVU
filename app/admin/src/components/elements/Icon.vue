@@ -1,6 +1,10 @@
 <template>
 
-	<div class="e-Icon"  v-bind="{'class': 'e-Icon--' + size}"></div>
+	<div
+		v-bind="{'class': 'e-Icon--' + size}"
+		:title="glyph"
+		class="e-Icon"
+	></div>
 
 </template>
 
