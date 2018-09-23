@@ -56,11 +56,11 @@ return [
 		],
 		[
 			'method' => 'POST',
-			'path' => 'users/remove/:id(/)',
+			'path' => 'users/delete/:id(/)',
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => function($dependencies, $params) {
 				$users = register_users_action_defaults($dependencies);
-				$users->remove($params);
+				$users->delete($params);
 			},
 		],
 	],

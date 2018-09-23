@@ -11,11 +11,6 @@
 
 declare(strict_types=1);
 
-
-/**
- * CORE CLASS
- */
-
 class Core {
 
 	// Stores list of classes that was autoloaded.
@@ -82,7 +77,7 @@ class Core {
 	}
 
 
-	/**
+	/** ----------------------------------------------------------------------------
 	 * Start session
 	 */
 
@@ -103,40 +98,28 @@ class Core {
 
 	private function definePaths() {
 
-		/**
-		 * Request protocol (http or https)
-		 */
-
+		// Request protocol (http or https)
 		define('REQUEST_PROTOCOL', (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https' : 'http');
 
-
-		/**
-		 * ROOT URI
-		 * This path represents browser location of index.php
-		 * Everything after that address is a request.
-		 */
-
+		// ROOT URI
+		// This path represents browser location of index.php
+		// Everything after that address is a request.
 		$root_uri = $_SERVER['SERVER_NAME'];
 		$script_dirname = dirname($_SERVER['SCRIPT_NAME']);
 		if ($script_dirname != '/') {
 			$root_uri .= $script_dirname;
 		}
-
 		define('ROOT_URI', $root_uri . '/');
 
-
-		/**
-		 * ROOT URL
-		 */
-
+		// ROOT URL
 		define('ROOT_URL', REQUEST_PROTOCOL . '://' . ROOT_URI);
 
+		// ROOT DIR
+		// Phisical path of app root file
+		define('ROOT_DIR', __DIR__);
 
-		/**
-		 * REQUEST TARGET
-		 * app_request is created by Mod Rewrite configured in .htaccess file
-		 */
-
+		// REQUEST TARGET
+		// app_request is created by Mod Rewrite configured in .htaccess file
 		define('REQUEST_TARGET', $_GET['app_request'] ?? '');
 		define('REQUEST_TARGET_CHUNKS', explode('/', trim(REQUEST_TARGET, '/')));
 	}

@@ -38,5 +38,14 @@ return [
 				$files->createDir();
 			},
 		],
+		[
+			'method' => 'POST',
+			'path' => 'files/delete(/)',
+			'auth_lvl' => Auth::LVL_ADMIN,
+			'callback' => function($dependencies) {
+				$files = register_files_action_defaults($dependencies);
+				$files->delete();
+			},
+		],
 	],
 ];

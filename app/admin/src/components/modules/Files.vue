@@ -168,12 +168,17 @@ export default {
 		 * Delete file
 		 */
 		deleteFile(file) {
-			console.log(file);
-			axios.post(this.nodeUrl + 'delete', 'name=' + file['full-name'] + '&location=' + this.actualPath)
+			let fileLocation = this.actualPath + '/' + file['full-name'];
+			axios.post(this.nodeUrl + 'delete', 'file=' + fileLocation)
 				.then(result => {
-					console.log('Deleted: ' + file['full-name']);
-					console.log(result);
-				})
+					if (result.data.errors) {
+						this.$store.commit('openToast', 'File or directory removal failed.<br>Returned error: ' + result.errors[0].message);
+					}
+					else if (result.data.success === true) {
+						this.$store.commit('openToast', 'File or directory deleted permanently.');
+						this.getList();
+					}
+				});
 		},
 
 		/**
@@ -181,7 +186,7 @@ export default {
 		 */
 		onCreateDirectorySuccess(result) {
 			if (result.errors) {
-				this.$store.commit('openToast', 'Direcotory creation failed.<br>Returned error: ' + result.errors[0].message);
+				this.$store.commit('openToast', 'Directory creation failed.<br>Returned error: ' + result.errors[0].message);
 			}
 			else {
 				this.$store.commit('openToast', 'Directory created');

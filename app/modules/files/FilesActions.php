@@ -106,13 +106,17 @@ class FilesActions {
 			throw new Exception("Directory with this name exists in location: {$dir_path}");
 		}
 
-		$result = mkdir($dir_path);
+		$result = @mkdir($dir_path);
 
-		if ($result) {
-			return true;
-		}
+		if ($result) return true;
 		else {
-			throw new Exception("Directory creation failed in {$dir_path}. " . error_get_last());
+			$last_error = error_get_last();
+			if (is_array($last_error)) {
+				throw new Exception("Directory creation failed in {$dir_path}. " . $last_error['message']);
+			}
+			else {
+				throw new Exception("Unknown error occured while trying to create directory {$dir_path}");
+			}
 		}
 	}
 
@@ -130,19 +134,23 @@ class FilesActions {
 	 * Delete file
 	 */
 
-	public function delete($file_name, $location) {
-		if (empty($file_name)) {
+	public function delete($file_location) {
+		if (empty($file_location)) {
 			throw new Exception('File to be removed was not specified.');
 		}
 
-		$file_path = $_SERVER['DOCUMENT_ROOT'] . trim($this->uploads_dir . $location, '/') . '/' . $file_name;
-		return $file_path;
+		$file_path = ROOT_DIR . '/' . $this->uploads_dir . $file_location;
 
 		if (!file_exists($file_path)) {
-			throw new Exception("File `{$file_name}` does not exist in specified location of uploads.");
+			throw new Exception("File or directory `{$file_location}` does not exist in specified location of uploads.");
 		}
 
-		$result = @unlink($file_path);
+		if (is_dir($file_path)) {
+			$result = @rmdir($file_path);
+		}
+		else {
+			$result = @unlink($file_path);
+		}
 
 		if ($result) return true;
 		else {

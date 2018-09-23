@@ -63,10 +63,10 @@ final class FilesController {
 	 * Delete file or directory
 	 */
 
-	public function deleteFile() {
-		$location = (!empty($_POST['location'])) ? $_POST['location'] : null;
+	public function delete() {
+		$file_location = $_POST['file'] ?? null;
 
-		$result = $this->actions->deleteFile($_FILES, $location);
+		$result = $this->actions->delete($file_location);
 		$this->_rest_store->set('success', $result);
 	}
 }

@@ -30,7 +30,7 @@ final class UsersController {
 
 	public function login() {
 		$login_status = $this->_auth->login(
-			$_POST['email'] ?? null,
+			$_POST['email']    ?? null,
 			$_POST['password'] ?? null
 		);
 		$this->_rest_store->set('status', $login_status);
@@ -94,10 +94,10 @@ final class UsersController {
 
 
 	/** ----------------------------------------------------------------------------
-	 * Remove user
+	 * Delete user
 	 */
 
-	public function remove($params) {
+	public function delete($params) {
 		/** @todo */
 	}
 }
