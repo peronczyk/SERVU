@@ -12,32 +12,30 @@
 					:type="field.type"
 					:ref="field.name"
 					:required="field.required"
-				>{{ field.label }}</form-field>
-
-				<form-file
-					v-if="field.type == 'file'"
-					:ref="field.name"
-					:required="field.required"
-				>{{ field.label }}</form-file>
+				>
+					{{ field.label }}
+				</form-field>
 
 				<form-select
 					v-if="field.type == 'select'"
 					:ref="field.name"
 					:required="field.required"
-				></form-select>
+				/>
 
 				<form-files
 					v-if="field.type == 'files'"
 					:ref="field.name"
 					:required="field.required"
 					:max="field.max"
-				></form-files>
+				/>
 
 				<form-checkbox
 					v-if="field.type == 'checkbox'"
 					:ref="field.name"
 					:required="field.required"
-				>{{ field.label }}</form-checkbox>
+				>
+					{{ field.label }}
+				</form-checkbox>
 
 				<form-hidden-field
 					v-if="field.type == 'hidden'"
@@ -66,7 +64,6 @@ import FormFiles from '../elements/FormFiles.vue';
 import FormSelect from '../elements/FormSelect.vue';
 import FormCheckbox from '../elements/FormCheckbox.vue';
 import FormHiddenField from '../elements/FormHiddenField.vue';
-import queryString from 'querystring';
 
 export default {
 	props: {
@@ -116,9 +113,12 @@ export default {
 		submitForm() {
 			this.isFormValid = true;
 
-			let formData    = {};
-			let filesData   = new FormData();
-			let axiosConfig = {};
+			let formData = new FormData();
+			let axiosConfig = {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			};
 
 			console.info('Form submit');
 
@@ -130,22 +130,25 @@ export default {
 					this.isFormValid = false;
 				}
 
-
-				console.log(' - ' + refName + ': ' + ref.value);
-
-				if (ref.value instanceof File) {
-
+				// Value is an array
+				if (ref.value instanceof Array) {
+					ref.value.forEach((refElement, index) => {
+						// If elements of array are files add them to formData
+						if (refElement instanceof File) {
+							formData.append(refName + '[' + index + ']', refElement);
+						}
+					});
 				}
+
+				// Regular value
 				else {
-					formData[refName] = ref.value;
+					formData.append(refName, ref.value);
 				}
 			}
 
 			// Check if all fields are valid and fire API call
 			if (this.isFormValid) {
-				let query = queryString.stringify(formData);
-
-				axios.post(this.uri, query)
+				axios.post(this.uri, formData, axiosConfig)
 					.then(result => {
 						console.log(result);
 

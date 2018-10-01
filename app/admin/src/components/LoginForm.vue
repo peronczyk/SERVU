@@ -28,7 +28,6 @@
 
 import axios from 'axios';
 import FormControl from './elements/FormControl.vue';
-import queryString from 'querystring';
 import FormField from './elements/FormField.vue';
 
 export default {

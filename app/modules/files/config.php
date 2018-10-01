@@ -47,5 +47,14 @@ return [
 				$files->delete();
 			},
 		],
+		[
+			'method' => 'POST',
+			'path' => 'files/upload(/)',
+			'auth_lvl' => Auth::LVL_ADMIN,
+			'callback' => function($dependencies) {
+				$files = register_files_action_defaults($dependencies);
+				$files->upload();
+			},
+		],
 	],
 ];

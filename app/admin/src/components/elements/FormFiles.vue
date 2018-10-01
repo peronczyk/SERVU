@@ -1,15 +1,22 @@
 <template>
 
-	<label class="c-FormFiles" :class="{'is-Error': !isValid}">
-		<input
-			@change="fileInputChange"
-			:disabled="isMax"
-			:multiple="max > 1"
-			type="file"
+	<div class="c-FormFiles">
+		<label
+			:class="{'is-Error': !isValid}"
+			class="c-FormFiles__input"
 		>
+			<a class="Btn Btn--hollow">Select files</a>
+			<input
+				@change="fileInputChange"
+				:disabled="isMax"
+				:multiple="max > 1"
+				type="file"
+			>
+		</label>
 
 		<table v-if="value.length" class="c-FormFiles__list">
 			<tr v-for="(file, index) in value" :key="index">
+				<td><small>{{ index + 1 }}</small></td>
 				<td>{{ file.name }}</td>
 				<td><small>{{ file.size / 1000 }}&nbsp;KB</small></td>
 				<td>
@@ -19,7 +26,7 @@
 				</td>
 			</tr>
 		</table>
-	</label>
+	</div>
 
 </template>
 
@@ -92,12 +99,34 @@ export default {
 
 <style lang="scss">
 
+@import '../../assets/styles/_variables.scss';
+
 .c-FormFiles {
+	&__input {
+		position: relative;
+		overflow: hidden;
+
+		input {
+			position: absolute;
+			top: 0;
+			left: -100%;
+			opacity: 0;
+		}
+	}
+
 	&__list {
+		margin-top: 6px;
+		margin-bottom: $box-margin / 3;
 		max-width: 100%;
 
-		td:first-child {
-			word-break: break-all;
+		td {
+			padding: 4px;
+
+			&:first-child {
+				padding-left: 0;
+				padding-right: 0;
+				word-break: break-all;
+			}
 		}
 	}
 }

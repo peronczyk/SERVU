@@ -126,7 +126,19 @@ class FilesActions {
 	 */
 
 	public function upload($files, $location) {
-		return print_r($files, true);
+		$files_number = count($files['name']);
+		$errors = 0;
+
+		for ($i = 0; $i < $files_number; $i++) {
+			if (!move_uploaded_file(
+				$files['tmp_name'][$i],
+				$this->uploads_dir . $location . '/' . $files['name'][$i]
+			)) {
+				$errors++;
+			}
+		}
+
+		return (!$errors);
 	}
 
 

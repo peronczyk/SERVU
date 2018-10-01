@@ -53,7 +53,10 @@ final class FilesController {
 	 * Upload files
 	 */
 
-	public function uploadFile() {
+	public function upload() {
+		$files    = $_FILES['files']   ?? null;
+		$location = $_POST['location'] ?? null;
+
 		$result = $this->actions->upload($files, $location);
 		$this->_rest_store->set('success', $result);
 	}

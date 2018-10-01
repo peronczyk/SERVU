@@ -19,8 +19,8 @@
 					<thead>
 						<tr>
 							<th>File name</th>
-							<th style="width: 50px;">Extension</th>
-							<th style="width: 80px;">Options</th>
+							<th style="width: 100px;">Extension</th>
+							<th style="width: 160px;">Options</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -117,7 +117,6 @@
 
 import axios from 'axios';
 import FormControl from '../elements/FormControl.vue';
-import queryString from 'querystring';
 
 export default {
 	data() {
@@ -199,8 +198,14 @@ export default {
 		 * Form Control Success : Upload Files
 		 */
 		onUploadFilesSuccess(result) {
-			console.log('Files uploaded');
-			console.log(result);
+			if (result.errors) {
+				this.$store.commit('openToast', 'Files upload failed.<br>Returned error: ' + result.errors[0].message);
+			}
+			else {
+				this.$store.commit('openToast', 'Files uploaded');
+				this.$refs.uploadFilesForm.resetForm();
+				this.getList();
+			}
 		}
 	},
 
