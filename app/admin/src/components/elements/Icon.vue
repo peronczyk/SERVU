@@ -1,10 +1,8 @@
 <template>
 
-	<div
-		v-bind="{'class': 'e-Icon--' + size}"
-		:title="glyph"
-		class="e-Icon"
-	></div>
+	<svg class="Icon" v-bind="{'class': 'Icon--' + size}">
+		<use v-bind="{'xlink:href': '#icon-' + size + '_' + glyph}"></use>
+	</svg>
 
 </template>
 
@@ -28,15 +26,14 @@ export default {
 </script>
 
 
-
 <style lang="scss">
 
 @import '../../assets/styles/_variables';
 
-.e-Icon {
+.Icon {
 	display: inline-block;
 	vertical-align: middle;
-	background-color: rgba($color-white, .1);
+	color: inherit;
 
 	&--16 {
 		width: 16px;
@@ -52,6 +49,15 @@ export default {
 		width: 48px;
 		height: 48px;
 	}
+}
+
+.filled {
+	fill: currentColor;
+}
+
+.stroked {
+	stroke: currentColor;
+	fill: none;
 }
 
 </style>

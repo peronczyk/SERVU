@@ -1,4 +1,7 @@
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 module.exports = {
+	mode: 'development',
 	entry: './src/main.js',
 
 	output: {
@@ -16,6 +19,9 @@ module.exports = {
 				test: /\.js$/,
 				exclude: /(node_modules|bower_components)/,
 				loader: 'babel-loader',
+				options: {
+					presets: ['@babel/preset-env']
+				}
 			},
 			{
 				test: /\.scss$/,
@@ -24,7 +30,20 @@ module.exports = {
 					{loader: 'css-loader'},
 					{loader: 'sass-loader'}
 				]
-			}
+			},
+			{
+				test: /\.svg$/,
+				loader: 'vue-svg-loader',
+				options: {
+					// Disable SVGO optimisation because it messess up SVGs.
+					svgo: false,
+				}
+			},
 		]
 	},
+
+	plugins: [
+		// Required by vue-loader
+		new VueLoaderPlugin(),
+	],
 }

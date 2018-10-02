@@ -1,6 +1,6 @@
 <template>
 
-	<div>
+	<div class="c-Files">
 		<header class="o-Header">
 			<h1>Files</h1>
 		</header>
@@ -39,7 +39,7 @@
 						<tr v-for="(file, fileIndex) in filesList" v-if="file.type == 'directory'" :key="fileIndex">
 							<td colspan="2">
 								<a @click.prevent="getList(file.name)">
-									<icon size="24" glyph="folder" />
+									<icon size="24" glyph="folder-closed" />
 									{{ file.name }}
 								</a>
 							</td>
@@ -53,7 +53,7 @@
 						-->
 						<tr v-for="(file, fileIndex) in filesList" v-if="file.type != 'directory'" :key="fileIndex">
 							<td>
-								<icon size="24" glyph="file" />
+								<icon size="24" glyph="document-kinked" />
 								{{ file.name }}
 							</td>
 							<td>
@@ -119,6 +119,10 @@ import axios from 'axios';
 import FormControl from '../elements/FormControl.vue';
 
 export default {
+	components: {
+		FormControl
+	},
+
 	data() {
 		return {
 			nodeUrl: window.appConfig.apiBaseUrl + 'files/',
@@ -212,8 +216,24 @@ export default {
 	created() {
 		this.getList();
 	},
-
-	components: { FormControl }
 }
 
 </script>
+
+
+<style lang="scss">
+
+@import '../../assets/styles/_variables.scss';
+
+.c-Files {
+	table {
+		td {
+			.Icon {
+				margin-right: 10px;
+				color: $color-text-lvl-3;
+			}
+		}
+	}
+}
+
+</style>

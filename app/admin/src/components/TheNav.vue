@@ -66,7 +66,7 @@ export default {
 	a {
 		color: $color-text-lvl-3;
 
-		.e-Icon {
+		.Icon {
 			margin-right: 10px;
 		}
 	}

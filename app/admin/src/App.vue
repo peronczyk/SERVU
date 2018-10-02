@@ -5,6 +5,8 @@
 		<the-main />
 		<the-toast />
 		<the-modal />
+
+		<svg-icon-set />
 	</div>
 
 </template>
@@ -12,13 +14,23 @@
 
 <script>
 
+// Dependensies
 import axios from 'axios';
+
+// Components
 import TheSidebar from './components/TheSidebar.vue';
 import TheMain from './components/TheMain.vue';
 import TheToast from './components/TheToast.vue';
 import TheModal from './components/themodal.vue';
 
+// Assets
+import SvgIconSet from './assets/images/streamline-icons.svg';
+
 export default {
+	components: {
+		TheSidebar, TheMain, TheToast, TheModal, SvgIconSet
+	},
+
 	created() {
 		axios.get(window.appConfig.apiBaseUrl)
 			.then(receivedData => {
@@ -38,8 +50,6 @@ export default {
 				console.log(error);
 			});
 	},
-
-	components: { TheSidebar, TheMain, TheToast, TheModal }
 }
 
 </script>

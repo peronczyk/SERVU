@@ -20,7 +20,7 @@ function register_users_action_defaults($dependencies) {
  */
 return [
 	'name' => 'Users',
-	'icon' => 'users',
+	'icon' => 'user',
 	'routes' => [
 		[
 			'path' => 'users/list(/)',
