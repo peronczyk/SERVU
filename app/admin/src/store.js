@@ -48,6 +48,8 @@ export default new Vuex.Store({
 		isAppConnected    : state => state.connected,
 		getUserAccess     : state => state.userAccessLvl,
 		isOptionsMenuOpen : state => state.optionsMenu.isOpen,
+		isToastVisible    : state => state.toast.isVisible,
+		getToastContent   : state => state.toast.content,
 	},
 
 
@@ -79,7 +81,7 @@ export default new Vuex.Store({
 			state.toast.isVisible = false;
 			setTimeout(() => {
 				state.toast.content = null;
-			});
+			}, 500);
 		},
 
 		openModal(state, content) {

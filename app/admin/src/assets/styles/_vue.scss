@@ -47,3 +47,20 @@
 		transform: translateY(-14px);
 	}
 }
+
+
+/*
+ * Slide right transition
+ */
+.slide-right {
+	&-enter-active,
+	&-leave-active {
+		transition: .3s;
+	}
+
+	&-enter,
+	&-leave-to {
+		opacity: 0;
+		transform: translateX(20px);
+	}
+}
