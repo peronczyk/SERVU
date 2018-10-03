@@ -1,5 +1,5 @@
 <?php return [
 	'name' => 'Collections',
-	'icon' => 'collections',
+	'icon' => 'group',
 	'routes' => [],
 ];

@@ -19,6 +19,14 @@ Vue.component('Icon', Icon);
 
 
 /**
+ * Global event bus
+ * Allows to use this.$eventBus.$on and this.$eventBus.$emit in global scope.
+ */
+
+Vue.prototype.$eventBus = new Vue();
+
+
+/**
  * Initiate VUE instance
  */
 

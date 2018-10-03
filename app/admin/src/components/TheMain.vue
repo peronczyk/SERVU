@@ -2,7 +2,12 @@
 
 	<div class="c-Main">
 		<login-form v-if="$store.getters.getUserAccess < 1" />
-		<transition v-else duration="2000">
+
+		<transition
+			v-else
+			name="page"
+			duration="2000"
+		>
 			<keep-alive>
 				<router-view class="c-Main__view"></router-view>
 			</keep-alive>
@@ -14,6 +19,7 @@
 
 <script>
 
+// Components
 import LoginForm from './LoginForm.vue';
 
 export default {

@@ -18,9 +18,9 @@
 				<table>
 					<thead>
 						<tr>
-							<th>File name</th>
+							<th>Name</th>
 							<th style="width: 100px;">Extension</th>
-							<th style="width: 160px;">Options</th>
+							<th class="u-Text--center" style="width: 80px;">Options</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,8 +43,10 @@
 									{{ file.name }}
 								</a>
 							</td>
-							<td>
-								<a @click.prevent="deleteFile(file)">delete</a>
+							<td class="u-Text--center">
+								<options-menu :options="[
+									{name: 'Delete directory and its contents', action: () => deleteFile(file)}
+								]" />
 							</td>
 						</tr>
 
@@ -53,15 +55,17 @@
 						-->
 						<tr v-for="(file, fileIndex) in filesList" v-if="file.type != 'directory'" :key="fileIndex">
 							<td>
-								<icon size="24" glyph="document-kinked" />
+								<icon size="24" glyph="file" />
 								{{ file.name }}
 							</td>
 							<td>
 								{{ file.extension }}
 							</td>
-							<td>
-								<a @click.prevent="copyLink(fileIndex)">copy url</a> /
-								<a @click.prevent="deleteFile(file)">delete</a>
+							<td class="u-Text--center">
+								<options-menu :options="[
+									{name: 'Copy url', action: () => copyLink(fileIndex)},
+									{name: 'Delete file', action: () => deleteFile(file)}
+								]" />
 							</td>
 						</tr>
 
@@ -115,12 +119,16 @@
 
 <script>
 
+// Dependencies
 import axios from 'axios';
+
+// Components
 import FormControl from '../elements/FormControl.vue';
+import OptionsMenu from '../elements/OptionsMenu.vue';
 
 export default {
 	components: {
-		FormControl
+		FormControl, OptionsMenu,
 	},
 
 	data() {
@@ -182,6 +190,14 @@ export default {
 						this.getList();
 					}
 				});
+		},
+
+		/**
+		 * Copy link
+		 * @todo
+		 */
+		copyLink() {
+			console.log('Copy link');
 		},
 
 		/**

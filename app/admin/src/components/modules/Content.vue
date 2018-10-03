@@ -21,7 +21,7 @@
 					<th></th>
 					<th>Name</th>
 					<th>Children</th>
-					<th>Options</th>
+					<th class="u-Text--center" style="width: 80px;">Options</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,7 +33,12 @@
 					<td v-if="entry.children > 0"><a @click.prevent="getList(entry.id)">{{ entry.name }}</a></td>
 					<td v-else>{{ entry.name }}</td>
 					<td>{{ entry.children }}</td>
-					<td><a>edit</a> / <a>delete</a></td>
+					<td class="u-Text--center">
+						<options-menu :options="[
+							{name: 'Edit', action: () => editContent(entry)},
+							{name: 'Delete', action: () => deleteContent(entry)},
+						]" />
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -45,10 +50,18 @@
 
 <script>
 
+// Dependencies
 import axios from 'axios';
+
+// Components
 import ContentForm from './ContentForm.vue';
+import OptionsMenu from '../elements/OptionsMenu.vue';
 
 export default {
+	components: {
+		OptionsMenu
+	},
+
 	data() {
 		return {
 			nodeUrl: window.appConfig.apiBaseUrl + 'content/',
@@ -81,7 +94,11 @@ export default {
 
 		openForm() {
 			this.$store.commit('openModal', ContentForm);
-		}
+		},
+
+		editContent() {},
+
+		deleteContent() {},
 	},
 
 	created() {

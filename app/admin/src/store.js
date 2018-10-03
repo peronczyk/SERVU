@@ -24,6 +24,9 @@ export default new Vuex.Store({
 			isOpen: false,
 			content: null
 		},
+		optionsMenu: {
+			isOpen: false,
+		},
 		contentFieldTypes: [
 			{
 				id: 'simple',
@@ -42,13 +45,9 @@ export default new Vuex.Store({
 	 */
 
 	getters: {
-		isAppConnected(state) {
-			return state.connected;
-		},
-
-		getUserAccess(state) {
-			return state.userAccessLvl;
-		},
+		isAppConnected    : state => state.connected,
+		getUserAccess     : state => state.userAccessLvl,
+		isOptionsMenuOpen : state => state.optionsMenu.isOpen,
 	},
 
 
@@ -93,6 +92,10 @@ export default new Vuex.Store({
 			setTimeout(() => {
 				state.modal.content = null;
 			}, 1000);
+		},
+
+		setOptionsMenuState(state, value) {
+			state.optionsMenu.isOpen = value;
 		}
 	},
 
