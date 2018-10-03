@@ -15,7 +15,7 @@ $breakpoints: (
 );
 
 
-/**
+/** --------------------------------------------------------------------------------
  * Sizes
  */
 
@@ -25,7 +25,7 @@ $inputs-height       : 40px;
 $base-font-size      : 15px;
 
 
-/**
+/** --------------------------------------------------------------------------------
  * Colors
  */
 
@@ -54,3 +54,13 @@ $color-links-hover   : lighten($color-links, 20);
 
 $color-lines         : rgba($color-base-lines, .08);
 $color-inputs-border : rgba($color-base-lines, .2);
+
+
+/** --------------------------------------------------------------------------------
+ * Shadows
+ */
+
+$shadow-opacity      : .5;
+$shadow-lvl-1        : 0 2px 20px rgba($color-black, $shadow-opacity);
+$shadow-lvl-2        : 0 4px 40px rgba($color-black, $shadow-opacity);
+$shadow-lvl-3        : 0 10px 60px rgba($color-black, $shadow-opacity);

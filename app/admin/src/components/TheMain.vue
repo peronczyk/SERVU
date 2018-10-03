@@ -1,10 +1,9 @@
 <template>
 
 	<div class="c-Main">
-		<login-form v-if="$store.getters.getUserAccess < 1" />
 
 		<transition
-			v-else
+			v-if="isUserLoggedIn"
 			name="page"
 			duration="2000"
 		>
@@ -12,6 +11,8 @@
 				<router-view class="c-Main__view"></router-view>
 			</keep-alive>
 		</transition>
+
+		<login-form v-else />
 	</div>
 
 </template>
@@ -21,9 +22,22 @@
 
 // Components
 import LoginForm from './LoginForm.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-	components: { LoginForm }
+	components: {
+		LoginForm
+	},
+
+	computed: {
+		...mapGetters({
+			userAccess: 'getUserAccess',
+		}),
+
+		isUserLoggedIn() {
+			return (this.userAccess > 0);
+		}
+	},
 }
 
 </script>

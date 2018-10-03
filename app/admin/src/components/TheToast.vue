@@ -52,6 +52,7 @@ export default {
 	color: $color-white;
 	background-color: $color-bg-lvl-4;
 	opacity: 0;
+	box-shadow: $shadow-lvl-3;
 	transform: translateX(40px);
 	transition: .4s;
 
@@ -63,7 +64,7 @@ export default {
 
 	&__close {
 		position: absolute;
-		top: 10px;
+		top: 16px;
 		right: 10px;
 		padding: 6px;
 	}

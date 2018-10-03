@@ -1,7 +1,11 @@
 <template>
 
-	<div class="e-OptionsMenu" v-if="options.length">
-		<a @click="toggleState" class="e-OptionsMenu__toggle">
+	<div
+		v-if="options.length"
+		v-click-outside="close"
+		class="e-OptionsMenu"
+	>
+		<a @click="toggle" class="e-OptionsMenu__toggle">
 			<span></span>
 			<span></span>
 			<span></span>
@@ -48,16 +52,24 @@ export default {
 			'setOptionsMenuState',
 		]),
 
-		toggleState() {
-			this.isOpen = !this.isOpen;
-			this.setOptionsMenuState(this.isOpen);
-
-			if (this.isOpen) {
-				this.$eventBus.$emit('options-menu-open', this.menuId);
-			}
+		toggle() {
+			(this.isOpen)
+				? this.close()
+				: this.open();
 		},
 
-		close(id) {
+		open() {
+			this.isOpen = true;
+			this.setOptionsMenuState(true);
+			this.$eventBus.$emit('options-menu-open', this.menuId);
+		},
+
+		close() {
+			this.isOpen = false;
+			this.setOptionsMenuState(false);
+		},
+
+		externalClose(id) {
 			if (id !== this.menuId) {
 				this.isOpen = false;
 			}
@@ -65,16 +77,16 @@ export default {
 
 		runAction(action) {
 			action();
-			this.toggleState();
+			this.toggle();
 		},
 	},
 
 	created() {
-		this.$eventBus.$on('options-menu-open', this.close);
+		this.$eventBus.$on('options-menu-open', this.externalClose);
 	},
 
 	beforeDestroy() {
-		this.$eventBus.$off('options-menu-open', this.close);
+		this.$eventBus.$off('options-menu-open', this.externalClose);
 	},
 }
 
@@ -139,7 +151,7 @@ export default {
 		line-height: 1.2em;
 		text-align: left;
 		background-color: $list-bg-color;
-		box-shadow: 0 4px 40px rgba($color-black, .4);
+		box-shadow: $shadow-lvl-2;
 
 		&::after {
 			content: '';
