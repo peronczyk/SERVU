@@ -34,7 +34,7 @@ export default {
 
 <style lang="scss">
 
-@import '../assets/styles/_variables';
+@import '../assets/styles/definitions';
 
 .c-Sidebar {
 	position: fixed;
@@ -47,6 +47,18 @@ export default {
 
 	.is-UserLoggedIn & {
 		width: 200px;
+
+		@include narrower-than(lg) {
+			width: 170px;
+		}
+
+		@include narrower-than(md) {
+			width: 140px;
+		}
+
+		@include narrower-than(sm) {
+			width: 90px;
+		}
 	}
 }
 

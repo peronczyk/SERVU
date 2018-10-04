@@ -1,23 +1,25 @@
 <template>
 
-	<dialog
-		:class="{'is-Open': isOpen}"
-		:aria-hidden="!isOpen"
-		class="c-Modal"
-		role="modal"
-	>
-		<div class="c-Modal__window">
-			<a class="c-Modal__close" @click.prevent="close">close</a>
+	<transition name="fade">
+		<dialog
+			v-if="isOpen"
+			:aria-hidden="!isOpen"
+			class="c-Modal"
+			role="modal"
+		>
+			<div class="c-Modal__window" v-if="isOpen">
+				<a class="c-Modal__close" @click.prevent="close">close</a>
 
-			<div class="c-Modal__content">
-				<keep-alive>
-					<component :is="getContent" />
-				</keep-alive>
+				<div class="c-Modal__content">
+					<keep-alive>
+						<component :is="getContent" />
+					</keep-alive>
+				</div>
 			</div>
-		</div>
 
-		<div class="c-Modal__bg" @click.prevent="close"></div>
-	</dialog>
+			<div class="c-Modal__bg" @click.prevent="close"></div>
+		</dialog>
+	</transition>
 
 </template>
 
@@ -47,15 +49,14 @@ export default {
 
 <style lang="scss">
 
-@import '../assets/styles/_variables';
+@import '../assets/styles/definitions';
 
 .c-Modal {
 	display: block;
-	visibility: hidden;
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 1000;
+	z-index: +10;
 	padding: 40px;
 	width: 100%;
 	height: 100%;
@@ -63,8 +64,6 @@ export default {
 	background: none;
 	overflow: auto;
 	text-align: center;
-	opacity: 0;
-	transition: .3s;
 
 	&:before {
 		content: '';
@@ -84,9 +83,6 @@ export default {
 		min-height: 40px;
 		max-width: 800px;
 		background-color: $color-bg-lvl-2;
-		opacity: 0;
-		transform: scale(.8);
-		transition: .3s;
 	}
 
 	&__close {
@@ -138,17 +134,6 @@ export default {
 		right: 0;
 		bottom: 0;
 		background-color: rgba($color-base-1, .8);
-	}
-
-	&.is-Open {
-		visibility: visible;
-		opacity: 1;
-
-		.c-Modal__window {
-			opacity: 1;
-			transform: scale(1);
-		}
-
 	}
 }
 

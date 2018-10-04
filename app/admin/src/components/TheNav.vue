@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss">
 
-@import '../assets/styles/_variables';
+@import '../assets/styles/definitions';
 
 .c-Nav {
 	display: flex;
@@ -60,10 +60,6 @@ export default {
 
 	a {
 		color: $color-text-lvl-3;
-
-		.Icon {
-			margin-right: 10px;
-		}
 	}
 
 	&__top {
@@ -72,7 +68,7 @@ export default {
 		padding-left: $gutter;
 		padding-right: $gutter;
 		height: 14vh;
-		min-height: 40px;
+		min-height: 80px;
 
 		a {
 			display: inline-block;
@@ -109,9 +105,9 @@ export default {
 			position: relative;
 			display: flex;
 			align-items: center;
-			padding-left: $gutter;
-			padding-right: $gutter;
+			padding: 0 30px;
 			height: 8vh;
+			min-height: 40px;
 			font-size: 15px;
 
 			&::after {
@@ -132,6 +128,31 @@ export default {
 				&::after {
 					opacity: 1;
 					transform: none;
+				}
+			}
+
+			.Icon {
+				margin-right: 10px;
+			}
+
+			@include narrower-than(lg) {
+				padding: 0 20px;
+			}
+
+			@include narrower-than(md) {
+				padding: 0 14px;
+				font-size: 14px;
+			}
+
+			@include narrower-than(sm) {
+				flex-direction: column;
+				height: auto;
+				padding: 10px 0;
+				font-size: 13px;
+
+				.Icon {
+					margin-right: 0;
+					margin-bottom: 10px;
 				}
 			}
 		}

@@ -41,7 +41,7 @@ export default {
 
 <style lang="scss">
 
-@import '../assets/styles/_variables';
+@import '../assets/styles/definitions';
 
 .c-Main {
 	position: relative;
@@ -50,10 +50,22 @@ export default {
 
 	.is-UserLoggedIn & {
 		margin-left: 200px;
+
+		@include narrower-than(lg) {
+			margin-left: 170px;
+		}
+
+		@include narrower-than(md) {
+			margin-left: 140px;
+		}
+
+		@include narrower-than(sm) {
+			margin-left: 90px;
+		}
 	}
 
 	&__view {
-		padding: 0 $gutter * 2;
+		padding: 0 #{$gutter * 2} 5vh #{$gutter * 2};
 		height: 100%;
 		will-change: transform, opacity;
 	}

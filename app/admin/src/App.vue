@@ -76,7 +76,7 @@ export default {
 .c-App {
 	visibility: hidden;
 	position: relative;
-	height: 100%;
+	min-height: 100%;
 	opacity: 0;
 	overflow: hidden;
 	transition: .4s;
@@ -85,6 +85,10 @@ export default {
 		visibility: visible;
 		opacity: 1;
 	}
+}
+
+#StreamlineIcons {
+	display: none;
 }
 
 </style>

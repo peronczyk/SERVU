@@ -25,7 +25,7 @@ export default {
 
 <style lang="scss">
 
-@import '../assets/styles/_variables';
+@import '../assets/styles/definitions';
 
 .c-LoginInfo {
 	display: flex;

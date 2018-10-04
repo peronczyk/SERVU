@@ -10,12 +10,12 @@
 		<ul class="c-Home__bottom">
 			<li>
 				App version:
-				<strong>{{ $store.state.meta.appVersion }}</strong>
+				<strong>{{ getAppVersion }}</strong>
 			</li>
 
 			<li>
 				PHP version:
-				<strong>{{ $store.state.meta.phpVersion }}</strong>
+				<strong>{{ getPhpVersion }}</strong>
 			</li>
 
 			<li>
@@ -30,12 +30,22 @@
 
 <script>
 
+// Dependencies
+import { mapGetters } from 'vuex';
+
 export default {
 	data() {
 		return {
 			siteName: window.appConfig.siteName,
 		}
-	}
+	},
+
+	computed: {
+		...mapGetters('base', [
+			'getAppVersion',
+			'getPhpVersion',
+		]),
+	},
 }
 
 </script>

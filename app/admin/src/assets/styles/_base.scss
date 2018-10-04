@@ -10,6 +10,11 @@ html, body {
 	height: 100%;
 }
 
+html {
+	// Force displaying scrollbar track
+	overflow-y: scroll;
+}
+
 body {
 	background-color: $color-bg-lvl-2;
 	font-family: 'Roboto', sans-serif;

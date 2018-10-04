@@ -49,17 +49,30 @@
 
 <script>
 
+// Dependencies
+import { mapGetters } from 'vuex';
+
+// Components
 import FormField from '../elements/FormField.vue';
 import FormSelect from '../elements/FormSelect.vue';
 
 export default {
+	components: {
+		FormField, FormSelect
+	},
+
 	data() {
 		return {
-			fieldTypes: this.$store.state.contentFieldTypes,
 			collectionName: '',
 			collectionId: '',
 			addedFields: [],
 		}
+	},
+
+	computed: {
+		...mapGetters('content', {
+			fieldTypes: 'fieldTypes',
+		}),
 	},
 
 	methods: {
@@ -91,8 +104,6 @@ export default {
 			this.addedFields.splice(fieldNumber, 1);
 		},
 	},
-
-	components: { FormField, FormSelect }
 }
 
 </script>
@@ -100,7 +111,7 @@ export default {
 
 <style lang="scss">
 
-@import '../../assets/styles/_variables';
+@import '../../assets/styles/definitions';
 
 .c-CollectionsForm {
 }

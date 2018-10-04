@@ -1,17 +1,29 @@
 /*
  * Page transition
  */
- .page {
+.page {
 	&-enter-active,
 	&-leave-active {
-		animation: pageEnter .7s forwards;
+		transform-origin: top;
+		transition: .6s;
 	}
 
-	&-enter,
-	&-leave-to {
-		position: absolute !important;
-		width: 100%;
-		animation: pageLeave .7s forwards;
+	&-enter {
+		opacity: 0;
+	}
+
+	&-enter-to {
+		opacity: 1
+	}
+
+	&-leave,
+	&-leave-active {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		transform: scale(.95);
+		opacity: 0;
 	}
 }
 
@@ -28,6 +40,23 @@
 	&-enter,
 	&-leave-to {
 		opacity: 0;
+	}
+}
+
+
+/*
+ * Slide right transition
+ */
+.appear {
+	&-enter-active,
+	&-leave-active {
+		transition: .5s;
+	}
+
+	&-enter,
+	&-leave-to {
+		opacity: 0;
+		transform: scale(.9);
 	}
 }
 

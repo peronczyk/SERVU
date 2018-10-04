@@ -20,7 +20,7 @@
 <script>
 
 // Dependencies
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 	computed: {
@@ -31,7 +31,7 @@ export default {
 	},
 
 	methods: {
-		...mapMutations('toast', [
+		...mapActions('toast', [
 			'close',
 		]),
 	}
@@ -42,7 +42,7 @@ export default {
 
 <style lang="scss">
 
-@import '../assets/styles/_variables';
+@import '../assets/styles/definitions';
 
 .c-Toast {
 	position: absolute;
