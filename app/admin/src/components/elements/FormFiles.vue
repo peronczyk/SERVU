@@ -33,6 +33,9 @@
 
 <script>
 
+// Dependencies
+import { mapActions } from 'vuex';
+
 export default {
 	props: {
 		required: {
@@ -60,6 +63,10 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+			openToast: 'toast/open',
+		}),
+
 		validate() {
 			this.isValid = true;
 
@@ -74,7 +81,7 @@ export default {
 			let addedFiles = event.target.files;
 
 			if (addedFiles.length + this.value.length > this.max) {
-				this.$store.commit('openToast', 'Maximal number of files reached: ' + this.max);
+				this.openToast('Maximal number of files reached: ' + this.max);
 				event.target.value = '';
 			}
 			else {
@@ -86,8 +93,6 @@ export default {
 
 		removeFile(file) {
 			this.value = this.value.filter(addedFile => {
-				console.log(addedFile);
-
 				return addedFile.name != file.name
 			});
 		}

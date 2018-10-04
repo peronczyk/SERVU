@@ -2,7 +2,8 @@ import './assets/styles/styles.scss';
 
 import Vue from 'vue/dist/vue.esm.js';
 import App from './App.vue';
-import store from './store.js';
+
+import store from './store/';
 import router from './router.js';
 
 
@@ -10,8 +11,7 @@ import router from './router.js';
  * Custom directives
  */
 
-import ClickOutside from './directives/ClickOutside.js';
-Vue.directive('click-outside', ClickOutside);
+import './directives/ClickOutside.js';
 
 
 /** --------------------------------------------------------------------------------
@@ -33,6 +33,7 @@ Vue.prototype.$eventBus = new Vue();
 /** --------------------------------------------------------------------------------
  * Initiate VUE instance
  */
+
 
 window.servantAdminApp = new Vue({
 	el: '#app',

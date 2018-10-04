@@ -1,8 +1,8 @@
 <template>
 
 	<div class="c-Sidebar">
-		<login-info v-if="$store.getters.getUserAccess < 1" />
-		<the-nav v-else />
+		<the-nav v-if="isLoggedIn" />
+		<login-info v-else />
 	</div>
 
 </template>
@@ -10,11 +10,23 @@
 
 <script>
 
+// Dependencies
+import { mapGetters } from 'vuex';
+
+// Components
 import LoginInfo from './LoginInfo.vue';
 import TheNav from './TheNav.vue';
 
 export default {
-	components: { LoginInfo, TheNav }
+	components: {
+		LoginInfo, TheNav
+	},
+
+	computed: {
+		...mapGetters('user', [
+			'isLoggedIn'
+		]),
+	}
 }
 
 </script>

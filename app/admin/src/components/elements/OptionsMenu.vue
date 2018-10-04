@@ -29,7 +29,7 @@
 <script>
 
 // Dependencies
-import { mapGetters, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
 	props: {
@@ -48,8 +48,8 @@ export default {
 	},
 
 	methods: {
-		...mapMutations([
-			'setOptionsMenuState',
+		...mapMutations('optionsmenu', [
+			'setState',
 		]),
 
 		toggle() {
@@ -60,13 +60,13 @@ export default {
 
 		open() {
 			this.isOpen = true;
-			this.setOptionsMenuState(true);
+			this.setState(true);
 			this.$eventBus.$emit('options-menu-open', this.menuId);
 		},
 
 		close() {
 			this.isOpen = false;
-			this.setOptionsMenuState(false);
+			this.setState(false);
 		},
 
 		externalClose(id) {

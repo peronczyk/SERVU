@@ -121,6 +121,7 @@
 
 // Dependencies
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 // Components
 import FormControl from '../elements/FormControl.vue';
@@ -148,6 +149,10 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+			openToast: 'toast/open',
+		}),
+
 		/**
 		 * Get files list from specified path
 		 */
@@ -183,10 +188,10 @@ export default {
 			axios.post(this.nodeUrl + 'delete', 'file=' + fileLocation)
 				.then(result => {
 					if (result.data.errors) {
-						this.$store.commit('openToast', 'File or directory removal failed.<br>Returned error: ' + result.errors[0].message);
+						this.openToast('File or directory removal failed.<br>Returned error: ' + result.errors[0].message);
 					}
 					else if (result.data.success === true) {
-						this.$store.commit('openToast', 'File or directory deleted permanently.');
+						this.openToast('File or directory deleted permanently.');
 						this.getList();
 					}
 				});
@@ -205,10 +210,10 @@ export default {
 		 */
 		onCreateDirectorySuccess(result) {
 			if (result.errors) {
-				this.$store.commit('openToast', 'Directory creation failed.<br>Returned error: ' + result.errors[0].message);
+				this.openToast('Directory creation failed.<br>Returned error: ' + result.errors[0].message);
 			}
 			else {
-				this.$store.commit('openToast', 'Directory created');
+				this.openToast('Directory created');
 				this.$refs.createDirectoryForm.resetForm();
 				this.getList();
 			}
@@ -219,10 +224,10 @@ export default {
 		 */
 		onUploadFilesSuccess(result) {
 			if (result.errors) {
-				this.$store.commit('openToast', 'Files upload failed.<br>Returned error: ' + result.errors[0].message);
+				this.openToast('Files upload failed.<br>Returned error: ' + result.errors[0].message);
 			}
 			else {
-				this.$store.commit('openToast', 'Files uploaded');
+				this.openToast('Files uploaded');
 				this.$refs.uploadFilesForm.resetForm();
 				this.getList();
 			}

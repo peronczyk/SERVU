@@ -52,6 +52,7 @@
 
 // Dependencies
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 // Components
 import ContentForm from './ContentForm.vue';
@@ -82,6 +83,10 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+			openModal: 'modal/open',
+		}),
+
 		getList(id) {
 			this.previousParentId = id ? this.actualParentId : null;
 			this.actualParentId = id ? id : 0;
@@ -93,7 +98,7 @@ export default {
 		},
 
 		openForm() {
-			this.$store.commit('openModal', ContentForm);
+			this.openModal(ContentForm);
 		},
 
 		editContent() {},

@@ -41,6 +41,7 @@
 
 // Dependencies
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 // Components
 import CollectionsForm from './CollectionsForm.vue';
@@ -59,6 +60,10 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+			openModal: 'modal/open',
+		}),
+
 		getList() {
 			axios.get(this.nodeUrl + 'list')
 				.then(result => {
@@ -67,7 +72,7 @@ export default {
 		},
 
 		openForm() {
-			this.$store.commit('openModal', CollectionsForm);
+			this.openModal(CollectionsForm);
 		}
 	},
 

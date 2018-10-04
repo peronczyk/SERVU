@@ -1,10 +1,14 @@
 <template>
 
 	<transition name="slide-right">
-		<dialog v-if="isToastVisible" class="c-Toast">
-			<p v-html="getToastContent" class="c-Toast__content"></p>
+		<dialog
+			v-if="isVisible"
+			:aria-hidden="!isVisible"
+			class="c-Toast"
+		>
+			<p v-html="getContent" class="c-Toast__content"></p>
 
-			<a @click.prevent="closeToast" class="c-Toast__close">
+			<a @click.prevent="close" class="c-Toast__close">
 				<icon size="16" glyph="times"></icon>
 			</a>
 		</dialog>
@@ -20,15 +24,15 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
 	computed: {
-		...mapGetters([
-			'isToastVisible',
-			'getToastContent',
+		...mapGetters('toast', [
+			'isVisible',
+			'getContent',
 		]),
 	},
 
 	methods: {
-		...mapMutations([
-			'closeToast',
+		...mapMutations('toast', [
+			'close',
 		]),
 	}
 }

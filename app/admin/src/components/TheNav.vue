@@ -28,23 +28,18 @@
 
 <script>
 
+// Dependencies
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 export default {
 	methods: {
-		logout() {
-			axios.get(window.appConfig.apiBaseUrl + 'users/logout')
-				.then(receivedData => {
-					if (receivedData.data.status) {
-						this.$store.commit('changeUserAccessLvl', receivedData.data.meta['access-lvl']);
-					}
-					else {
-						console.error('Logout failed');
-					}
-				});
-		}
-	}
+		...mapActions('user', [
+			'logout'
+		]),
+	},
 }
+
 </script>
 
 

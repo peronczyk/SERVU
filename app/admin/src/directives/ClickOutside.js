@@ -1,4 +1,6 @@
-export default {
+import Vue from 'vue/dist/vue.esm.js';
+
+Vue.directive('click-outside', {
 	bind(el, binding, vnode) {
 		el.clickOutsideEvent = (event) => {
 			// Check if clicked outside
@@ -13,4 +15,4 @@ export default {
 	unbind(el) {
 		document.body.removeEventListener('click', el.clickOutsideEvent)
 	},
-};
+});

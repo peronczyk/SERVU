@@ -4,12 +4,12 @@
 
 		<div class="c-LoginForm__wrapper">
 			<form-control
-			 :fields="loginFields"
-			 :uri="loginUri"
-			 :success="onSuccess"
-			 :error="onError"
-			 title="Provide your credentials"
-			 cta="Login"
+				:fields="loginFields"
+				:uri="loginUri"
+				:success="onSuccess"
+				:error="onError"
+				title="Provide your credentials"
+				cta="Login"
 			/>
 
 			<a @click.prevent="passwordRecovery">Password recovery</a>
@@ -26,11 +26,19 @@
 
 <script>
 
+// Dependencies
 import axios from 'axios';
+import { mapActions } from 'vuex';
+
+// Components
 import FormControl from './elements/FormControl.vue';
 import FormField from './elements/FormField.vue';
 
 export default {
+	components: {
+		FormControl
+	},
+
 	data() {
 		return {
 			loginFields: [
@@ -53,6 +61,11 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+			handleReceivedMeta: 'base/handleReceivedMeta',
+			openToast: 'toast/open',
+		}),
+
 		onSuccess(result) {
 			if (result.errors) {
 				this.loginErrorText = result.errors[0].message;
@@ -61,11 +74,7 @@ export default {
 				this.loginErrorText = 'API refuses to log you in because of unhandled error.';
 			}
 			else {
-				this.$store.commit('changeUserAccessLvl', result.meta['access-lvl']);
-
-				if (result.meta) {
-					this.$store.commit('setMeta', result.meta);
-				}
+				this.handleReceivedMeta(result.meta);
 			}
 		},
 
@@ -74,11 +83,9 @@ export default {
 		},
 
 		passwordRecovery() {
-			this.$store.commit('openToast', 'This function is not available in this application version');
+			this.openToast('This function is not available in this application version');
 		},
 	},
-
-	components: { FormControl }
 }
 
 </script>

@@ -3,7 +3,7 @@
 	<div class="c-Main">
 
 		<transition
-			v-if="isUserLoggedIn"
+			v-if="isLoggedIn"
 			name="page"
 			duration="2000"
 		>
@@ -30,13 +30,9 @@ export default {
 	},
 
 	computed: {
-		...mapGetters({
-			userAccess: 'getUserAccess',
-		}),
-
-		isUserLoggedIn() {
-			return (this.userAccess > 0);
-		}
+		...mapGetters('user', [
+			'isLoggedIn',
+		]),
 	},
 }
 
@@ -59,6 +55,7 @@ export default {
 	&__view {
 		padding: 0 $gutter * 2;
 		height: 100%;
+		will-change: transform, opacity;
 	}
 }
 

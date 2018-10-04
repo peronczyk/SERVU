@@ -1,17 +1,22 @@
 <template>
 
-	<dialog class="c-Modal" :class="{'is-Open': isOpen}" role="modal" aria-hidden="true">
+	<dialog
+		:class="{'is-Open': isOpen}"
+		:aria-hidden="!isOpen"
+		class="c-Modal"
+		role="modal"
+	>
 		<div class="c-Modal__window">
-			<a class="c-Modal__close" @click.prevent="closeModal">close</a>
+			<a class="c-Modal__close" @click.prevent="close">close</a>
 
 			<div class="c-Modal__content">
 				<keep-alive>
-					<component :is="content" />
+					<component :is="getContent" />
 				</keep-alive>
 			</div>
 		</div>
 
-		<div class="c-Modal__bg" @click.prevent="closeModal"></div>
+		<div class="c-Modal__bg" @click.prevent="close"></div>
 	</dialog>
 
 </template>
@@ -19,25 +24,21 @@
 
 <script>
 
+// Dependencies
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
 	computed: {
-		isOpen() {
-			return this.$store.state.modal.isOpen;
-		},
-
-		content() {
-			return this.$store.state.modal.content;
-		},
+		...mapGetters('modal', [
+			'isOpen',
+			'getContent',
+		]),
 	},
 
 	methods: {
-		openModal() {
-			this.commit('openModal', "bla");
-		},
-
-		closeModal() {
-			this.$store.commit('closeModal');
-		},
+		...mapActions('modal', [
+			'close',
+		]),
 	},
 }
 

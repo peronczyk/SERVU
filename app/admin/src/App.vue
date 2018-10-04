@@ -1,6 +1,12 @@
 <template>
 
-	<div class="c-App" :class="{'is-AppConnected': $store.getters.isAppConnected, 'is-UserLoggedIn': $store.getters.getUserAccess > 0}">
+	<div
+		class="c-App"
+		:class="{
+			'is-AppConnected': isConnected,
+			'is-UserLoggedIn': isUserLoggedIn
+		}"
+	>
 		<the-sidebar />
 		<the-main />
 		<the-toast />
@@ -16,6 +22,7 @@
 
 // Dependensies
 import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
 
 // Components
 import TheSidebar from './components/TheSidebar.vue';
@@ -31,15 +38,24 @@ export default {
 		TheSidebar, TheMain, TheToast, TheModal, SvgIconSet
 	},
 
+	computed: {
+		...mapGetters({
+			isConnected: 'base/isConnected',
+			isUserLoggedIn: 'user/isLoggedIn',
+		}),
+	},
+
+	methods: {
+		...mapActions('base', [
+			'handleReceivedMeta',
+		]),
+	},
+
 	created() {
 		axios.get(window.appConfig.apiBaseUrl)
-			.then(receivedData => {
-				if (receivedData.data.meta) {
-					this.$store.commit('appConnected', receivedData.data.meta);
-
-					if (receivedData.data.meta) {
-						this.$store.commit('setMeta', receivedData.data.meta);
-					}
+			.then(result => {
+				if (result.data.meta) {
+					this.handleReceivedMeta(result.data.meta)
 				}
 				else {
 					console.error('No meta entry in connection data');

@@ -4,9 +4,8 @@
   "description": "Administration panel for Servant Headless CMS",
   "main": "index.php",
   "scripts": {
-    "watch": "webpack --progress --colors --watch",
-    "dev": "webpack --progress --colors --watch",
-    "build": "webpack -p"
+    "dev": "webpack --mode=development --progress --colors --watch",
+    "build": "webpack --mode=production"
   },
   "author": "Bartosz Perończyk",
   "license": "ISC",

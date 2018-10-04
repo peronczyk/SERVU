@@ -58,7 +58,11 @@
 
 <script>
 
+// Dependencies
 import axios from 'axios';
+import { mapActions } from 'vuex';
+
+// Components
 import FormField from '../elements/FormField.vue';
 import FormFiles from '../elements/FormFiles.vue';
 import FormSelect from '../elements/FormSelect.vue';
@@ -66,6 +70,10 @@ import FormCheckbox from '../elements/FormCheckbox.vue';
 import FormHiddenField from '../elements/FormHiddenField.vue';
 
 export default {
+	components: {
+		FormField, FormFiles, FormSelect, FormCheckbox, FormHiddenField
+	},
+
 	props: {
 		fields: {
 			type: Array,
@@ -104,6 +112,10 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+			openToast: 'toast/open',
+		}),
+
 		resetForm() {
 			for (let refName in this.$refs) {
 				this.$refs[refName][0].value = '';
@@ -119,8 +131,6 @@ export default {
 					'Content-Type': 'multipart/form-data'
 				}
 			};
-
-			console.info('Form submit');
 
 			// Validate all fields
 			for (let refName in this.$refs) {
@@ -162,7 +172,7 @@ export default {
 
 							// Or show toast message
 							else {
-								this.$store.commit('openToast', '<small>This action caused the following error:</small><br>' + result.data.errors[0].message);
+								this.openToast('<small>This action caused the following error:</small><br>' + result.data.errors[0].message);
 							}
 						}
 
@@ -183,8 +193,6 @@ export default {
 			}
 		}
 	},
-
-	components: { FormField, FormFiles, FormSelect, FormCheckbox, FormHiddenField }
 }
 
 </script>
