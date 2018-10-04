@@ -47,7 +47,7 @@
 							label: 'Send email to this user with registration informations'
 						}
 					]"
-					:uri="nodeUrl + 'add-user/'"
+					:uri="nodeUrl + 'create/'"
 					ref="addUserForm"
 					title="Add user"
 					cta="Add"
