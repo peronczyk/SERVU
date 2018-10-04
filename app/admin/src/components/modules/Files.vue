@@ -36,7 +36,11 @@
 						<!--
 							Directories
 						-->
-						<tr v-for="(file, fileIndex) in filesList" v-if="file.type == 'directory'" :key="fileIndex">
+						<tr
+							v-for="(file, fileIndex) in filesList"
+							v-if="file.type == 'directory'"
+							:key="file.name + fileIndex"
+						>
 							<td colspan="2">
 								<a @click.prevent="getList(file.name)">
 									<icon size="24" glyph="folder-closed" />
@@ -53,7 +57,11 @@
 						<!--
 							Files
 						-->
-						<tr v-for="(file, fileIndex) in filesList" v-if="file.type != 'directory'" :key="fileIndex">
+						<tr
+							v-for="(file, fileIndex) in filesList"
+							v-if="file.type != 'directory'"
+							:key="file.name + fileIndex"
+						>
 							<td>
 								<icon size="24" glyph="file" />
 								{{ file.name }}
@@ -80,7 +88,12 @@
 							type: 'files',
 							name: 'files',
 							required: true,
-							max: 5,
+							max: 5
+						},
+						{
+							type: 'hidden',
+							name: 'location',
+							value: actualPath
 						}
 					]"
 					:uri="nodeUrl + 'upload/'"
@@ -202,7 +215,7 @@ export default {
 		 * @todo
 		 */
 		copyLink() {
-			console.log('Copy link');
+			this.openToast('This feature is in ToDo list...');
 		},
 
 		/**
