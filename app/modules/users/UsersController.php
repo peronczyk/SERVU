@@ -62,25 +62,25 @@ final class UsersController {
 	 */
 
 	public function create() {
-		if (empty($_GET['email'])) {
+		if (empty($_POST['email'])) {
 			throw new Exception("Email not provided");
 		}
 
-		if (empty($_GET['password'])) {
+		if (empty($_POST['password'])) {
 			throw new Exception("Password not provided");
 		}
 
-		if (!$this->_auth->emailValidate($_GET['email'])) {
+		if (!$this->_auth->emailValidate($_POST['email'])) {
 			throw new Exception("Provided email address is incorrect");
 		}
 
-		if (!$this->_auth->passwordValidate($_GET['password'])) {
+		if (!$this->_auth->passwordValidate($_POST['password'])) {
 			throw new Exception("Provided password does not meet the requirements");
 		}
 
 		$result = $this->actions->createUser(
-			$_GET['email'],
-			$this->_auth->passwordEncode($_GET['password']),
+			$_POST['email'],
+			$this->_auth->passwordEncode($_POST['password']),
 			Auth::LVL_ADMIN
 		);
 

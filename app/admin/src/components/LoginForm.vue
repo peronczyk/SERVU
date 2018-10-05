@@ -33,6 +33,7 @@ import { mapActions } from 'vuex';
 // Components
 import FormControl from './elements/FormControl.vue';
 import FormField from './elements/FormField.vue';
+import PasswordRecovery from './elements/PasswordRecovery.vue';
 
 export default {
 	components: {
@@ -64,6 +65,7 @@ export default {
 		...mapActions({
 			handleReceivedMeta: 'base/handleReceivedMeta',
 			openToast: 'toast/open',
+			openModal: 'modal/open',
 		}),
 
 		onSuccess(result) {
@@ -83,7 +85,7 @@ export default {
 		},
 
 		passwordRecovery() {
-			this.openToast('This function is not available in this application version');
+			this.openModal(PasswordRecovery);
 		},
 	},
 }
@@ -99,7 +101,7 @@ export default {
 	position: relative;
 	display: flex;
 	align-items: center;
-	height: 100%;
+	height: 100vh;
 	padding: $gutter * 3;
 
 	&__wrapper {

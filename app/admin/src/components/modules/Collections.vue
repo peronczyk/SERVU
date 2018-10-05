@@ -49,7 +49,7 @@ import OptionsMenu from '../elements/OptionsMenu.vue';
 
 export default {
 	components: {
-		CollectionsForm, OptionsMenu
+		OptionsMenu
 	},
 
 	data() {

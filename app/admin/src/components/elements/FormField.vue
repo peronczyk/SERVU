@@ -112,12 +112,12 @@ export default {
 .c-FormField {
 	position: relative;
 	margin-bottom: 20px;
-	padding-top: 20px;
+	padding-top: 14px;
 
 
 	&__label {
 		position: absolute;
-		top: 20px;
+		top: 14px;
 		left: 0;
 		display: flex;
 		align-items: center;

@@ -45,7 +45,8 @@ export default {
 @import '../assets/styles/definitions';
 
 .c-Toast {
-	position: absolute;
+	position: fixed;
+	z-index: +20; // Twice as modal
 	top: $gutter;
 	left: auto; // Override browser defaults
 	right: $gutter;

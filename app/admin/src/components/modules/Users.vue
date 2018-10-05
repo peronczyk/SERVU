@@ -8,7 +8,7 @@
 		<div class="Grid Grid--gutter">
 
 			<div class="Col-8 Col-12@LG">
-				<h3>Users list</h3>
+				<h3>Users list <small>({{ usersList.length }})</small></h3>
 				<table>
 					<thead>
 						<tr>
@@ -42,15 +42,22 @@
 							required: true,
 						},
 						{
+							type: 'text',
+							name: 'password',
+							label: 'Password',
+							required: true,
+						},
+						{
 							type: 'checkbox',
 							name: 'inform',
 							label: 'Send email to this user with registration informations'
 						}
 					]"
 					:uri="nodeUrl + 'create/'"
-					ref="addUserForm"
-					title="Add user"
-					cta="Add"
+					:success="onUserCreateSuccess"
+					title="Create user"
+					cta="Create"
+					ref="createUserForm"
 				/>
 
 				<form-control
@@ -81,9 +88,9 @@
 						},
 					]"
 					:uri="nodeUrl + 'change-data/'"
-					ref="changeCurrentUserDataForm"
 					title="Change your data"
 					cta="Change"
+					ref="changeCurrentUserDataForm"
 				/>
 			</div>
 
@@ -97,6 +104,7 @@
 
 // Dependencies
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 // Components
 import FormControl from '../elements/FormControl.vue';
@@ -115,6 +123,10 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+			openToast: 'toast/open',
+		}),
+
 		getList() {
 			axios.get(this.nodeUrl + 'list')
 				.then(result => {
@@ -122,9 +134,25 @@ export default {
 				});
 		},
 
-		editUser() {},
+		/**
+		 * @todo
+		 */
+		editUser(entry) {
+			this.openToast('Operation not available yet');
+		},
 
-		deleteUser() {},
+		/**
+		 * @todo
+		 */
+		deleteUser(entry) {
+			this.openToast('Operation not available yet');
+		},
+
+		onUserCreateSuccess(resultData) {
+			this.openToast('User created');
+			this.$refs.createUserForm.resetForm();
+			this.getList();
+		}
 	},
 
 	created() {

@@ -156,11 +156,11 @@ export default {
 				}
 			}
 
+
 			// Check if all fields are valid and fire API call
 			if (this.isFormValid) {
 				axios.post(this.uri, formData, axiosConfig)
 					.then(result => {
-						console.log(result);
 
 						// Check if there are errors in response
 						if (result.data.errors && result.data.errors.length) {
@@ -172,7 +172,11 @@ export default {
 
 							// Or show toast message
 							else {
-								this.openToast('<small>This action caused the following error:</small><br>' + result.data.errors[0].message);
+								console.warn('Api call responded with errors:');
+								console.log(result.data.errors);
+
+								let errorMessages = result.data.errors.map(error => error.message).join('<br>');
+								this.openToast('<small>This action caused the following error:</small><br>' + errorMessages);
 							}
 						}
 
@@ -180,14 +184,22 @@ export default {
 						else if (typeof this.success === 'function') {
 							this.success(result.data);
 						}
+
+						// Open toast if there is no success hook
+						else {
+							this.openToast('Submitting <em>"' + this.title + '"</em> form was successful.');
+						}
 					})
 					.catch(error => {
-						console.warn('Api call error');
+						console.warn('Api call error:');
 						console.log(error);
 
 						// Fire error hook
 						if (typeof this.error === 'function') {
 							this.error(error);
+						}
+						else {
+							this.openToast('<small>Api call failed</small><br>' + error);
 						}
 					});
 			}

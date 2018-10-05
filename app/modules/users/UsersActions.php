@@ -65,6 +65,6 @@ class UsersActions {
 			->where("email = '{$email}'")
 			->all();
 
-		return ($result > 0);
+		return ((int) $result[0]['count'] > 0);
 	}
 }

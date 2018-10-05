@@ -96,7 +96,7 @@ class Sqlite {
 	 * Shortcut to 'SELECT'
 	 */
 
-	public function count() : int {
+	public function count() : object {
 		return $this->select('COUNT(*) as count');
 	}
 
@@ -168,7 +168,7 @@ class Sqlite {
 	 * Perform insertion
 	 */
 
-	public function into(string $table) : bool {
+	public function into(string $table) : object {
 		if ($this->query_type != 'insert') {
 			throw new Exception("Method `into` can be used only with `insert` query type.");
 		}
