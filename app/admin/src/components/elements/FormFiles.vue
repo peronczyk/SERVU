@@ -38,9 +38,7 @@ import { mapActions } from 'vuex';
 
 export default {
 	props: {
-		required: {
-			type: Boolean,
-		},
+		required: Boolean,
 
 		// Maximal number of files added
 		max: {
@@ -66,6 +64,10 @@ export default {
 		...mapActions({
 			openToast: 'toast/open',
 		}),
+
+		getValue() {
+			return this.value;
+		},
 
 		validate() {
 			this.isValid = true;

@@ -17,37 +17,47 @@
 				</form-field>
 
 				<form-select
-					v-if="field.type == 'select'"
+					v-else-if="field.type == 'select'"
 					:ref="field.name"
 					:required="field.required"
 				/>
 
 				<form-files
-					v-if="field.type == 'files'"
+					v-else-if="field.type == 'files'"
 					:ref="field.name"
 					:required="field.required"
 					:max="field.max"
 				/>
 
 				<form-checkbox
-					v-if="field.type == 'checkbox'"
+					v-else-if="field.type == 'checkbox'"
 					:ref="field.name"
 					:required="field.required"
 				>
 					{{ field.label }}
 				</form-checkbox>
 
+				<form-list
+					v-else-if="field.type == 'list'"
+					:ref="field.name"
+					:required="field.required"
+				>
+					{{ field.label }}
+				</form-list>
+
 				<form-hidden-field
-					v-if="field.type == 'hidden'"
+					v-else-if="field.type == 'hidden'"
 					:value="field.value"
 					:ref="field.name"
 				/>
 
 			</fieldset>
 
-			<p class="u-Error" v-if="!isFormValid">
-				Please fill in all required fields
-			</p>
+			<transition name="fade">
+				<p class="u-Error" v-if="!isFormValid">
+					Please fill in all required fields
+				</p>
+			</transition>
 
 			<button class="Btn">{{ cta }}</button>
 		</form>
@@ -67,11 +77,12 @@ import FormField from '../elements/FormField.vue';
 import FormFiles from '../elements/FormFiles.vue';
 import FormSelect from '../elements/FormSelect.vue';
 import FormCheckbox from '../elements/FormCheckbox.vue';
+import FormList from '../elements/FormList.vue';
 import FormHiddenField from '../elements/FormHiddenField.vue';
 
 export default {
 	components: {
-		FormField, FormFiles, FormSelect, FormCheckbox, FormHiddenField
+		FormField, FormFiles, FormSelect, FormCheckbox, FormList, FormHiddenField
 	},
 
 	props: {
@@ -134,15 +145,23 @@ export default {
 
 			// Validate all fields
 			for (let refName in this.$refs) {
-				let ref = this.$refs[refName][0];
+				let ref        = this.$refs[refName][0];
+				let isValid    = ref.validate();
 
-				if (!ref.validate()) {
-					this.isFormValid = false;
+				if (!isValid) {
+					// Prevent changing isFormValid multiple times if there is more
+					// than one invalid field
+					if (this.isFormValid) {
+						this.isFormValid = false;
+					}
+					continue;
 				}
 
+				let fieldValue = ref.getValue();
+
 				// Value is an array
-				if (ref.value instanceof Array) {
-					ref.value.forEach((refElement, index) => {
+				if (fieldValue instanceof Array) {
+					fieldValue.forEach((refElement, index) => {
 						// If elements of array are files add them to formData
 						if (refElement instanceof File) {
 							formData.append(refName + '[' + index + ']', refElement);
@@ -152,7 +171,7 @@ export default {
 
 				// Regular value
 				else {
-					formData.append(refName, ref.value);
+					formData.append(refName, fieldValue);
 				}
 			}
 

@@ -38,6 +38,7 @@ $app_modules = $modules->getConfigs();
 		window.appModules = <?= json_encode($app_modules); ?>;
 	</script>
 
+	<link rel="shortcut icon" type="image/png" href="<?= $admin_dir ?>/favicon.png">
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,700,300,400italic,700italic">
 </head>
 

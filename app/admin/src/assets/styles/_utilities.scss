@@ -2,21 +2,33 @@
 	&--full { width: 100%; }
 }
 
+
 .u-Text {
 	&--center {
 		text-align: center;
 	}
+
+	&--left {
+		text-align: left;
+	}
+
+	&--right {
+		text-align: right;
+	}
 }
+
 
 p.u-Error {
 	margin-bottom: 20px;
 	color: $color-errors;
 }
 
+
 .u-Info {
 	padding: 20px;
 	background-color: $color-bg-lvl-2;
 }
+
 
 .u-Required {
 	display: inline-block;

@@ -1,16 +1,22 @@
 <template>
 
-	<label class="c-FormSelect" :class="{'is-Dirty': isDirty, 'is-Error': !isValid}">
+	<label
+		class="c-FormSelect"
+		:class="{
+			'is-Dirty': isDirty,
+			'is-Error': !isValid
+		}"
+	>
 		<div class="c-FormSelect__label">
 			{{ label }}
 		</div>
 
 		<select
-		 v-model="fieldValue"
-		 :aria-invalid="!isValid"
-		 @focus="onFocus"
-		 @blur="onBlur"
-		 @change="onChange"
+			v-model="value"
+			@focus="onFocus"
+			@blur="onBlur"
+			@change="onChange"
+			:aria-invalid="!isValid"
 		>
 			<slot />
 		</select>
@@ -23,23 +29,30 @@
 
 export default {
 	props: {
+		required: Boolean,
+
 		label: {
 			type: String,
 			required: true,
-		}
+		},
 	},
 
 	data() {
 		return {
-			fieldValue: '',
+			value: '',
 			isDirty: false,
 			isValid: true,
 		}
 	},
 
 	methods: {
+		getValue() {
+			return this.value;
+		},
+
 		validate() {
-			console.log('Validate');
+			this.isValid = !(this.required && this.value.length < 1);
+			return this.isValid;
 		},
 
 		onFocus() {
@@ -51,7 +64,7 @@ export default {
 		},
 
 		onBlur() {
-			if (this.fieldValue.length < 1) {
+			if (this.value.length < 1) {
 				this.isDirty = false;
 			}
 			else {

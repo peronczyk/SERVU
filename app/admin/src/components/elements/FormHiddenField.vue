@@ -15,6 +15,10 @@ export default {
 	},
 
 	methods: {
+		getValue() {
+			return this.value;
+		},
+
 		validate() {
 			return true;
 		}

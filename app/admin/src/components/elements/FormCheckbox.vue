@@ -31,6 +31,10 @@ export default {
 	},
 
 	methods: {
+		getValue() {
+			return this.value;
+		},
+
 		validate() {
 			this.isValid = true;
 
