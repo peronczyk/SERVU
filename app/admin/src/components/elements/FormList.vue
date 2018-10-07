@@ -80,6 +80,7 @@ export default {
 
 	data() {
 		return {
+			fieldColumns: ['names', 'typeIds'],
 			fieldsList: [],
 			isValid: true,
 		};
@@ -96,7 +97,11 @@ export default {
 	},
 
 	methods: {
+		/**
+		 * @todo
+		 */
 		getValue() {
+			let computedValue = [];
 			console.log(this.$refs);
 			return 'TEST';
 		},
@@ -108,17 +113,18 @@ export default {
 				this.isValid = false;
 			}
 
-			let nameFields = this.$refs.names || [];
-			let typeIdFields = this.$refs.typeIds || [];
+			this.fieldColumns.forEach(column => {
+				let columnRefs = this.$refs[column] || [];
 
-			for (let nameIndex in nameFields) {
-				let fieldIsValid = nameFields[nameIndex].validate();
+				for (let index in columnRefs) {
+					let fieldIsValid = columnRefs[index].validate();
 
-				// Change component valid state to false on first invalid element
-				if (!fieldIsValid && this.isValid) {
-					this.isValid = false;
+					// Change component valid state to false on first invalid element
+					if (!fieldIsValid && this.isValid) {
+						this.isValid = false;
+					}
 				}
-			}
+			});
 
 			return this.isValid;
 		},
