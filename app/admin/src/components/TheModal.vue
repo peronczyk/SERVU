@@ -121,6 +121,7 @@ export default {
 	}
 
 	&__content {
+		min-height: 100px;
 		padding: $gutter #{$gutter * 1.5};
 		overflow: hidden;
 		text-align: left;

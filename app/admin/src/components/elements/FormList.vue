@@ -24,7 +24,7 @@
 				<tr v-for="(field, fieldNumber) in fieldsList" :key="fieldNumber">
 					<td class="u-Text--center">{{ fieldNumber + 1 }}
 					<td>
-						<form-select ref="typeIds" label="Field type" required>
+						<form-select ref="typeId" label="Field type" required>
 							<option
 								v-for="(fieldType, fieldTypeNumber) in getFieldTypes"
 								:key="fieldTypeNumber"
@@ -33,7 +33,7 @@
 						</form-select>
 					</td>
 					<td>
-						<form-field ref="names" required>Field name</form-field>
+						<form-field ref="name" required>Field name</form-field>
 					</td>
 					<td class="u-Text--center">
 						<a @click.prevent="removeField(fieldNumber)"><icon size="16" glyph="times" /></a>
@@ -80,7 +80,7 @@ export default {
 
 	data() {
 		return {
-			fieldColumns: ['names', 'typeIds'],
+			fieldColumns: ['name', 'typeId'],
 			fieldsList: [],
 			isValid: true,
 		};
@@ -98,14 +98,32 @@ export default {
 
 	methods: {
 		/**
-		 * @todo
+		 * Field value getter
+		 * @return Array
 		 */
 		getValue() {
 			let computedValue = [];
-			console.log(this.$refs);
-			return 'TEST';
+
+			// Iterate column types
+			this.fieldColumns.forEach(column => {
+				let columnRefs = this.$refs[column] || [];
+
+				// Iterate refs of selected column type
+				for (let index in columnRefs) {
+					if (!computedValue[index]) {
+						computedValue[index] = {};
+					}
+					computedValue[index][column] = columnRefs[index].getValue();
+				}
+			});
+
+			return computedValue;
 		},
 
+		/**
+		 * Field validator
+		 * @return Boolean
+		 */
 		validate() {
 			this.isValid = true;
 
@@ -113,9 +131,11 @@ export default {
 				this.isValid = false;
 			}
 
+			// Iterate column types
 			this.fieldColumns.forEach(column => {
 				let columnRefs = this.$refs[column] || [];
 
+				// Iterate refs of selected column type
 				for (let index in columnRefs) {
 					let fieldIsValid = columnRefs[index].validate();
 

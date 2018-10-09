@@ -7,7 +7,7 @@ function register_files_action_defaults($dependencies) {
 	$controller_file = _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'files/FilesController.php';
 
 	if (file_exists($controller_file)) {
-		require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'files/FilesController.php';
+		require_once $controller_file;
 		return new FilesController($dependencies);
 	}
 	else {

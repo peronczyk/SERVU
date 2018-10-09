@@ -3,7 +3,12 @@
 	<div class="c-CollectionsForm">
 		<h1>Create collection</h1>
 
+		<transition name="fade">
+			<p v-if="creationSuccess" class="u-Info">Collection added</p>
+		</transition>
+
 		<form-control
+			v-if="!creationSuccess"
 			:fields="[
 				{
 					type: 'text',
@@ -30,7 +35,7 @@
 <script>
 
 // Dependencies
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 // Components
 import FormControl from '../elements/FormControl.vue';
@@ -42,7 +47,8 @@ export default {
 
 	data() {
 		return {
-			apiUri: '',
+			apiUri: window.appConfig.apiBaseUrl + 'collections/add/',
+			creationSuccess: false,
 		}
 	},
 
@@ -54,7 +60,7 @@ export default {
 
 	methods: {
 		onCreateSuccess() {
-			console.log('SUCCESS');
+			this.creationSuccess = true;
 		},
 	},
 }

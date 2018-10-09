@@ -145,8 +145,8 @@ export default {
 
 			// Validate all fields
 			for (let refName in this.$refs) {
-				let ref        = this.$refs[refName][0];
-				let isValid    = ref.validate();
+				let ref     = this.$refs[refName][0];
+				let isValid = ref.validate();
 
 				if (!isValid) {
 					// Prevent changing isFormValid multiple times if there is more
@@ -162,9 +162,14 @@ export default {
 				// Value is an array
 				if (fieldValue instanceof Array) {
 					fieldValue.forEach((refElement, index) => {
-						// If elements of array are files add them to formData
+						// If elements of array are files
 						if (refElement instanceof File) {
 							formData.append(refName + '[' + index + ']', refElement);
+						}
+						else if (refElement instanceof Object) {
+							for (let elementIndex in refElement) {
+								formData.append(refName + '[' + index + '][' + elementIndex + ']', refElement[elementIndex]);
+							}
 						}
 					});
 				}
