@@ -1,13 +1,27 @@
 <template>
 
 	<div class="c-ContentForm">
-		<h1>Add content</h1>
+		<h1>Add new content</h1>
 
-		<form @submit.prevent="sendForm">
-			<form-select label="Choose collection">
-				<option v-for="(collection, index) in collections" :key="index" :value="collection.id">{{ collection.name }}</option>
-			</form-select>
-		</form>
+		<form-control
+			:fields="[
+				{
+					type: 'text',
+					name: 'content-name',
+					label: 'Content name',
+					required: true,
+				},
+				{
+					type: 'select',
+					name: 'collection',
+					label: 'Collection',
+					options: collectionsOptions,
+				},
+			]"
+			:uri="apiUri"
+			:success="onAddSuccess"
+			cta="Add content"
+		/>
 	</div>
 
 </template>
@@ -15,28 +29,43 @@
 
 <script>
 
-import FormField from '../elements/FormField.vue';
-import FormSelect from '../elements/FormSelect.vue';
+// Dependencies
+import { mapGetters } from 'vuex';
+
+// Components
+import FormControl from '../elements/FormControl.vue';
 
 export default {
+	components: {
+		FormControl
+	},
+
 	data() {
 		return {
-			collections: [
-				{
-					id: 'text',
-					name: 'Text',
-				}
-			],
+			apiUri: window.appConfig.apiBaseUrl + 'content/add/',
 		}
+	},
+
+	computed: {
+		...mapGetters({
+			collectionsList: 'collections/getList',
+		}),
+
+		collectionsOptions() {
+			return this.collectionsList.map(collection => {
+				return {
+					name: collection.name + ' (' + (collection.fields.length || 0) + ')',
+					value: collection.id,
+				};
+			});
+		},
 	},
 
 	methods: {
-		sendForm() {
-			console.log('Send content form');
-		}
+		onAddSuccess() {
+			console.log('Add success');
+		},
 	},
-
-	components: { FormField, FormSelect }
 }
 
 </script>

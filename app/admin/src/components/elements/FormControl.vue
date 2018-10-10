@@ -18,9 +18,12 @@
 
 				<form-select
 					v-else-if="field.type == 'select'"
+					:options="field.options"
 					:ref="field.name"
 					:required="field.required"
-				/>
+				>
+					{{ field.label }}
+				</form-select>
 
 				<form-files
 					v-else-if="field.type == 'files'"

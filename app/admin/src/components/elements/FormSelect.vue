@@ -8,7 +8,7 @@
 		}"
 	>
 		<div class="c-FormSelect__label">
-			{{ label }}
+			<slot />
 		</div>
 
 		<select
@@ -18,7 +18,11 @@
 			@change="onChange"
 			:aria-invalid="!isValid"
 		>
-			<slot />
+			<option
+				v-for="(option, optionIndex) in options"
+				:key="optionIndex"
+				:value="option.value"
+			>{{ option.name }}</option>
 		</select>
 	</label>
 
@@ -31,8 +35,8 @@ export default {
 	props: {
 		required: Boolean,
 
-		label: {
-			type: String,
+		options: {
+			type: Array,
 			required: true,
 		},
 	},
@@ -64,7 +68,7 @@ export default {
 		},
 
 		onBlur() {
-			if (this.value.length < 1) {
+			if (!this.value || this.value.length < 1) {
 				this.isDirty = false;
 			}
 			else {

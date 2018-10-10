@@ -24,12 +24,13 @@
 				<tr v-for="(field, fieldNumber) in fieldsList" :key="fieldNumber">
 					<td class="u-Text--center">{{ fieldNumber + 1 }}
 					<td>
-						<form-select ref="typeId" label="Field type" required>
-							<option
-								v-for="(fieldType, fieldTypeNumber) in getFieldTypes"
-								:key="fieldTypeNumber"
-								:value="fieldType.id"
-							>{{ fieldType.name }}</option>
+						<form-select
+							:options="fieldTypesOptions"
+							ref="typeId"
+							label="Field type"
+							required
+						>
+							Field type
 						</form-select>
 					</td>
 					<td>
@@ -90,6 +91,15 @@ export default {
 		...mapGetters('content', [
 			'getFieldTypes',
 		]),
+
+		fieldTypesOptions() {
+			return this.getFieldTypes.map(type => {
+				return {
+					name: type.name,
+					value: type.id,
+				};
+			});
+		},
 
 		isNotEnough() {
 			return (this.required && this.fieldsList.length < this.min);

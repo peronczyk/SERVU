@@ -1,14 +1,9 @@
 <template>
 
 	<div class="c-CollectionsForm">
-		<h1>Create collection</h1>
-
-		<transition name="fade">
-			<p v-if="creationSuccess" class="u-Info">Collection added</p>
-		</transition>
+		<h1>Add new collection</h1>
 
 		<form-control
-			v-if="!creationSuccess"
 			:fields="[
 				{
 					type: 'text',
@@ -24,8 +19,8 @@
 				},
 			]"
 			:uri="apiUri"
-			:success="onCreateSuccess"
-			cta="Create new collection"
+			:success="onAddSuccess"
+			cta="Add collection"
 		/>
 	</div>
 
@@ -48,7 +43,6 @@ export default {
 	data() {
 		return {
 			apiUri: window.appConfig.apiBaseUrl + 'collections/add/',
-			creationSuccess: false,
 		}
 	},
 
@@ -59,8 +53,16 @@ export default {
 	},
 
 	methods: {
-		onCreateSuccess() {
-			this.$root.$emit('COLLECTION_ADDED');
+		...mapActions({
+			closeModal       : 'modal/close',
+			openToast        : 'toast/open',
+			fetchCollections : 'collections/fetchList',
+		}),
+
+		onAddSuccess() {
+			this.closeModal();
+			this.openToast('Collection added.');
+			this.fetchCollections();
 		},
 	},
 }

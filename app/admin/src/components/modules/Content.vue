@@ -26,11 +26,11 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td colspan="4" v-if="previousParentId !== null"><a @click.prevent="getList(previousParentId)">Go up</a></td>
+					<td colspan="4" v-if="previousParentId !== null"><a @click.prevent="fetchList(previousParentId)">Go up</a></td>
 				</tr>
 				<tr v-for="(entry, index) in contentList" :key="entry.id">
 					<td>{{ index + 1 }}.</td>
-					<td v-if="entry.children > 0"><a @click.prevent="getList(entry.id)">{{ entry.name }}</a></td>
+					<td v-if="entry.children > 0"><a @click.prevent="fetchList(entry.id)">{{ entry.name }}</a></td>
 					<td v-else>{{ entry.name }}</td>
 					<td>{{ entry.children }}</td>
 					<td class="u-Text--center">
@@ -52,7 +52,7 @@
 
 // Dependencies
 import axios from 'axios';
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 // Components
 import ContentForm from './ContentForm.vue';
@@ -82,14 +82,22 @@ export default {
 		}
 	},
 
+	computed: {
+		...mapGetters({
+			isCollectionsFetched : 'collections/isFetched',
+		}),
+	},
+
 	methods: {
 		...mapActions({
-			openModal: 'modal/open',
+			openModal            : 'modal/open',
+			openToast            : 'toast/open',
+			fetchCollectionsList : 'collections/fetchList',
 		}),
 
-		getList(id) {
+		fetchList(id) {
 			this.previousParentId = id ? this.actualParentId : null;
-			this.actualParentId = id ? id : 0;
+			this.actualParentId   = id ? id : 0;
 
 			axios.get(this.nodeUrl + 'list?parent-id=' + this.actualParentId)
 				.then(result => {
@@ -101,14 +109,24 @@ export default {
 			this.openModal(ContentForm);
 		},
 
-		editContent() {},
+		/** @todo */
+		editContent() {
+			this.openToast('This option is not available yet.');
+		},
 
-		deleteContent() {},
+		/** @todo */
+		deleteContent() {
+			this.openToast('This option is not available yet.');
+		},
 	},
 
 	created() {
-		this.getList();
-	}
+		this.fetchList();
+
+		if (!this.isCollectionsFetched) {
+			this.fetchCollectionsList();
+		}
+	},
 }
 
 </script>
