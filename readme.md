@@ -9,7 +9,7 @@ The simpliest and easy to use headless CMS that you can imagine. Its ligghtning 
 Open your installation URL in your browser and you will be guided through the easiest installation process you have ever seen.
 
 ## Requirements
-Apache or NGINX server with PHP 5.3+ and SQLite support.
+Apache or NGINX server with PHP 7.1+ and SQLite support.
 
 ## API
 When installation process was finished API is accessible via root url address of the CMS (place where you have installed Servant). For example `https://yourdomain.com/servant`.
