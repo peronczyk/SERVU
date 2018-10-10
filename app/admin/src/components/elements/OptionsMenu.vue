@@ -61,7 +61,7 @@ export default {
 		open() {
 			this.isOpen = true;
 			this.setState(true);
-			this.$eventBus.$emit('options-menu-open', this.menuId);
+			this.$root.$emit('OPTIONS_MENU_OPEN', this.menuId);
 		},
 
 		close() {
@@ -79,14 +79,6 @@ export default {
 			action();
 			this.toggle();
 		},
-	},
-
-	created() {
-		this.$eventBus.$on('options-menu-open', this.externalClose);
-	},
-
-	beforeDestroy() {
-		this.$eventBus.$off('options-menu-open', this.externalClose);
 	},
 }
 
@@ -141,22 +133,22 @@ export default {
 	&__list {
 		position: absolute;
 		z-index: +1;
-		left: -6px;
+		right: -28px;
 		bottom: calc(100% + 10px);
 		width: 14vw;
 		min-width: 160px;
 		max-width: 260px;
-		padding: 6px 0 8px 0;
 		list-style: none;
 		line-height: 1.2em;
 		text-align: left;
 		background-color: $list-bg-color;
 		box-shadow: $shadow-lvl-2;
 
+		// Pointing down triangle
 		&::after {
 			content: '';
 			position: absolute;
-			left: 10px;
+			right: 33px;
 			bottom: -8px;
 			width: 16px;
 			height: 16px;
@@ -172,8 +164,15 @@ export default {
 			}
 
 			a {
+				position: relative;
+				z-index: +1;
 				display: block;
-				padding: 12px 20px;
+				padding: 16px 20px;
+				user-select: none;
+
+				&:hover {
+					background-color: rgba($color-white, .03);
+				}
 			}
 		}
 	}

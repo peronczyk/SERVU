@@ -60,7 +60,7 @@ export default {
 
 	methods: {
 		onCreateSuccess() {
-			this.creationSuccess = true;
+			this.$root.$emit('COLLECTION_ADDED');
 		},
 	},
 }

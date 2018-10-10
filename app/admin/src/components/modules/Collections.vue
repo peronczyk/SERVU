@@ -5,24 +5,24 @@
 			<h1>Collections</h1>
 
 			<div class="o-Header__buttons">
-				<a class="Btn" @click.prevent="openForm">Create collection</a>
+				<a class="Btn" @click.prevent="addCollection()">Add collection</a>
 			</div>
 		</header>
 
 		<table>
 			<thead>
 				<tr>
-					<th></th>
+					<th style="width: 20px"></th>
 					<th>Name</th>
-					<th>Fields</th>
+					<th class="u-Text--center">Fields</th>
 					<th class="u-Text--center" style="width: 80px">Options</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="(entry, index) in collectionsList" :key="entry.id">
 					<td>{{ index + 1 }}.</td>
-					<td>{{ entry.name }}</td>
-					<td>{{ entry.fields.length }}</td>
+					<td><a @click.prevent="editCollection(entry)">{{ entry.name }}</a></td>
+					<td class="u-Text--center">{{ entry.fields.length }}</td>
 					<td class="u-Text--center">
 						<options-menu :options="[
 							{name: 'Edit', action: () => editCollection(entry)},
@@ -62,6 +62,8 @@ export default {
 	methods: {
 		...mapActions({
 			openModal: 'modal/open',
+			closeModal: 'modal/close',
+			openToast: 'toast/open',
 		}),
 
 		getList() {
@@ -71,13 +73,34 @@ export default {
 				});
 		},
 
-		openForm() {
+		addCollection() {
 			this.openModal(CollectionsForm);
-		}
+		},
+
+		/** @todo */
+		editCollection() {
+			this.openToast('This option is not available yet.');
+		},
+
+		/** @todo */
+		deleteCollection() {
+			this.openToast('This option is not available yet.');
+		},
+
+		onAddSuccess() {
+			this.closeModal();
+			this.openToast('Collection added.');
+			this.getList();
+		},
 	},
 
 	created() {
 		this.getList();
+		this.$root.$on('COLLECTION_ADDED', this.onAddSuccess);
+	},
+
+	beforeDestroy() {
+		this.$root.$off('COLLECTION_ADDED', this.onAddSuccess);
 	},
 }
 

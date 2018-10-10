@@ -47,7 +47,7 @@ export default {
 .c-Toast {
 	position: fixed;
 	z-index: +20; // Twice as modal
-	top: $gutter;
+	bottom: $gutter;
 	left: auto; // Override browser defaults
 	right: $gutter;
 	display: flex;
