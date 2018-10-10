@@ -9,21 +9,22 @@
 
 			<div class="Col-8 Col-12@LG">
 				<h3>Users list <small>({{ usersList.length }})</small></h3>
-				<table>
+
+				<table class="u-Table--styled u-Table--withOptions">
 					<thead>
 						<tr>
 							<th>ID</th>
 							<th>Email</th>
-							<th class="u-Text--center" style="width: 80px">Options</th>
+							<th>Options</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="entry in usersList" :key="entry.id">
 							<td>{{ entry.id }}</td>
 							<td>{{ entry.email }}</td>
-							<td class="u-Text--center">
+							<td>
 								<options-menu :options="[
-									{name: 'Edit', action: () => editUser(entry)},
+									{name: 'Edit',   action: () => editUser(entry)},
 									{name: 'Delete', action: () => deleteUser(entry)},
 								]" />
 							</td>

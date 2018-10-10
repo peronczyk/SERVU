@@ -15,7 +15,7 @@
 					</li>
 				</ul>
 
-				<table class="Table Table--withOptions">
+				<table class="u-Table--styled u-Table--withOptions">
 
 					<thead>
 						<tr>

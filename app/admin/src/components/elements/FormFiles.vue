@@ -17,8 +17,10 @@
 		<table v-if="value.length" class="c-FormFiles__list">
 			<tr v-for="(file, index) in value" :key="index">
 				<td><small>{{ index + 1 }}</small></td>
-				<td>{{ file.name }}</td>
-				<td><small>{{ file.size / 1000 }}&nbsp;KB</small></td>
+				<td>
+					{{ file.name }}<br>
+					<small>{{ file.size / 1000 }}&nbsp;KB</small>
+				</td>
 				<td>
 					<a @click.prevent="removeFile(file)">
 						<icon size="16" glyph="times" />
@@ -115,28 +117,31 @@ export default {
 .c-FormFiles {
 	&__input {
 		position: relative;
+		display: inline-block;
 		overflow: hidden;
+		font-size: 0;
 
 		input {
 			position: absolute;
 			top: 0;
 			left: -100%;
+			width: 0;
+			height: 0;
 			opacity: 0;
 		}
 	}
 
 	&__list {
-		margin-top: 6px;
+		margin-top: -$box-margin / 3;
 		margin-bottom: $box-margin / 3;
 		max-width: 100%;
 
 		td {
 			padding: 4px;
+			line-height: 1.2em;
 
 			&:first-child {
 				padding-left: 0;
-				padding-right: 0;
-				word-break: break-all;
 			}
 		}
 	}

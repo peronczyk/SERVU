@@ -4,7 +4,7 @@ export default {
 		state.content = content;
 
 		setTimeout(() => {
-			//dispatch('close');
+			dispatch('close');
 		}, 12000);
 	},
 

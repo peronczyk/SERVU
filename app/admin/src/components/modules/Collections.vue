@@ -10,7 +10,7 @@
 		</header>
 
 		<transition name="fade">
-			<table v-if="isCollectionsFetched">
+			<table v-if="isCollectionsFetched" class="u-Table--styled u-Table--withOptions u-Table--withOptions">
 				<thead>
 					<tr>
 						<th style="width: 20px"></th>

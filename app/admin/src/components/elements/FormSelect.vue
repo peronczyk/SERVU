@@ -92,7 +92,7 @@ export default {
 .c-FormSelect {
 	position: relative;
 	margin-bottom: 20px;
-	padding-top: 20px;
+	padding-top: 14px;
 
 	&__label {
 		position: absolute;

@@ -15,13 +15,13 @@
 			<li v-for="(index, chunk) in pathChunks" :key="index">{{ chunk }}</li>
 		</ul>
 
-		<table>
+		<table class="u-Table--styled u-Table--withOptions">
 			<thead>
 				<tr>
 					<th></th>
 					<th>Name</th>
 					<th>Children</th>
-					<th class="u-Text--center" style="width: 80px;">Options</th>
+					<th>Options</th>
 				</tr>
 			</thead>
 
@@ -36,7 +36,7 @@
 					<td v-if="entry.children > 0"><a @click.prevent="fetchList(entry.id)">{{ entry.name }}</a></td>
 					<td v-else>{{ entry.name }}</td>
 					<td>{{ entry.children }}</td>
-					<td class="u-Text--center">
+					<td>
 						<options-menu :options="[
 							{name: 'Edit', action: () => editContent(entry)},
 							{name: 'Delete', action: () => deleteContent(entry)},

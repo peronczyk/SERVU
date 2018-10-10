@@ -87,8 +87,8 @@ export default {
 
 	&__close {
 		position: absolute;
-		top: 8px;
-		right: 8px;
+		top: 10px;
+		right: 10px;
 	}
 
 	&__content {

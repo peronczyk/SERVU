@@ -16,7 +16,7 @@
 			</div>
 		</div>
 
-		<table>
+		<table class="c-FormList__table u-Table--padded u-Table--withOptions">
 			<tbody>
 				<!--
 					List of fields
@@ -36,7 +36,7 @@
 					<td>
 						<form-field ref="name" required>Field name</form-field>
 					</td>
-					<td class="u-Text--center">
+					<td>
 						<a @click.prevent="removeField(fieldNumber)"><icon size="16" glyph="times" /></a>
 					</td>
 				</tr>
@@ -185,6 +185,15 @@ export default {
 
 	h4 {
 		margin: 0;
+	}
+
+	&__table {
+		margin-bottom: 20px;
+
+		a {
+			display: inline-block;
+			padding: 6px;
+		}
 	}
 }
 
