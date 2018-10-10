@@ -1,9 +1,11 @@
-table {
+table,
+.Table {
 	$side-paddings: 16px;
 
 	margin-bottom: $box-margin;
 	width: 100%;
-	border-collapse: collapse;
+	border-collapse: separate;
+	border-spacing: 0;
 
 	th, td {
 		padding-left: $side-paddings;
@@ -25,6 +27,7 @@ table {
 			padding-bottom: $side-paddings * 1.4;
 			font-size: 13px;
 			letter-spacing: .04em;
+			color: $color-text-lvl-3;
 		}
 
 		tr:last-child {
@@ -39,6 +42,20 @@ table {
 			padding-top: $side-paddings;
 			padding-bottom: $side-paddings;
 			border-bottom: 1px solid $color-lines;
+		}
+	}
+
+	&--withOptions {
+		th:last-child {
+			text-align: center;
+		}
+
+		tbody {
+			td:last-child:not(:first-child) {
+				width: $tool-btn-size * 2;
+				padding: 0 !important;
+				text-align: center;
+			}
 		}
 	}
 }

@@ -24,10 +24,13 @@
 					<th class="u-Text--center" style="width: 80px;">Options</th>
 				</tr>
 			</thead>
+
 			<tbody>
+
 				<tr>
 					<td colspan="4" v-if="previousParentId !== null"><a @click.prevent="fetchList(previousParentId)">Go up</a></td>
 				</tr>
+
 				<tr v-for="(entry, index) in contentList" :key="entry.id">
 					<td>{{ index + 1 }}.</td>
 					<td v-if="entry.children > 0"><a @click.prevent="fetchList(entry.id)">{{ entry.name }}</a></td>
@@ -40,6 +43,7 @@
 						]" />
 					</td>
 				</tr>
+
 			</tbody>
 		</table>
 

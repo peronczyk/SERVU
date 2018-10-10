@@ -79,6 +79,10 @@ export default {
 			return this.isValid;
 		},
 
+		reset() {
+			this.value = [];
+		},
+
 		fileInputChange(event) {
 			let addedFiles = event.target.files;
 

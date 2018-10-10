@@ -15,69 +15,78 @@
 					</li>
 				</ul>
 
-				<table>
+				<table class="Table Table--withOptions">
+
 					<thead>
 						<tr>
 							<th>Name</th>
 							<th style="width: 100px;">Extension</th>
-							<th class="u-Text--center" style="width: 80px;">Options</th>
+							<th>Options</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr v-if="pathChunks.length > 0">
-							<td colspan="4">
-								<a @click.prevent="getList('../')">
-									<icon size="24" glyph="back" />
-									<strong>Go up</strong>
-								</a>
-							</td>
-						</tr>
 
-						<!--
-							Directories
-						-->
-						<tr
-							v-for="(file, fileIndex) in filesList"
-							v-if="file.type == 'directory'"
-							:key="file.name + fileIndex"
-						>
-							<td colspan="2">
-								<a @click.prevent="getList(file.name)">
-									<icon size="24" glyph="folder-closed" />
+					<transition name="fade">
+
+						<tbody v-if="isFilesFetched">
+
+							<tr v-if="pathChunks.length > 0">
+								<td colspan="4">
+									<a @click.prevent="getList('../')">
+										<icon size="24" glyph="back" />
+										<strong>Go up</strong>
+									</a>
+								</td>
+							</tr>
+
+							<!--
+								Directories
+							-->
+							<tr
+								v-for="(file, fileIndex) in filesList"
+								v-if="file.type == 'directory'"
+								:key="file.name + fileIndex"
+							>
+								<td>
+									<a @click.prevent="getList(file.name)">
+										<icon size="24" glyph="folder-closed" />
+										{{ file.name }}
+									</a>
+								</td>
+								<td></td>
+								<td>
+									<options-menu :options="[
+										{name: 'Delete directory and its contents', action: () => deleteFile(file)}
+									]" />
+								</td>
+							</tr>
+
+							<!--
+								Files
+							-->
+							<tr
+								v-for="(file, fileIndex) in filesList"
+								v-if="file.type != 'directory'"
+								:key="file.name + fileIndex"
+							>
+								<td>
+									<icon size="24" glyph="file" />
 									{{ file.name }}
-								</a>
-							</td>
-							<td class="u-Text--center">
-								<options-menu :options="[
-									{name: 'Delete directory and its contents', action: () => deleteFile(file)}
-								]" />
-							</td>
-						</tr>
+								</td>
+								<td>
+									{{ file.extension }}
+								</td>
+								<td>
+									<options-menu :options="[
+										{name: 'Copy url', action: () => copyLink(fileIndex)},
+										{name: 'Delete file', action: () => deleteFile(file)}
+									]" />
+								</td>
+							</tr>
 
-						<!--
-							Files
-						-->
-						<tr
-							v-for="(file, fileIndex) in filesList"
-							v-if="file.type != 'directory'"
-							:key="file.name + fileIndex"
-						>
-							<td>
-								<icon size="24" glyph="file" />
-								{{ file.name }}
-							</td>
-							<td>
-								{{ file.extension }}
-							</td>
-							<td class="u-Text--center">
-								<options-menu :options="[
-									{name: 'Copy url', action: () => copyLink(fileIndex)},
-									{name: 'Delete file', action: () => deleteFile(file)}
-								]" />
-							</td>
-						</tr>
+						</tbody>
 
-					</tbody>
+					</transition>
+
 				</table>
 			</div>
 
@@ -148,6 +157,7 @@ export default {
 	data() {
 		return {
 			nodeUrl: window.appConfig.apiBaseUrl + 'files/',
+			isFilesFetched: false,
 			pathChunks: [],
 			filesList: [],
 		}
@@ -170,6 +180,8 @@ export default {
 		 * Get files list from specified path
 		 */
 		getList(parent = null) {
+			this.isFilesFetched = false;
+
 			let action = 'list';
 
 			if (parent) {
@@ -189,7 +201,11 @@ export default {
 
 			axios.get(this.nodeUrl + action)
 				.then(result => {
+					this.isFilesFetched = true;
 					this.filesList = result.data.data;
+				})
+				.catch(error => {
+					this.isFilesFetched = true;
 				});
 		},
 
@@ -263,7 +279,7 @@ export default {
 	table {
 		td {
 			.Icon {
-				margin-right: 10px;
+				margin: 0 10px;
 				color: $color-text-lvl-3;
 			}
 		}

@@ -132,7 +132,7 @@ export default {
 
 		resetForm() {
 			for (let refName in this.$refs) {
-				this.$refs[refName][0].value = '';
+				this.$refs[refName][0].reset();
 			}
 		},
 

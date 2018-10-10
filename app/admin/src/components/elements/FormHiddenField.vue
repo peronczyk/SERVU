@@ -21,7 +21,9 @@ export default {
 
 		validate() {
 			return true;
-		}
+		},
+
+		reset() {},
 	},
 }
 

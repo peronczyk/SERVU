@@ -1,0 +1,68 @@
+.e-ToolBtn {
+	position: relative;
+	display: inline-block;
+	width: $tool-btn-size;
+	height: $tool-btn-size;
+	overflow: hidden;
+	transition: .2s;
+
+
+	&:hover,
+	.is-Open & {
+		background-color: rgba($color-white, .05);
+	}
+
+
+	&--close {
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			top: 20px;
+			left: 11px;
+			width: 20px;
+			height: 1px;
+			background-color: $color-links;
+		}
+
+		&::before {
+			transform: rotate(45deg);
+		}
+
+		&::after {
+			transform: rotate(-45deg);
+		}
+	}
+
+
+	&--options {
+		$dot-size: 4px;
+		$dot-color: $color-base-1;
+
+		// Middle dot
+		&:before {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: $dot-size;
+			height: $dot-size;
+			border-radius: 100%;
+			background-color: $dot-color;
+			box-shadow:
+				-#{$tool-btn-size / 5} 0 0 0 $dot-color, // Left dot
+				 #{$tool-btn-size / 5} 0 0 0 $dot-color; // Right dot
+			transform: translate(-50%, -50%);
+			transition: .2s;
+		}
+
+		&:hover,
+		.is-Open & {
+			&:before {
+				box-shadow:
+					-#{$tool-btn-size / 4} 0 0 0 $dot-color, // Left dot
+					#{$tool-btn-size / 4} 0 0 0 $dot-color; // Right dot
+			}
+		}
+	}
+}

@@ -23,6 +23,7 @@ $gutter              : 2vw;
 $box-margin          : 5vh;
 $inputs-height       : 40px;
 $base-font-size      : 15px;
+$tool-btn-size       : 40px;
 
 
 /** --------------------------------------------------------------------------------
@@ -60,7 +61,7 @@ $color-inputs-border : rgba($color-base-lines, .2);
  * Shadows
  */
 
-$shadow-opacity      : .5;
+$shadow-opacity      : .4;
 $shadow-lvl-1        : 0 2px 20px rgba($color-black, $shadow-opacity);
 $shadow-lvl-2        : 0 4px 40px rgba($color-black, $shadow-opacity);
 $shadow-lvl-3        : 0 10px 60px rgba($color-black, $shadow-opacity);

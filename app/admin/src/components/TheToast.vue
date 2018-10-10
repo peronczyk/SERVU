@@ -8,9 +8,7 @@
 		>
 			<p v-html="getContent" class="c-Toast__content"></p>
 
-			<a @click.prevent="close" class="c-Toast__close">
-				<icon size="16" glyph="times"></icon>
-			</a>
+			<a @click.prevent="close" class="c-Toast__close e-ToolBtn e-ToolBtn--close"></a>
 		</dialog>
 	</transition>
 
@@ -52,7 +50,7 @@ export default {
 	right: $gutter;
 	display: flex;
 	align-items: center;
-	padding: #{$gutter * .5} 50px #{$gutter * .5} #{$gutter * .7};
+	padding: 14px #{$tool-btn-size + 30} 14px 26px;
 	max-width: 400px;
 	min-height: 60px;
 	color: $color-white;
@@ -62,9 +60,8 @@ export default {
 
 	&__close {
 		position: absolute;
-		top: 16px;
+		top: 10px;
 		right: 10px;
-		padding: 6px;
 	}
 }
 

@@ -62,6 +62,7 @@ button,
 	transition: .3s;
 	will-change: color, background-color, transform;
 
+
 	&:hover {
 		color: $color-bg-lvl-1;
 		background-color: $color-links-hover;
@@ -72,10 +73,12 @@ button,
 		transform: scale(.9);
 	}
 
+
 	&--primary {
 		height: $inputs-height * 1.2;
 		font-size: 16px;
 	}
+
 
 	&--hollow {
 		height: $inputs-height * .8;

@@ -90,6 +90,10 @@ export default {
 			return this.isValid;
 		},
 
+		reset() {
+			this.value = '';
+		},
+
 		onFocus() {
 			this.isValid = true;
 			this.isDirty = true;

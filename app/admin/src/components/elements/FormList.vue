@@ -159,6 +159,9 @@ export default {
 			return this.isValid;
 		},
 
+		/** @todo */
+		reset() {},
+
 		addField() {
 			this.fieldsList.push({
 				typeId: null,

@@ -38,3 +38,10 @@ p.u-Error {
 	background-color: $color-errors;
 	border-radius: 50%;
 }
+
+
+.u-Pad {
+	&--none {
+		padding: 0;
+	}
+}

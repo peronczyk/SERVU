@@ -3,13 +3,10 @@
 	<div
 		v-if="options.length"
 		v-click-outside="close"
+		:class="{'is-Open': isOpen}"
 		class="e-OptionsMenu"
 	>
-		<a @click="toggle" class="e-OptionsMenu__toggle">
-			<span></span>
-			<span></span>
-			<span></span>
-		</a>
+		<a @click="toggle" class="e-ToolBtn e-ToolBtn--options"></a>
 
 		<transition name="slide-bottom">
 			<ul class="e-OptionsMenu__list" v-if="isOpen">
@@ -90,51 +87,17 @@ export default {
 @import '../../assets/styles/_variables';
 
 .e-OptionsMenu {
-	$toggle-size: 26px;
-	$dot-size: 4px;
 	$list-bg-color: $color-bg-lvl-4;
 
 	position: relative;
 	display: inline-block;
 
-	&__toggle {
-		position: relative;
-		display: block;
-		width: $toggle-size;
-		height: $toggle-size;
-		transition: .2s;
-
-		span {
-			position: absolute;
-			top: calc(50% - #{$dot-size / 2});
-			width: $dot-size;
-			height: $dot-size;
-			border-radius: 100%;
-			background-color: $color-base-1;
-
-			&:nth-child(1) {
-				left: 4px;
-			}
-
-			&:nth-child(2) {
-				left: calc(50% - #{$dot-size / 2});
-			}
-
-			&:nth-child(3) {
-				right: 4px;
-			}
-		}
-
-		&:hover {
-			background-color: $color-bg-lvl-4;
-		}
-	}
 
 	&__list {
 		position: absolute;
 		z-index: +1;
-		right: -28px;
-		bottom: calc(100% + 10px);
+		right: 0;
+		bottom: 100%;
 		width: 14vw;
 		min-width: 160px;
 		max-width: 260px;
@@ -143,18 +106,6 @@ export default {
 		text-align: left;
 		background-color: $list-bg-color;
 		box-shadow: $shadow-lvl-2;
-
-		// Pointing down triangle
-		&::after {
-			content: '';
-			position: absolute;
-			right: 33px;
-			bottom: -8px;
-			width: 16px;
-			height: 16px;
-			transform: rotate(45deg);
-			background-color: $list-bg-color;
-		}
 
 		li {
 			border-bottom: 1px solid $color-lines;
