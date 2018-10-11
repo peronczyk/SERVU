@@ -127,7 +127,7 @@ export default {
 
 		.is-Error & {
 			transition: .2s;
-			border-color: $color-errors;
+			border-color: var(--color-error);
 		}
 
 		label:active & {

@@ -20,13 +20,13 @@
 
 p.u-Error {
 	margin-bottom: 20px;
-	color: $color-errors;
+	color: var(--color-error);
 }
 
 
 .u-Info {
 	padding: 20px;
-	background-color: $color-bg-lvl-2;
+	background-color: var(--color-bg-light);
 }
 
 
@@ -35,7 +35,7 @@ p.u-Error {
 	margin: 10px;
 	width: 6px;
 	height: 6px;
-	background-color: $color-errors;
+	background-color: var(--color-error);
 	border-radius: 50%;
 }
 

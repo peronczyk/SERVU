@@ -1,96 +1,37 @@
-$breakpoints: (
-
-	// Horizontal
-	h-ul: 1520px, // Ultra large
-	h-xl: 1280px, // Extra large
-	h-lg: 980px,  // large
-	h-md: 800px,  // Medium
-	h-sm: 640px,  // Small
-	h-xs: 480px,  // Extra small
-
-	// Vertical
-	v-lg: 780px,  // Large
-	v-md: 700px,  // Medium
-	v-sm: 620px,  // Small
-);
-
-
-/** --------------------------------------------------------------------------------
- * Sizes
- */
-
-$base-font-size      : 15px;
-$tool-btn-size       : 40px;
-
-
-/** --------------------------------------------------------------------------------
- * Colors
- */
-
-$color-white         : #fff;
-$color-black         : #000;
-
-$color-base-1        : #21e074;
-$color-base-2        : #161617;
-$color-base-lines    : #cacce3;
-$color-base-text     : #e4ebee;
-$color-errors        : #c64113;
-
-$color-bg-lvl-1      : $color-base-2;
-$color-bg-lvl-2      : lighten($color-bg-lvl-1, 1.8);
-$color-bg-lvl-3      : lighten($color-bg-lvl-1, 3.2);
-$color-bg-lvl-4      : lighten($color-bg-lvl-1, 5);
-
-$color-text-lvl-1    : $color-white;
-$color-text-lvl-2    : $color-base-text;
-$color-text-lvl-3    : darken($color-base-text, 30);
-$color-text-lvl-4    : darken($color-base-text, 50);
-
-$color-links         : $color-base-1;
-$color-links-hover   : lighten($color-links, 20);
-
-$color-lines         : rgba($color-base-lines, .08);
-$color-inputs-border : rgba($color-base-lines, .2);
-
-
-/** --------------------------------------------------------------------------------
- * Shadows
- */
-
-$shadow-opacity      : .4;
-$shadow-lvl-1        : 0 2px 20px rgba($color-black, $shadow-opacity);
-$shadow-lvl-2        : 0 4px 40px rgba($color-black, $shadow-opacity);
-$shadow-lvl-3        : 0 10px 60px rgba($color-black, $shadow-opacity);
-
-
 :root {
 
 	/* -----------------------------------------------------------------------------
 	 * Sizes
 	 */
 
-	--gutter: 2vw;
-	--gutter-md: calc(var(--gutter) * 1.5);
-	--gutter-lg: calc(var(--gutter) * 2);
-	--gutter-xl: calc(var(--gutter) * 3);
+	--gutter             : 2vw;
+	--gutter-md          : calc(var(--gutter) * 1.5);
+	--gutter-lg          : calc(var(--gutter) * 2);
+	--gutter-xl          : calc(var(--gutter) * 3);
 
-	--input-height: 40px;
+	--input-height       : 40px;
 	--input-primary-height: 44px;
 	--input-secondary-height: 34px;
 
-	--box-margin: 5vh;
+	--tool-btn-size      : 40px;
 
-	--table-cell-padding: 16px;
+	--box-margin         : 5vh;
 
-	--font-size-base: 15px;
-	--font-size-small: 13px;
-	--font-size-h1: 34px;
-	--font-size-h2: 24px;
-	--font-size-h3: 20px;
-	--font-size-h4: 16px;
-	--font-size-h5: 15px;
-	--font-size-h6: 14px;
+	--table-cell-padding : 16px;
 
+	--font-size-base     : 15px;
+	--font-size-small    : calc(var(--font-size-base) * .9);
+	--font-size-h1       : calc(var(--font-size-base) * 2.2);
+	--font-size-h2       : calc(var(--font-size-base) * 1.6);
+	--font-size-h3       : calc(var(--font-size-base) * 1.33);
+	--font-size-h4       : calc(var(--font-size-base) * 1.2);
+	--font-size-h5       : var(--font-size-base);
+	--font-size-h6       : calc(var(--font-size-base) * .9);
+
+
+	@include narrower-than(sm) {
+		--font-size-base: 14px;
+	}
 
 	@include narrower-than(md) {
 		--gutter: 14px;
@@ -108,11 +49,22 @@ $shadow-lvl-3        : 0 10px 60px rgba($color-black, $shadow-opacity);
 	--color-brand        : #{$color-base-1};
 	--color-link         : #{$color-base-1};
 
-	--color-text-base    : #{$color-base-text};
-	--color-text-bright  : #{$color-white};
-	--color-text-dimmed  : #{darken($color-base-text, 30)};
-	--color-text-dark    : #{darken($color-base-text, 50)};
 
-	--color-bg-base      : #{$color-base-2};
-	--color-bg-bright    : #{lighten($color-base-2, 5)};
+	--color-text-bright  : #{$color-white};                 // 1
+	--color-text-base    : #{$color-base-text};             // 2
+	--color-text-dimmed  : #{darken($color-base-text, 30)}; // 3
+	--color-text-dark    : #{darken($color-base-text, 50)}; // 4
+
+
+	// Content background
+	--color-bg-base      : #{$color-base-2};                // 1
+
+	// Sidebar
+	--color-bg-light     : #{lighten($color-base-2, 3)};    // 2
+
+	// Options menu, Toast
+	--color-bg-lighter   : #{lighten($color-base-2, 5)};    // 3
+
+
+	--color-error        : #c64113;
 }

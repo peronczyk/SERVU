@@ -170,7 +170,7 @@ export default {
 		},
 
 		removeField(fieldNumber) {
-			this.addedFields.splice(fieldNumber, 1);
+			this.fieldsList.splice(fieldNumber, 1);
 		},
 	}
 }

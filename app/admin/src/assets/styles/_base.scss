@@ -19,9 +19,9 @@ html {
 
 
 body {
-	background-color: $color-bg-lvl-2;
+	background-color: var(--color-bg-base);
 	font-family: 'Roboto', sans-serif;
-	font-size: $base-font-size;
+	font-size: var(--font-size-base);
 	line-height: 1em;
 	color: var(--color-text-base);
 }
@@ -62,7 +62,7 @@ table {
 
 	thead {
 		th {
-			font-size: 13px;
+			font-size: var(--font-size-small);
 			letter-spacing: .04em;
 			color: var(--color-text-dark);
 		}
@@ -78,7 +78,11 @@ table {
 	width: 10px;
 	height: 10px;
 
-	&-track { background-color: $color-bg-lvl-1; }
+	&-track {
+		background-color: transparent;
+	}
 
-	&-thumb { background-color: $color-text-lvl-3; }
+	&-thumb {
+		background-color: $color-text-lvl-3;
+	}
 }

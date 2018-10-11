@@ -50,11 +50,11 @@ export default {
 	right: var(--gutter);
 	display: flex;
 	align-items: center;
-	padding: 14px #{$tool-btn-size + 30} 14px 26px;
+	padding: 14px calc(var(--tool-btn-size) + 30) 14px 26px;
 	max-width: 400px;
 	min-height: 60px;
 	color: $color-white;
-	background-color: $color-bg-lvl-4;
+	background-color: var(--color-bg-lighter);
 	box-shadow: $shadow-lvl-3;
 	transition: .4s;
 

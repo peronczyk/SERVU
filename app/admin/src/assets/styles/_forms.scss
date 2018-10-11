@@ -24,7 +24,7 @@ select {
 	width: 100%;
 	border: none;
 	border-bottom: 1px solid $color-inputs-border;
-	font-size: $base-font-size;
+	font-size: var(--font-size-base);
 	color: $color-text-lvl-2;
 	background: none;
 	transition: .2s;
@@ -34,13 +34,13 @@ select {
 	}
 
 	.is-Error & {
-		border-color: $color-errors;
+		border-color: var(--color-error);
 	}
 }
 
 select {
 	option {
-		background-color: $color-bg-lvl-3;
+		background-color: var(--color-bg-light);
 	}
 }
 
@@ -52,7 +52,7 @@ button,
 	padding-right: 15px;
 	border: none;
 	font-weight: bold;
-	color: $color-bg-lvl-1;
+	color: var(--color-bg-base);
 	background-color: var(--color-link);
 	cursor: pointer;
 	user-select: none;
@@ -61,7 +61,7 @@ button,
 
 
 	&:hover {
-		color: $color-bg-lvl-1;
+		color: var(--color-bg-base);
 		background-color: $color-links-hover;
 		box-shadow: 0 4px 30px rgba($color-base-1, .4);
 	}
@@ -96,7 +96,7 @@ button,
 
 // Disable default styling for autocompleted inputs
 input:-webkit-autofill {
-	-webkit-box-shadow: inset 0 0 0px 9999px $color-bg-lvl-2;
+	-webkit-box-shadow: inset 0 0 0px 9999px var(--color-bg-base);
 	-webkit-text-fill-color: darken($color-text-lvl-2, 20) !important;
 	border-color: $color-inputs-border !important;
 }

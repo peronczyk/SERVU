@@ -1,0 +1,49 @@
+$breakpoints: (
+
+	// Horizontal
+	h-ul: 1520px, // Ultra large
+	h-xl: 1280px, // Extra large
+	h-lg: 980px,  // large
+	h-md: 800px,  // Medium
+	h-sm: 640px,  // Small
+	h-xs: 480px,  // Extra small
+
+	// Vertical
+	v-lg: 780px,  // Large
+	v-md: 700px,  // Medium
+	v-sm: 620px,  // Small
+);
+
+
+/** --------------------------------------------------------------------------------
+ * Colors
+ */
+
+$color-white         : #fff;
+$color-black         : #000;
+
+$color-base-1        : #21e074;
+$color-base-2        : #161617;
+$color-base-lines    : #cacce3;
+$color-base-text     : #e4ebee;
+
+$color-text-lvl-1    : $color-white;
+$color-text-lvl-2    : $color-base-text;
+$color-text-lvl-3    : darken($color-base-text, 30);
+$color-text-lvl-4    : darken($color-base-text, 50);
+
+$color-links         : $color-base-1;
+$color-links-hover   : lighten($color-links, 20);
+
+$color-lines         : rgba($color-base-lines, .08);
+$color-inputs-border : rgba($color-base-lines, .2);
+
+
+/** --------------------------------------------------------------------------------
+ * Shadows
+ */
+
+$shadow-opacity      : .4;
+$shadow-lvl-1        : 0 2px 20px rgba($color-black, $shadow-opacity);
+$shadow-lvl-2        : 0 4px 40px rgba($color-black, $shadow-opacity);
+$shadow-lvl-3        : 0 10px 60px rgba($color-black, $shadow-opacity);

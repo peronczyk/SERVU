@@ -42,7 +42,7 @@ export default {
 	display: flex;
 	width: 50%;
 	height: 100%;
-	background-color: $color-bg-lvl-3;
+	background-color: var(--color-bg-light);
 	transition: .4s;
 
 	.is-UserLoggedIn & {

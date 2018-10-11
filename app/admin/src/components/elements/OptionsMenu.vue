@@ -87,8 +87,6 @@ export default {
 @import '../../assets/styles/definitions';
 
 .e-OptionsMenu {
-	$list-bg-color: $color-bg-lvl-4;
-
 	position: relative;
 	display: inline-block;
 
@@ -104,7 +102,7 @@ export default {
 		list-style: none;
 		line-height: 1.2em;
 		text-align: left;
-		background-color: $list-bg-color;
+		background-color: var(--color-bg-lighter);
 		box-shadow: $shadow-lvl-2;
 
 		li {

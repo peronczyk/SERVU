@@ -56,7 +56,6 @@ export default {
 @import '../../assets/styles/definitions';
 
 .c-Home {
-	position: relative;
 	display: flex;
 	align-items: center;
 	height: 100vh;
@@ -72,7 +71,7 @@ export default {
 			font-size: 160px;
 			font-weight: bold;
 			line-height: 1em;
-			color: var(--color-bg-bright);
+			color: var(--color-bg-lighter);
 		}
 	}
 

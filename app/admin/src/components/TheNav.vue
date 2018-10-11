@@ -108,7 +108,6 @@ export default {
 			padding: 0 30px;
 			height: 8vh;
 			min-height: 40px;
-			font-size: 15px;
 
 			&::after {
 				content: '';

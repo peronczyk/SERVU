@@ -82,7 +82,7 @@ export default {
 		z-index: +1;
 		min-height: 40px;
 		max-width: 800px;
-		background-color: $color-bg-lvl-2;
+		background-color: var(--color-bg-base);
 	}
 
 	&__close {

@@ -1,8 +1,8 @@
 .e-ToolBtn {
 	position: relative;
 	display: inline-block;
-	width: $tool-btn-size;
-	height: $tool-btn-size;
+	width: var(--tool-btn-size);
+	height: var(--tool-btn-size);
 	overflow: hidden;
 	transition: .2s;
 
@@ -37,7 +37,7 @@
 
 	&--options {
 		$dot-size: 4px;
-		--dot-color: var(--color-base-1);
+		--dot-color: var(--color-brand);
 
 		// Middle dot
 		&:before {
@@ -50,8 +50,8 @@
 			border-radius: 100%;
 			background-color: var(--dot-color);
 			box-shadow:
-				-#{$tool-btn-size / 5} 0 0 0 var(--dot-color), // Left dot
-				 #{$tool-btn-size / 5} 0 0 0 var(--dot-color); // Right dot
+				calc(var(--tool-btn-size) / -5) 0 0 0 var(--dot-color), // Left dot
+				calc(var(--tool-btn-size) / 5) 0 0 0 var(--dot-color); // Right dot
 			transform: translate(-50%, -50%);
 			transition: .2s;
 		}
@@ -60,8 +60,8 @@
 		.is-Open & {
 			&:before {
 				box-shadow:
-					-#{$tool-btn-size / 4} 0 0 0 var(--dot-color), // Left dot
-					#{$tool-btn-size / 4} 0 0 0 var(--dot-color); // Right dot
+					calc(var(--tool-btn-size) / -4) 0 0 0 var(--dot-color), // Left dot
+					calc(var(--tool-btn-size) / 4) 0 0 0 var(--dot-color); // Right dot
 			}
 		}
 	}
