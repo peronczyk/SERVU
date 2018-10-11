@@ -65,8 +65,8 @@ export default {
 	&__top {
 		display: flex;
 		align-items: center;
-		padding-left: $gutter;
-		padding-right: $gutter;
+		padding-left: var(--gutter);
+		padding-right: var(--gutter);
 		height: 14vh;
 		min-height: 80px;
 
@@ -117,7 +117,7 @@ export default {
 				bottom: 0;
 				right: 0;
 				width: 2px;
-				background-color: $color-links;
+				background-color: var(--color-link);
 				opacity: 0;
 				transform: scaleY(0);
 				transition: .2s;

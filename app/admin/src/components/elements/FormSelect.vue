@@ -87,7 +87,7 @@ export default {
 
 <style lang="scss">
 
-@import '../../assets/styles/_variables';
+@import '../../assets/styles/definitions';
 
 .c-FormSelect {
 	position: relative;
@@ -101,12 +101,12 @@ export default {
 		z-index: -1;
 		display: flex;
 		align-items: center;
-		height: $inputs-height;
+		height: var(--input-height);
 		cursor: text;
 		transition: .2s;
 
 		.is-Dirty & {
-			transform: translateY(-.6 * $inputs-height);
+			transform: translateY(calc(-.6 * var(--input-height)));
 			font-size: .85em;
 			color: $color-text-lvl-4;
 			cursor: default;

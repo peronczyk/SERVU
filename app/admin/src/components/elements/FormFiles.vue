@@ -112,7 +112,7 @@ export default {
 
 <style lang="scss">
 
-@import '../../assets/styles/_variables.scss';
+@import '../../assets/styles/definitions';
 
 .c-FormFiles {
 	&__input {
@@ -132,8 +132,8 @@ export default {
 	}
 
 	&__list {
-		margin-top: -$box-margin / 3;
-		margin-bottom: $box-margin / 3;
+		margin-top: calc(var(--box-margin) / -3);
+		margin-bottom: calc(var(--box-margin) / 3);
 		max-width: 100%;
 
 		td {

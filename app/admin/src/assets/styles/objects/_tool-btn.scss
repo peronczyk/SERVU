@@ -22,7 +22,7 @@
 			left: 11px;
 			width: 20px;
 			height: 1px;
-			background-color: $color-links;
+			background-color: var(--color-link);
 		}
 
 		&::before {
@@ -37,7 +37,7 @@
 
 	&--options {
 		$dot-size: 4px;
-		$dot-color: $color-base-1;
+		--dot-color: var(--color-base-1);
 
 		// Middle dot
 		&:before {
@@ -48,10 +48,10 @@
 			width: $dot-size;
 			height: $dot-size;
 			border-radius: 100%;
-			background-color: $dot-color;
+			background-color: var(--dot-color);
 			box-shadow:
-				-#{$tool-btn-size / 5} 0 0 0 $dot-color, // Left dot
-				 #{$tool-btn-size / 5} 0 0 0 $dot-color; // Right dot
+				-#{$tool-btn-size / 5} 0 0 0 var(--dot-color), // Left dot
+				 #{$tool-btn-size / 5} 0 0 0 var(--dot-color); // Right dot
 			transform: translate(-50%, -50%);
 			transition: .2s;
 		}
@@ -60,8 +60,8 @@
 		.is-Open & {
 			&:before {
 				box-shadow:
-					-#{$tool-btn-size / 4} 0 0 0 $dot-color, // Left dot
-					#{$tool-btn-size / 4} 0 0 0 $dot-color; // Right dot
+					-#{$tool-btn-size / 4} 0 0 0 var(--dot-color), // Left dot
+					#{$tool-btn-size / 4} 0 0 0 var(--dot-color); // Right dot
 			}
 		}
 	}

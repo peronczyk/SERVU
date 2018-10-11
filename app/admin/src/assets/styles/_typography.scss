@@ -2,31 +2,46 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 1em;
 	font-weight: normal;
 	line-height: 1.6em;
-	color: $color-text-lvl-1;
 
 	strong {
 		font-weight: bold;
 	}
+
+	small {
+		display: inline-block;
+		transform: translateY(-2px);
+	}
 }
 
 h1 {
-	font-size: 34px;
+	font-size: var(--font-size-h1);
 }
 
 h2 {
-	font-size: 24px;
+	font-size: var(--font-size-h2);
 	color: $color-text-lvl-3;
 }
 
 h3 {
-	font-size: 20px;
+	font-size: var(--font-size-h3);
 	font-weight: bold;
+	letter-spacing: .03em;
 }
 
 h4 {
-	font-size: 16px;
+	font-size: var(--font-size-h4);
 	font-weight: bold;
 	letter-spacing: .04em;
+}
+
+h5 {
+	font-size: var(--font-size-h5);
+}
+
+h6 {
+	font-size: var(--font-size-h6);
+	font-weight: bold;
+	color: var(--color-text-dimmed);
 }
 
 
@@ -41,6 +56,6 @@ p {
 
 
 small {
-	font-size: .9em;
-	color: $color-text-lvl-3;
+	font-size: var(--font-size-small);
+	color: var(--color-text-dark);
 }

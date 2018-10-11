@@ -65,7 +65,7 @@ export default {
 	}
 
 	&__view {
-		padding: 0 #{$gutter * 2} 5vh #{$gutter * 2};
+		padding: 0 var(--gutter-lg) 5vh var(--gutter-lg);
 		height: 100%;
 		will-change: transform, opacity;
 	}

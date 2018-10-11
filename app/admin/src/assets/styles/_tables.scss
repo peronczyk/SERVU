@@ -1,34 +1,13 @@
-table {
-	width: 100%;
-	border-collapse: separate;
-	border-spacing: 0;
-
-	th, td {
-		text-align: left;
-	}
-
-	thead {
-		th {
-			font-size: 13px;
-			letter-spacing: .04em;
-			color: $color-text-lvl-3;
-		}
-	}
-}
-
-
 .u-Table {
-	$side-paddings: 16px;
-
 	/**
 	 * Styled table has horizontal lines and additional paddings
 	 */
 	&--styled {
-		margin-bottom: $box-margin;
+		margin-bottom: var(--box-margin);
 
 		th, td {
-			padding-left: $side-paddings;
-			padding-right: $side-paddings;
+			padding-left: var(--table-cell-padding);
+			padding-right: var(--table-cell-padding);
 
 			&:first-child {
 				padding-left: 0;
@@ -40,9 +19,11 @@ table {
 		}
 
 		thead {
+			--th-v-padding: calc(var(--table-cell-padding) * 1.4);
+
 			th {
-				padding-top: $side-paddings * 1.4;
-				padding-bottom: $side-paddings * 1.4;
+				padding-top: var(--th-v-padding);
+				padding-bottom: var(--th-v-padding);
 			}
 
 			tr:last-child {
@@ -54,8 +35,8 @@ table {
 
 		tbody {
 			td {
-				padding-top: $side-paddings;
-				padding-bottom: $side-paddings;
+				padding-top: var(--table-cell-padding);
+				padding-bottom: var(--table-cell-padding);
 				border-bottom: 1px solid $color-lines;
 			}
 		}
@@ -64,8 +45,8 @@ table {
 
 	&--padded {
 		th, td {
-			padding-left: $side-paddings;
-			padding-right: $side-paddings;
+			padding-left: var(--table-cell-padding);
+			padding-right: var(--table-cell-padding);
 
 			&:first-child {
 				padding-left: 0;

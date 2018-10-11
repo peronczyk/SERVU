@@ -84,7 +84,7 @@ export default {
 
 <style lang="scss">
 
-@import '../../assets/styles/_variables';
+@import '../../assets/styles/definitions';
 
 .e-OptionsMenu {
 	$list-bg-color: $color-bg-lvl-4;

@@ -1,21 +1,21 @@
 form {
-	margin-bottom: $box-margin;
+	margin-bottom: var(--box-margin);
 	width: 100%;
 }
 
 label {
 	display: block;
-	margin-bottom: $box-margin / 2;
+	margin-bottom: calc(var(--box-margin) / 2);
 	line-height: 1.3em;
 	user-select: none;
-	color: $color-text-lvl-3;
+	color: var(--color-text-dimmed);
 }
 
 input,
 select,
 button,
 .Btn {
-	height: $inputs-height;
+	height: var(--input-height);
 }
 
 input,
@@ -30,7 +30,7 @@ select {
 	transition: .2s;
 
 	&:focus {
-		border-bottom-color: $color-links;
+		border-bottom-color: var(--color-link);
 	}
 
 	.is-Error & {
@@ -46,8 +46,6 @@ select {
 
 button,
 .Btn {
-	$btn-hover-shadow: 0 6px 40px rgba($color-base-1, .4);
-
 	display: inline-flex;
 	align-items: center;
 	padding-left: 15px;
@@ -55,9 +53,8 @@ button,
 	border: none;
 	font-weight: bold;
 	color: $color-bg-lvl-1;
-	background-color: $color-links;
+	background-color: var(--color-link);
 	cursor: pointer;
-	box-shadow: 0 0 0 rgba($color-base-1, 0);
 	user-select: none;
 	transition: .3s;
 	will-change: color, background-color, transform;
@@ -66,7 +63,7 @@ button,
 	&:hover {
 		color: $color-bg-lvl-1;
 		background-color: $color-links-hover;
-		box-shadow: 0 6px 40px rgba($color-base-1, .4);
+		box-shadow: 0 4px 30px rgba($color-base-1, .4);
 	}
 
 	&:active {
@@ -75,23 +72,23 @@ button,
 
 
 	&--primary {
-		height: $inputs-height * 1.2;
+		height: --input-primary-height;
 		font-size: 16px;
 	}
 
 
 	&--hollow {
-		height: $inputs-height * .8;
+		height: --input-secondary-height;
 		font-size: 13px;
 		font-weight: normal;
-		color: $color-links;
+		color: var(--color-link);
 		background: none;
-		box-shadow: inset 0 0 0 1px $color-links;
+		box-shadow: inset 0 0 0 1px var(--color-link);
 
 		&:hover {
 			color: $color-links-hover;
 			background: none;
-			box-shadow: inset 0 0 0 2px $color-links;
+			box-shadow: inset 0 0 0 2px var(--color-link);
 		}
 	}
 }

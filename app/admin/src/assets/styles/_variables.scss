@@ -19,9 +19,6 @@ $breakpoints: (
  * Sizes
  */
 
-$gutter              : 2vw;
-$box-margin          : 5vh;
-$inputs-height       : 40px;
 $base-font-size      : 15px;
 $tool-btn-size       : 40px;
 
@@ -48,7 +45,6 @@ $color-text-lvl-1    : $color-white;
 $color-text-lvl-2    : $color-base-text;
 $color-text-lvl-3    : darken($color-base-text, 30);
 $color-text-lvl-4    : darken($color-base-text, 50);
-$color-text-lvl-5    : darken($color-base-text, 70);
 
 $color-links         : $color-base-1;
 $color-links-hover   : lighten($color-links, 20);
@@ -65,3 +61,58 @@ $shadow-opacity      : .4;
 $shadow-lvl-1        : 0 2px 20px rgba($color-black, $shadow-opacity);
 $shadow-lvl-2        : 0 4px 40px rgba($color-black, $shadow-opacity);
 $shadow-lvl-3        : 0 10px 60px rgba($color-black, $shadow-opacity);
+
+
+:root {
+
+	/* -----------------------------------------------------------------------------
+	 * Sizes
+	 */
+
+	--gutter: 2vw;
+	--gutter-md: calc(var(--gutter) * 1.5);
+	--gutter-lg: calc(var(--gutter) * 2);
+	--gutter-xl: calc(var(--gutter) * 3);
+
+	--input-height: 40px;
+	--input-primary-height: 44px;
+	--input-secondary-height: 34px;
+
+	--box-margin: 5vh;
+
+	--table-cell-padding: 16px;
+
+	--font-size-base: 15px;
+	--font-size-small: 13px;
+	--font-size-h1: 34px;
+	--font-size-h2: 24px;
+	--font-size-h3: 20px;
+	--font-size-h4: 16px;
+	--font-size-h5: 15px;
+	--font-size-h6: 14px;
+
+
+	@include narrower-than(md) {
+		--gutter: 14px;
+	}
+
+	@include narrower-than(sm) {
+		--gutter: 10px;
+	}
+
+
+	/* -----------------------------------------------------------------------------
+	 * Colors
+	 */
+
+	--color-brand        : #{$color-base-1};
+	--color-link         : #{$color-base-1};
+
+	--color-text-base    : #{$color-base-text};
+	--color-text-bright  : #{$color-white};
+	--color-text-dimmed  : #{darken($color-base-text, 30)};
+	--color-text-dark    : #{darken($color-base-text, 50)};
+
+	--color-bg-base      : #{$color-base-2};
+	--color-bg-bright    : #{lighten($color-base-2, 5)};
+}

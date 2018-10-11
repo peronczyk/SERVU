@@ -9,18 +9,18 @@
 
 		<ul class="c-Home__bottom">
 			<li>
-				App version:
-				<strong>{{ getAppVersion }}</strong>
+				<small>App version:</small>
+				<h4>{{ getAppVersion }}</h4>
 			</li>
 
 			<li>
-				PHP version:
-				<strong>{{ getPhpVersion }}</strong>
+				<small>PHP version:</small>
+				<h4>{{ getPhpVersion }}</h4>
 			</li>
 
 			<li>
-				Provided by:
-				<strong><a href="https://github.com/peronczyk/servant" target="_blank">Servant</a></strong>
+				<small>Provided by:</small>
+				<h4><a href="https://github.com/peronczyk/servant" target="_blank">Servant</a></h4>
 			</li>
 		</ul>
 	</div>
@@ -53,24 +53,26 @@ export default {
 
 <style lang="scss">
 
-@import '../../assets/styles/_variables';
+@import '../../assets/styles/definitions';
 
 .c-Home {
 	position: relative;
 	display: flex;
 	align-items: center;
+	height: 100vh;
 
 	&__slogan {
 		h1 {
 			margin: 0;
 		}
 
+		// Large welcome header
 		p {
 			margin: 0 0 0 -10px;
 			font-size: 160px;
 			font-weight: bold;
 			line-height: 1em;
-			color: $color-bg-lvl-4;
+			color: var(--color-bg-bright);
 		}
 	}
 
@@ -82,32 +84,23 @@ export default {
 		bottom: 0;
 		display: flex;
 		align-items: center;
-		padding-left: $gutter;
-		padding-right: $gutter;
+		padding-left: var(--gutter);
+		padding-right: var(--gutter);
 		height: 7vh;
 		min-height: 40px;
 		border-top: 1px solid $color-lines;
 
 		li {
-			margin-right: $gutter;
-			font-size: 13px;
-			color: $color-text-lvl-3;
-			line-height: 1.7em;
+			margin-right: var(--gutter);
+			line-height: 1.4em;
 
 			&:last-child {
 				margin-left: auto;
 				margin-right: 0;
-
-				strong {
-					font-size: 1.1em;
-				}
 			}
 
-			strong {
-				display: block;
-				font-size: 1.2em;
-				letter-spacing: .05em;
-				color: $color-text-lvl-1;
+			h4 {
+				margin: 0;
 			}
 		}
 	}

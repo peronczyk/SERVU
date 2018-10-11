@@ -6,10 +6,6 @@
 			<span class="u-Required" v-if="required"></span>
 		</div>
 
-		<span class="c-FormField__error" v-if="!isValid" title="This field is required - please fill it">
-			<icon size="16" glyph="error" />
-		</span>
-
 		<textarea
 			v-if="type == 'textarea'"
 			v-model="value"
@@ -115,7 +111,7 @@ export default {
 
 <style lang="scss">
 
-@import '../../assets/styles/_variables';
+@import '../../assets/styles/definitions';
 
 .c-FormField {
 	position: relative;
@@ -129,27 +125,15 @@ export default {
 		left: 0;
 		display: flex;
 		align-items: center;
-		height: $inputs-height;
+		height: var(--input-height);
 		cursor: text;
 		transition: .2s;
 
 		.is-Dirty & {
-			transform: translateY(-.6 * $inputs-height);
+			transform: translateY(calc(-.6 * var(--input-height)));
 			font-size: .85em;
-			color: $color-text-lvl-4;
+			color: var(--color-text-dark);
 			cursor: default;
-		}
-	}
-
-
-	&__error {
-		position: absolute;
-		top: $inputs-height / 2 - 10px;
-		right: 10px;
-		cursor: help;
-
-		.Icon {
-			color: $color-errors;
 		}
 	}
 }

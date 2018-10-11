@@ -6,26 +6,30 @@
 	outline: none;
 }
 
+
 html, body {
 	height: 100%;
 }
+
 
 html {
 	// Force displaying scrollbar track
 	overflow-y: scroll;
 }
 
+
 body {
 	background-color: $color-bg-lvl-2;
 	font-family: 'Roboto', sans-serif;
 	font-size: $base-font-size;
 	line-height: 1em;
-	color: $color-text-lvl-2;
+	color: var(--color-text-base);
 }
+
 
 a {
 	cursor: pointer;
-	color: $color-links;
+	color: var(--color-link);
 	text-decoration: none;
 
 	&:hover {
@@ -33,15 +37,36 @@ a {
 	}
 }
 
+
 hr {
 	margin: 20px 0;
 	border: none;
 	border-top: 3px solid $color-lines;
 }
 
+
 dialog {
 	border: none;
 	color: inherit;
+}
+
+
+table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+
+	th, td {
+		text-align: left;
+	}
+
+	thead {
+		th {
+			font-size: 13px;
+			letter-spacing: .04em;
+			color: var(--color-text-dark);
+		}
+	}
 }
 
 

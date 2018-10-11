@@ -64,11 +64,11 @@ export default {
 
 <style lang="scss">
 
-@import '../../assets/styles/_variables';
+@import '../../assets/styles/definitions';
 
 .c-FormCheckbox {
 	display: flex;
-	margin-bottom: $inputs-height / 2;
+	margin-bottom: calc(var(--input-height) / 2);
 
 	&__input {
 		position: relative;

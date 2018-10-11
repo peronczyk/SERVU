@@ -28,7 +28,7 @@ export default {
 
 <style lang="scss">
 
-@import '../../assets/styles/_variables';
+@import '../../assets/styles/definitions';
 
 .Icon {
 	display: inline-block;

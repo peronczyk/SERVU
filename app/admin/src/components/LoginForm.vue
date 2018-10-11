@@ -102,7 +102,7 @@ export default {
 	display: flex;
 	align-items: center;
 	height: 100vh;
-	padding: $gutter * 3;
+	padding: var(--gutter-lg);
 
 	&__wrapper {
 		width: 100%;
@@ -111,8 +111,8 @@ export default {
 
 	&__appname {
 		position: absolute;
-		bottom: $gutter;
-		right: $gutter;
+		bottom: var(--gutter);
+		right: var(--gutter);
 		display: inline-block;
 		padding: 10px;
 		font-size: 12px;

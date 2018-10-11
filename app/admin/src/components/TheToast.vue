@@ -45,9 +45,9 @@ export default {
 .c-Toast {
 	position: fixed;
 	z-index: +20; // Twice as modal
-	bottom: $gutter;
+	bottom: var(--gutter);
 	left: auto; // Override browser defaults
-	right: $gutter;
+	right: var(--gutter);
 	display: flex;
 	align-items: center;
 	padding: 14px #{$tool-btn-size + 30} 14px 26px;

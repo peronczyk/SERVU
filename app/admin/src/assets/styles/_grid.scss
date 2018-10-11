@@ -28,12 +28,12 @@
 
 	// Grid with spaces between columns
 	&--gutter {
-		margin-left: -$gutter;
-		margin-right: -$gutter;
+		margin-left: calc(-1 * var(--gutter));
+		margin-right: calc(-1 * var(--gutter));
 
 		[class*='Col-'] {
-			padding-left: $gutter;
-			padding-right: $gutter;
+			padding-left: var(--gutter);
+			padding-right: var(--gutter);
 		}
 	}
 }

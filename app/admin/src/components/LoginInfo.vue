@@ -30,7 +30,7 @@ export default {
 .c-LoginInfo {
 	display: flex;
 	align-items: center;
-	padding: $gutter * 3;
+	padding: var(--gutter-xl);
 	width: 100%;
 	text-align: right;
 
