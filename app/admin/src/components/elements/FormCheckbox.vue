@@ -45,6 +45,10 @@ export default {
 			return this.isValid;
 		},
 
+		reset() {
+			this.value = false;
+		},
+
 		onChange(event) {
 			if (this.required && this.value) {
 				this.isValid = true;
