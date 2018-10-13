@@ -7,8 +7,19 @@
 
 			<fieldset v-for="(field, index) in fields" :key="index">
 
+				<h4
+					v-if="field.type == 'header'"
+					v-html="field.value"
+				></h4>
+
+				<p
+					v-else-if="field.type == 'description'"
+					v-html="field.value"
+					class="c-FormControl__desc"
+				></p>
+
 				<form-field
-					v-if="field.type == 'text' || field.type == 'password' || field.type == 'email'"
+					v-else-if="field.type == 'text' || field.type == 'password' || field.type == 'email'"
 					:type="field.type"
 					:ref="field.name"
 					:required="field.required"
@@ -21,6 +32,7 @@
 					:options="field.options"
 					:ref="field.name"
 					:required="field.required"
+					:listener="field.listener"
 				>
 					{{ field.label }}
 				</form-select>
@@ -48,11 +60,24 @@
 					{{ field.label }}
 				</form-list>
 
+				<form-rich
+					v-else-if="field.type == 'rich'"
+					:ref="field.name"
+					:required="field.required"
+				>
+					{{ field.label }}
+				</form-rich>
+
 				<form-hidden-field
 					v-else-if="field.type == 'hidden'"
 					:value="field.value"
 					:ref="field.name"
 				/>
+
+				<p
+					v-else
+					class="u-Info"
+				>Unhandled field: {{ field.type }}</p>
 
 			</fieldset>
 
@@ -76,16 +101,17 @@ import axios from 'axios';
 import { mapActions } from 'vuex';
 
 // Components
+import FormCheckbox from '../elements/FormCheckbox.vue';
 import FormField from '../elements/FormField.vue';
 import FormFiles from '../elements/FormFiles.vue';
-import FormSelect from '../elements/FormSelect.vue';
-import FormCheckbox from '../elements/FormCheckbox.vue';
-import FormList from '../elements/FormList.vue';
 import FormHiddenField from '../elements/FormHiddenField.vue';
+import FormList from '../elements/FormList.vue';
+import FormRich from '../elements/FormRich.vue';
+import FormSelect from '../elements/FormSelect.vue';
 
 export default {
 	components: {
-		FormField, FormFiles, FormSelect, FormCheckbox, FormList, FormHiddenField
+		FormField, FormFiles, FormCheckbox, FormList, FormHiddenField, FormRich, FormSelect
 	},
 
 	props: {
@@ -239,3 +265,14 @@ export default {
 }
 
 </script>
+
+
+<style lang="scss">
+
+.c-FormControl {
+	&__desc {
+		margin-bottom: var(--medium-margin) !important;
+	}
+}
+
+</style>

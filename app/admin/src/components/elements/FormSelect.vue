@@ -39,6 +39,10 @@ export default {
 			type: Array,
 			required: true,
 		},
+
+		listener: {
+
+		},
 	},
 
 	data() {
@@ -69,6 +73,10 @@ export default {
 
 		onChange() {
 			this.isDirty = true;
+
+			if (this.listener) {
+				this.listener(this.value);
+			}
 		},
 
 		onBlur() {

@@ -1,6 +1,12 @@
 <template>
 
-	<label class="c-FormField" :class="{'is-Dirty': isDirty, 'is-Error': !isValid}">
+	<label
+		:class="{
+			'is-Dirty': isDirty,
+			'is-Error': !isValid
+		}"
+		class="c-FormField"
+	>
 		<div class="c-FormField__label">
 			<slot />
 			<span class="u-Required" v-if="required"></span>

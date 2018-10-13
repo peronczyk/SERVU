@@ -16,7 +16,9 @@
 					name: 'collection',
 					label: 'Collection',
 					options: collectionsOptions,
+					listener: onCollectionChange,
 				},
+				...collectionFields,
 			]"
 			:uri="apiUri"
 			:success="onAddSuccess"
@@ -43,6 +45,10 @@ export default {
 	data() {
 		return {
 			apiUri: window.appConfig.apiBaseUrl + 'content/add/',
+			collectionFields: [{
+				type: 'description',
+				value: 'Choose collection.'
+			}],
 		}
 	},
 
@@ -65,6 +71,33 @@ export default {
 		onAddSuccess() {
 			console.log('Add success');
 		},
+
+		onCollectionChange(collectionId) {
+			console.log('Collection: ' + collectionId);
+
+			if (!collectionId) {
+				return false;
+			}
+
+			let collectionFields = [];
+
+			for (let collection of this.collectionsList) {
+				if (collection.id === collectionId) {
+					for (let field of collection.fields) {
+						console.log(field);
+
+						collectionFields.push({
+							type: field.typeId,
+							name: field.name,
+						});
+					}
+
+					break;
+				}
+			}
+
+			this.collectionFields = collectionFields;
+		}
 	},
 }
 

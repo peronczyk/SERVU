@@ -33,6 +33,10 @@ $app_modules = $modules->getConfigs();
 
 	<title>Administration Panel</title>
 
+	<style>
+		body { background-color: #161617; }
+	</style>
+
 	<script>
 		window.appConfig  = <?= json_encode($app_config); ?>;
 		window.appModules = <?= json_encode($app_modules); ?>;

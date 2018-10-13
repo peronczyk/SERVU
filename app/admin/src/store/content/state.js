@@ -1,7 +1,7 @@
 export default {
 	fieldTypes: [
 		{
-			id: 'simple',
+			id: 'text',
 			name: 'Simple text field'
 		},
 		{
