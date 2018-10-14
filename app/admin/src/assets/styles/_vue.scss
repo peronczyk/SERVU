@@ -93,3 +93,20 @@
 		transform: translateX(20px);
 	}
 }
+
+
+/*
+ * Scale vertically
+ */
+.scale-y {
+	&-enter-active,
+	&-leave-active {
+		transition: .3s;
+	}
+
+	&-enter,
+	&-leave-to {
+		opacity: 0;
+		transform: scaleY(0);
+	}
+}

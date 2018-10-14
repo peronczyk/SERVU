@@ -37,7 +37,7 @@
 						<form-field ref="name" required>Field name</form-field>
 					</td>
 					<td>
-						<a @click.prevent="removeField(fieldNumber)"><icon size="16" glyph="times" /></a>
+						<a @click.prevent="removeField(fieldNumber)" class="c-FormList__table__remove"><icon size="16" glyph="times" /></a>
 					</td>
 				</tr>
 
@@ -190,7 +190,7 @@ export default {
 	&__table {
 		margin-bottom: 20px;
 
-		a {
+		&__remove {
 			display: inline-block;
 			padding: 6px;
 		}

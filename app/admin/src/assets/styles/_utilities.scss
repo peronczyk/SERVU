@@ -45,3 +45,22 @@ p.u-Error {
 		padding: 0;
 	}
 }
+
+
+.u-FormFieldLabel {
+	position: absolute;
+	top: 14px;
+	left: 0;
+	display: flex;
+	align-items: center;
+	height: var(--input-height);
+	cursor: text;
+	transition: .2s;
+
+	.is-Dirty & {
+		transform: translateY(calc(-.6 * var(--input-height)));
+		font-size: .85em;
+		color: var(--color-text-dark);
+		cursor: default;
+	}
+}

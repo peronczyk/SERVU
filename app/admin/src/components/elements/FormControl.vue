@@ -32,7 +32,7 @@
 					:options="field.options"
 					:ref="field.name"
 					:required="field.required"
-					:listener="field.listener"
+					:change-callback="field.changeCallback"
 				>
 					{{ field.label }}
 				</form-select>

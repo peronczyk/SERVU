@@ -1,35 +1,53 @@
 <template>
 
 	<label
-		class="c-FormSelect"
+		@keydown="handleKeypress"
+		v-click-outside="close"
 		:class="{
+			'is-Open' : isOpen,
 			'is-Dirty': isDirty,
 			'is-Error': !isValid
 		}"
+		class="c-FormSelect"
+		tabindex="0"
 	>
-		<div class="c-FormSelect__label">
+		<div class="c-FormSelect__label u-FormFieldLabel">
 			<slot />
 		</div>
 
-		<select
-			v-model="value"
-			@focus="onFocus"
-			@blur="onBlur"
-			@change="onChange"
-			:aria-invalid="!isValid"
-		>
-			<option
-				v-for="(option, optionIndex) in options"
-				:key="optionIndex"
-				:value="option.value"
-			>{{ option.name }}</option>
-		</select>
+		<a @click.prevent="toggleOpen" class="c-FormSelect__toggle">
+			<span v-html="selectedValueLabel"></span>
+		</a>
+
+		<div class="c-FormSelect__options">
+			<transition name="scale-y">
+				<ul
+					v-show="isOpen"
+					:aria-invalid="!isValid"
+					role="listbox"
+				>
+					<li
+						v-for="(option, index) in options"
+						@click.prevent="selectOption(option, index)"
+						:class="{'is-Checked': isChecked(option.value)}"
+						:key="index"
+						tabindex="0"
+						role="option"
+						ref="option"
+					>
+						{{ option.name }}
+					</li>
+				</ul>
+			</transition>
+		</div>
 	</label>
 
 </template>
 
 
 <script>
+
+const INITIAL_VALUE = '';
 
 export default {
 	props: {
@@ -40,17 +58,27 @@ export default {
 			required: true,
 		},
 
-		listener: {
-
+		changeCallback: {
+			type: Function,
 		},
 	},
 
 	data() {
 		return {
-			value: '',
+			value: INITIAL_VALUE,
+			isOpen: false,
 			isDirty: false,
 			isValid: true,
 		}
+	},
+
+	computed: {
+		selectedValueLabel() {
+			let valueFound = this.options.filter(option => option.value === this.value);
+			return (valueFound.length)
+				? valueFound[0].name
+				: INITIAL_VALUE;
+		},
 	},
 
 	methods: {
@@ -64,29 +92,74 @@ export default {
 		},
 
 		reset() {
-			this.value = '';
+			this.value = INITIAL_VALUE;
 		},
 
-		onFocus() {
-			this.isValid = true;
+		open() {
+			this.isOpen = true;
 		},
 
-		onChange() {
+		close() {
+			this.isOpen = false;
+		},
+
+		toggleOpen() {
+			(this.isOpen) ? this.close() : this.open();
+		},
+
+		selectOption(optionData, optionIndex) {
+			this.value = optionData.value;
 			this.isDirty = true;
+			this.toggleOpen();
 
-			if (this.listener) {
-				this.listener(this.value);
+			if (this.changeCallback) {
+				this.changeCallback(this.value);
 			}
 		},
 
-		onBlur() {
-			if (!this.value || this.value.length < 1) {
-				this.isDirty = false;
+		isChecked(optionValue) {
+			return optionValue === this.value;
+		},
+
+		handleKeypress(event) {
+			console.log(event);
+			switch(event.code) {
+				case 'Space':
+					event.preventDefault();
+					this.toggleOpen();
+					break;
+
+				case 'Enter':
+					this.open();
+					break;
+
+				case 'Escape':
+					this.close();
+					break;
+
+				case 'Tab':
+					this.close();
+					break;
+
+				case 'ArrowDown':
+					event.preventDefault();
+					(this.isOpen)
+						? this.handleArrowKey(1)
+						: this.open();
+					break;
+
+				case 'ArrowUp':
+					if (this.isOpen) {
+						event.preventDefault();
+						this.handleArrowKey(-1);
+					}
+					break;
 			}
-			else {
-				this.validate();
-			}
-		}
+		},
+
+		handleArrowKey(dir) {
+
+		},
 	}
 }
 
@@ -99,25 +172,59 @@ export default {
 
 .c-FormSelect {
 	position: relative;
+	min-width: 80px;
 	margin-bottom: 20px;
 	padding-top: 14px;
 
 	&__label {
-		position: absolute;
-		top: 20px;
-		left: 0;
-		z-index: -1;
+		z-index: -1; // Hide under the __toggle element
+	}
+
+
+	&__toggle {
 		display: flex;
 		align-items: center;
 		height: var(--input-height);
-		cursor: text;
+		border-bottom: 1px solid $color-inputs-border;
+		color: var(--color-text-base);
 		transition: .2s;
 
-		.is-Dirty & {
-			transform: translateY(calc(-.6 * var(--input-height)));
-			font-size: .85em;
-			color: $color-text-lvl-4;
-			cursor: default;
+		&,
+		&:hover {
+			color: var(--color-text-base);
+		}
+
+		:focus &,
+		.is-Open & {
+			border-color: var(--color-brand);
+		}
+	}
+
+
+	&__options {
+		position: relative;
+		height: 0;
+
+		ul {
+			position: absolute;
+			z-index: +2;
+			top: 0;
+			left: 0;
+			width: 100%;
+			min-width: 140px;
+			list-style-type: none;
+			background-color: var(--color-bg-light);
+			box-shadow: $shadow-lvl-1;
+			transform-origin: top;
+		}
+
+		li {
+			padding: 12px 16px;
+			cursor: pointer;
+
+			&:hover {
+				background-color: rgba($color-white, .05);
+			}
 		}
 	}
 }

@@ -7,7 +7,7 @@
 		}"
 		class="c-FormField"
 	>
-		<div class="c-FormField__label">
+		<div class="c-FormField__label u-FormFieldLabel">
 			<slot />
 			<span class="u-Required" v-if="required"></span>
 		</div>
@@ -123,25 +123,6 @@ export default {
 	position: relative;
 	margin-bottom: 20px;
 	padding-top: 14px;
-
-
-	&__label {
-		position: absolute;
-		top: 14px;
-		left: 0;
-		display: flex;
-		align-items: center;
-		height: var(--input-height);
-		cursor: text;
-		transition: .2s;
-
-		.is-Dirty & {
-			transform: translateY(calc(-.6 * var(--input-height)));
-			font-size: .85em;
-			color: var(--color-text-dark);
-			cursor: default;
-		}
-	}
 }
 
 </style>

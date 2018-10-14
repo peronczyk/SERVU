@@ -25,7 +25,7 @@ select {
 	border: none;
 	border-bottom: 1px solid $color-inputs-border;
 	font-size: var(--font-size-base);
-	color: $color-text-lvl-2;
+	color: var(--color-text-base);
 	background: none;
 	transition: .2s;
 

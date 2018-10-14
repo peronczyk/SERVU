@@ -16,7 +16,7 @@
 					name: 'collection',
 					label: 'Collection',
 					options: collectionsOptions,
-					listener: onCollectionChange,
+					changeCallback: onCollectionChange,
 				},
 				...collectionFields,
 			]"
