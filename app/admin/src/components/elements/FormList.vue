@@ -65,6 +65,9 @@ import { mapGetters } from 'vuex';
 import FormField from './FormField.vue';
 import FormSelect from './FormSelect.vue';
 
+// Definitions
+const INITIAL_VALUE = [];
+
 export default {
 	components: {
 		FormField, FormSelect
@@ -82,7 +85,7 @@ export default {
 	data() {
 		return {
 			fieldColumns: ['name', 'typeId'],
-			fieldsList: [],
+			fieldsList: INITIAL_VALUE,
 			isValid: true,
 		};
 	},
@@ -159,8 +162,10 @@ export default {
 			return this.isValid;
 		},
 
-		/** @todo */
-		reset() {},
+		reset() {
+			this.fieldsList = [];
+			this.isValid = true;
+		},
 
 		addField() {
 			this.fieldsList.push({

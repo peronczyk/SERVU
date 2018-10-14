@@ -73,9 +73,8 @@ export default {
 		},
 
 		onCollectionChange(collectionId) {
-			console.log('Collection: ' + collectionId);
-
 			if (!collectionId) {
+				this.collectionFields = [];
 				return false;
 			}
 
@@ -84,8 +83,6 @@ export default {
 			for (let collection of this.collectionsList) {
 				if (collection.id === collectionId) {
 					for (let field of collection.fields) {
-						console.log(field);
-
 						collectionFields.push({
 							type: field.typeId,
 							name: field.name,

@@ -47,6 +47,7 @@
 
 <script>
 
+// Definitions
 const INITIAL_VALUE = '';
 
 export default {
@@ -93,6 +94,12 @@ export default {
 
 		reset() {
 			this.value = INITIAL_VALUE;
+			this.isDirty = false;
+			this.isValid = true;
+
+			if (this.changeCallback) {
+				this.changeCallback(null);
+			}
 		},
 
 		open() {

@@ -53,6 +53,9 @@
 
 <script>
 
+// Definitions
+const INITIAL_VALUE = '';
+
 export default {
 	props: {
 		type: {
@@ -68,7 +71,7 @@ export default {
 
 	data() {
 		return {
-			value: '',
+			value: INITIAL_VALUE,
 			isDirty: false,
 			isValid: true,
 		}
@@ -93,7 +96,9 @@ export default {
 		},
 
 		reset() {
-			this.value = '';
+			this.value = INITIAL_VALUE;
+			this.isDirty = false;
+			this.isValid = true;
 		},
 
 		onFocus() {

@@ -87,7 +87,10 @@
 				</p>
 			</transition>
 
-			<button class="Btn">{{ cta }}</button>
+			<div class="c-FormControl__buttons">
+				<button type="submit" class="Btn">{{ cta }}</button>
+				<button @click.prevent="resetForm" v-if="!hideReset" type="reset" class="Btn Btn--hollow">Reset</button>
+			</div>
 		</form>
 	</div>
 
@@ -143,6 +146,12 @@ export default {
 		error: {
 			type: Function,
 		},
+
+		// Hide reset button
+		hideReset: {
+			type: Boolean,
+			default: false,
+		}
 	},
 
 	data() {
@@ -157,6 +166,8 @@ export default {
 		}),
 
 		resetForm() {
+			this.isFormValid = true;
+
 			for (let refName in this.$refs) {
 				let ref = this.$refs[refName][0];
 
@@ -272,6 +283,16 @@ export default {
 .c-FormControl {
 	&__desc {
 		margin-bottom: var(--medium-margin) !important;
+	}
+
+
+	&__buttons {
+		display: flex;
+		margin-top: 20px;
+
+		.Btn {
+			margin-right: 10px;
+		}
 	}
 }
 

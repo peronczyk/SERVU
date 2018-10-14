@@ -38,6 +38,9 @@
 // Dependencies
 import { mapActions } from 'vuex';
 
+// Definitions
+const INITIAL_VALUE = [];
+
 export default {
 	props: {
 		required: Boolean,
@@ -51,7 +54,7 @@ export default {
 
 	data() {
 		return {
-			value: [],
+			value: INITIAL_VALUE,
 			isValid: true,
 		}
 	},
@@ -83,6 +86,7 @@ export default {
 
 		reset() {
 			this.value = [];
+			this.isValid = true;
 		},
 
 		fileInputChange(event) {
