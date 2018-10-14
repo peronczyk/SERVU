@@ -89,6 +89,7 @@ export default {
 						collectionFields.push({
 							type: field.typeId,
 							name: field.name,
+							label: field.name,
 						});
 					}
 
