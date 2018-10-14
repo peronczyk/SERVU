@@ -196,6 +196,20 @@ export default {
 		color: var(--color-text-base);
 		transition: .2s;
 
+		&::after {
+			content: '';
+			position: absolute;
+			top: calc(50% + 3px);
+			right: 16px;
+			width: 6px;
+			height: 6px;
+			border-style: solid;
+			border-color: var(--color-link);
+			border-width: 0 1px 1px 0;
+			transform: rotate(45deg);
+			transition: .2s;
+		}
+
 		&,
 		&:hover {
 			color: var(--color-text-base);
@@ -204,6 +218,12 @@ export default {
 		:focus &,
 		.is-Open & {
 			border-color: var(--color-brand);
+		}
+
+		.is-Open & {
+			&::after {
+				transform: rotate(-135deg);
+			}
 		}
 	}
 
