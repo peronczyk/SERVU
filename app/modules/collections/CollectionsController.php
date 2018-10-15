@@ -57,10 +57,21 @@ final class CollectionsController {
 
 
 	/** ----------------------------------------------------------------------------
-	 * Remove
+	 * Delete collection
+	 * @todo
 	 */
 
-	public function remove() {
-		/** @todo */
+	public function delete($params) {
+		if (!$params['id']) {
+			throw new Exception("Param 'id' is missing.");
+		}
+
+		$result = $this->_db
+			->delete()
+			->from('collections')
+			->where("`id` = '{$params['id']}'")
+			->all();
+
+		$this->_rest_store->set('params', $result);
 	}
 }

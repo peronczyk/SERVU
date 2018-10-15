@@ -13,7 +13,14 @@ return [
 		[
 			'path'     => 'collections/add(/)',
 			'method'   => 'POST',
+			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => $helper->PassCallbackMethod('add'),
+		],
+		[
+			'path'     => 'collections/delete/:id(/)',
+			'method'   => 'POST',
+			'auth_lvl' => Auth::LVL_ADMIN,
+			'callback' => $helper->PassCallbackMethod('delete'),
 		],
 	],
 ];

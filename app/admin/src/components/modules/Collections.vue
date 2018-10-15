@@ -84,9 +84,20 @@ export default {
 			this.openToast('This option is not available yet.');
 		},
 
-		/** @todo */
-		deleteCollection() {
-			this.openToast('This option is not available yet.');
+		deleteCollection(entry) {
+			axios.post(this.nodeUrl + 'delete/' + entry.id)
+				.then(result => {
+					if (result.data.errors) {
+						this.openToast(result.data.errors[0].message);
+					}
+					else {
+						this.openToast('Collection deleted');
+						this.fetchCollectionsList();
+					}
+				})
+				.catch(error => {
+					console.log(error);
+				});
 		},
 	},
 

@@ -65,6 +65,17 @@ class Sqlite {
 
 
 	/** ----------------------------------------------------------------------------
+	 * Connect to database if its not connected
+	 */
+
+	private function autoConnect() {
+		if (!$this->connection) {
+			$this->connect();
+		}
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * SELECT
 	 * @param string|array $fields
 	 */
@@ -87,6 +98,16 @@ class Sqlite {
 
 		$this->query_type = 'insert';
 		$this->insert_data = $arr;
+		return $this;
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * DELETE
+	 */
+
+	public function delete() : object {
+		$this->query_type = 'delete';
 		return $this;
 	}
 
@@ -151,10 +172,7 @@ class Sqlite {
 	 */
 
 	public function all() : array {
-		// Autoconnect to DB if there is no open connection
-		if (!$this->connection) {
-			$this->connect();
-		}
+		$this->autoConnect();
 
 		// Perform query
 		$this->query($this->prepareQuery());
@@ -173,8 +191,7 @@ class Sqlite {
 			throw new Exception("Method `into` can be used only with `insert` query type.");
 		}
 
-		// Autoconnect to DB if there is no open connection
-		if (!$this->connection) $this->connect();
+		$this->autoConnect();
 
 		$this->table = $table;
 
@@ -227,8 +244,15 @@ class Sqlite {
 				$query = "INSERT INTO {$this->table}({$columns}) VALUES({$values});";
 				break;
 
+			case 'delete':
+				if (empty ($this->conditions)) {
+					throw new Exception("Conditions are required to perform DELETE operation. Use method 'where()' to add conditions.");
+				}
+				$query = "DELETE FROM {$this->table} WHERE {$this->conditions}";
+				break;
+
 			default:
-				throw new Exception('Unknown');
+				throw new Exception("Unknown query type '{$this->query_type}'");
 		}
 
 		return $query;
