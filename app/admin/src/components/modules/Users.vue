@@ -131,7 +131,16 @@ export default {
 		getList() {
 			axios.get(this.nodeUrl + 'list')
 				.then(result => {
-					this.usersList = result.data['data'];
+					if (result.data.errors) {
+						this.openToast(result.data.errors[0].message);
+						console.log(result.data.errors);
+					}
+					else {
+						this.usersList = result.data['data'];
+					}
+				})
+				.catch(error => {
+					console.log(error);
 				});
 		},
 

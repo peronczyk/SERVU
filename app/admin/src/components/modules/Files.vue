@@ -206,6 +206,7 @@ export default {
 				})
 				.catch(error => {
 					this.isFilesFetched = true;
+					console.log(error);
 				});
 		},
 

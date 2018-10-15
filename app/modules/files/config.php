@@ -4,14 +4,14 @@
  * Register action defaults
  */
 function register_files_action_defaults($dependencies) {
-	$controller_file = _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'files/FilesController.php';
+	$controller_file = __DIR__ . '/FilesController.php';
 
 	if (file_exists($controller_file)) {
 		require_once $controller_file;
 		return new FilesController($dependencies);
 	}
 	else {
-		throw new Exception('Controller for module "files" does not exist');
+		throw new Exception("Controller for module 'files' does not exist");
 	}
 }
 

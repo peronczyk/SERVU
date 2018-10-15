@@ -21,8 +21,8 @@
 				</thead>
 				<tbody>
 					<tr v-for="(entry, index) in collectionsList" :key="entry.id">
-						<td>{{ index + 1 }}.</td>
-						<td><a @click.prevent="editCollection(entry)">{{ entry.name }}</a></td>
+						<td><small>{{ index + 1 }}.</small></td>
+						<td>{{ entry.name }}</td>
 						<td class="u-Text--center">{{ entry.fields.length }}</td>
 						<td class="u-Text--center">
 							<options-menu :options="[

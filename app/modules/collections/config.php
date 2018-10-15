@@ -11,7 +11,7 @@ function register_collections_action_defaults($dependencies) {
 		return new CollectionsController($dependencies);
 	}
 	else {
-		throw new Exception('Controller for module "collections" does not exist');
+		throw new Exception("Controller for module 'collections' does not exist");
 	}
 }
 
