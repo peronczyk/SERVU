@@ -15,7 +15,10 @@
 			<slot />
 		</div>
 
-		<a @click.prevent="toggleOpen" class="c-FormSelect__toggle">
+		<a
+			@click.prevent="toggleOpen"
+			class="c-FormSelect__toggle"
+		>
 			<span v-html="selectedValueLabel"></span>
 		</a>
 
@@ -29,7 +32,7 @@
 					<li
 						v-for="(option, index) in options"
 						@click.prevent="selectOption(option, index)"
-						:class="{'is-Checked': isChecked(option.value)}"
+						:class="{'is-Selected': isSelected(option.value)}"
 						:key="index"
 						tabindex="0"
 						role="option"
@@ -124,7 +127,7 @@ export default {
 			}
 		},
 
-		isChecked(optionValue) {
+		isSelected(optionValue) {
 			return optionValue === this.value;
 		},
 
@@ -180,8 +183,8 @@ export default {
 .c-FormSelect {
 	position: relative;
 	min-width: 80px;
+	margin-top: 14px;
 	margin-bottom: 20px;
-	padding-top: 14px;
 
 	&__label {
 		z-index: -1; // Hide under the __toggle element
@@ -199,7 +202,7 @@ export default {
 		&::after {
 			content: '';
 			position: absolute;
-			top: calc(50% + 3px);
+			top: calc(50% - 5px);
 			right: 16px;
 			width: 6px;
 			height: 6px;
@@ -249,7 +252,12 @@ export default {
 			padding: 12px 16px;
 			cursor: pointer;
 
+			&.is-Selected {
+				background-color: rgba($color-white, .03);
+			}
+
 			&:hover {
+				color: var(--color-text-base);
 				background-color: rgba($color-white, .05);
 			}
 		}

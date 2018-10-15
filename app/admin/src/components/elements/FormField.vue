@@ -126,8 +126,8 @@ export default {
 
 .c-FormField {
 	position: relative;
+	margin-top: 14px;
 	margin-bottom: 20px;
-	padding-top: 14px;
 }
 
 </style>
