@@ -1,67 +1,36 @@
 <?php
 
-/** --------------------------------------------------------------------------------
- * Register action defaults
- */
-function register_users_action_defaults($dependencies) {
-	$controller_file = __DIR__ . '/UsersController.php';
+$helper = new ModuleConfigHelper(__DIR__, 'UsersController');
 
-	if (file_exists($controller_file)) {
-		require_once _CONFIG['app_dir'] . _CONFIG['modules_dir'] . 'users/UsersController.php';
-		return new UsersController($dependencies);
-	}
-	else {
-		throw new Exception("Controller for module 'users' does not exist");
-	}
-}
-
-/** --------------------------------------------------------------------------------
- * Module config
- */
 return [
 	'name' => 'Users',
 	'icon' => 'user',
 	'routes' => [
 		[
-			'path' => 'users/list(/)',
+			'path'     => 'users/list(/)',
 			'auth_lvl' => Auth::LVL_ADMIN,
-			'callback' => function($dependencies) {
-				$users = register_users_action_defaults($dependencies);
-				$users->getList();
-			},
+			'callback' => $helper->PassCallbackMethod('getList'),
 		],
 		[
-			'method' => 'POST',
-			'path' => 'users/login(/)',
-			'callback' => function($dependencies) {
-				$users = register_users_action_defaults($dependencies);
-				$users->login();
-			},
+			'method'   => 'POST',
+			'path'     => 'users/login(/)',
+			'callback' => $helper->PassCallbackMethod('login'),
 		],
 		[
-			'path' => 'users/logout(/)',
-			'callback' => function($dependencies) {
-				$users = register_users_action_defaults($dependencies);
-				$users->logout();
-			},
+			'path'     => 'users/logout(/)',
+			'callback' => $helper->PassCallbackMethod('logout'),
 		],
 		[
-			'method' => 'POST',
-			'path' => 'users/create(/)',
+			'method'   => 'POST',
+			'path'     => 'users/create(/)',
 			'auth_lvl' => Auth::LVL_ADMIN,
-			'callback' => function($dependencies) {
-				$users = register_users_action_defaults($dependencies);
-				$users->create();
-			},
+			'callback' => $helper->PassCallbackMethod('create'),
 		],
 		[
-			'method' => 'POST',
-			'path' => 'users/delete/:id(/)',
+			'method'   => 'POST',
+			'path'     => 'users/delete/:id(/)',
 			'auth_lvl' => Auth::LVL_ADMIN,
-			'callback' => function($dependencies, $params) {
-				$users = register_users_action_defaults($dependencies);
-				$users->delete($params);
-			},
+			'callback' => $helper->PassCallbackMethod('delete'),
 		],
 	],
 ];
