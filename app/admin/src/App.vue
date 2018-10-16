@@ -9,6 +9,7 @@
 	>
 		<the-sidebar />
 		<the-main />
+		<the-dialog />
 		<the-toast />
 		<the-modal />
 
@@ -27,15 +28,16 @@ import { mapGetters, mapActions } from 'vuex';
 // Components
 import TheSidebar from './components/TheSidebar.vue';
 import TheMain from './components/TheMain.vue';
+import TheDialog from './components/TheDialog.vue';
 import TheToast from './components/TheToast.vue';
-import TheModal from './components/themodal.vue';
+import TheModal from './components/TheModal.vue';
 
 // Assets
 import SvgIconSet from './assets/images/streamline-icons.svg';
 
 export default {
 	components: {
-		TheSidebar, TheMain, TheToast, TheModal, SvgIconSet
+		TheSidebar, TheMain, TheDialog, TheToast, TheModal, SvgIconSet
 	},
 
 	computed: {

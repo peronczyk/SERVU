@@ -6,6 +6,7 @@ import Vuex from 'vuex';
 import base from './base';
 import collections from './collections';
 import content from './content';
+import dialog from './dialog';
 import modal from './modal';
 import optionsmenu from './optionsmenu';
 import user from './user';
@@ -18,6 +19,7 @@ export default new Vuex.Store({
 		base,
 		collections,
 		content,
+		dialog,
 		modal,
 		optionsmenu,
 		user,

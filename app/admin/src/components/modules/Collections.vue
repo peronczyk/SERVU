@@ -73,6 +73,7 @@ export default {
 			openModal            : 'modal/open',
 			closeModal           : 'modal/close',
 			openToast            : 'toast/open',
+			openDialog           : 'dialog/open',
 		}),
 
 		addCollection() {
@@ -85,19 +86,24 @@ export default {
 		},
 
 		deleteCollection(entry) {
-			axios.post(this.nodeUrl + 'delete/' + entry.id)
-				.then(result => {
-					if (result.data.errors) {
-						this.openToast(result.data.errors[0].message);
-					}
-					else {
-						this.openToast('Collection deleted');
-						this.fetchCollectionsList();
-					}
-				})
-				.catch(error => {
-					console.log(error);
-				});
+			this.openDialog({
+				message: `Do you really wish to delete collection: <strong>${entry.name}</strong>?`,
+				callback: () => {
+					axios.post(this.nodeUrl + 'delete/' + entry.id)
+						.then(result => {
+							if (result.data.errors) {
+								this.openToast(result.data.errors[0].message);
+							}
+							else {
+								this.openToast('Collection deleted');
+								this.fetchCollectionsList();
+							}
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			});
 		},
 	},
 
