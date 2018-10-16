@@ -9,5 +9,22 @@
 
 	&__buttons {
 		margin-left: auto;
+
+		@include narrower-than(sm) {
+			width: 100%;
+			margin: 16px 0;
+
+			.Btn {
+				width: 100%;
+			}
+		}
+	}
+
+	@include narrower-than(sm) {
+		flex-direction: column;
+		align-items: start;
+		min-height: 0;
+		margin-top: 20px;
+		margin-bottom: 16px;
 	}
 }

@@ -71,6 +71,10 @@ export default {
 	&__buttons,
 	&__content {
 		padding: 20px 30px;
+
+		@include narrower-than(md) {
+			padding: 14px 18px;
+		}
 	}
 
 

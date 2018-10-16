@@ -49,25 +49,17 @@ export default {
 	height: 100%;
 
 	.is-UserLoggedIn & {
-		margin-left: 200px;
-
-		@include narrower-than(lg) {
-			margin-left: 170px;
-		}
-
-		@include narrower-than(md) {
-			margin-left: 140px;
-		}
-
-		@include narrower-than(sm) {
-			margin-left: 90px;
-		}
+		margin-left: var(--sidebar-size);
 	}
 
 	&__view {
 		padding: 0 var(--gutter-lg) 5vh var(--gutter-lg);
 		height: 100%;
 		will-change: transform, opacity;
+
+		@include narrower-than(sm) {
+			padding-top: var(--toolbar-size);
+		}
 	}
 }
 

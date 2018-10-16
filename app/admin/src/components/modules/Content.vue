@@ -19,7 +19,7 @@
 
 			<thead>
 				<tr>
-					<th style="width: 40px;"></th>
+					<th style="width: 30px;"></th>
 					<th>Name</th>
 					<th class="u-Text--center">Children</th>
 					<th>Options</th>

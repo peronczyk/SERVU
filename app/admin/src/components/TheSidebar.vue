@@ -46,18 +46,11 @@ export default {
 	transition: .4s;
 
 	.is-UserLoggedIn & {
-		width: 200px;
-
-		@include narrower-than(lg) {
-			width: 170px;
-		}
-
-		@include narrower-than(md) {
-			width: 140px;
-		}
+		width: var(--sidebar-size);
 
 		@include narrower-than(sm) {
-			width: 90px;
+			width: 100%;
+			height: var(--toolbar-size);
 		}
 	}
 }

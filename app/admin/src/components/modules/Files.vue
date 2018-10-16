@@ -173,7 +173,8 @@ export default {
 
 	methods: {
 		...mapActions({
-			openToast: 'toast/open',
+			openToast  : 'toast/open',
+			openDialog : 'dialog/open',
 		}),
 
 		/**
@@ -214,17 +215,22 @@ export default {
 		 * Delete file
 		 */
 		deleteFile(file) {
-			let fileLocation = this.actualPath + '/' + file['full-name'];
-			axios.post(this.nodeUrl + 'delete', 'file=' + fileLocation)
-				.then(result => {
-					if (result.data.errors) {
-						this.openToast('File or directory removal failed.<br>Returned error: ' + result.errors[0].message);
-					}
-					else if (result.data.success === true) {
-						this.openToast('File or directory deleted permanently.');
-						this.getList();
-					}
-				});
+			this.openDialog({
+				message: `Do you really want to delete file <strong>${file['full-name']}</strong>?`,
+				callback: () => {
+					let fileLocation = this.actualPath + '/' + file['full-name'];
+					axios.post(this.nodeUrl + 'delete', 'file=' + fileLocation)
+						.then(result => {
+							if (result.data.errors) {
+								this.openToast('File or directory removal failed.<br>Returned error: ' + result.errors[0].message);
+							}
+							else if (result.data.success === true) {
+								this.openToast('File or directory deleted permanently.');
+								this.getList();
+							}
+						});
+				}
+			})
 		},
 
 		/**
@@ -240,7 +246,7 @@ export default {
 		 */
 		onCreateDirectorySuccess(result) {
 			if (result.errors) {
-				this.openToast('Directory creation failed.<br>Returned error: ' + result.errors[0].message);
+				this.openToast(`Directory creation failed.<br>Returned error: ${result.errors[0].message}`);
 			}
 			else {
 				this.openToast('Directory created');
@@ -254,7 +260,7 @@ export default {
 		 */
 		onUploadFilesSuccess(result) {
 			if (result.errors) {
-				this.openToast('Files upload failed.<br>Returned error: ' + result.errors[0].message);
+				this.openToast(`Files upload failed.<br>Returned error: ${result.errors[0].message}`);
 			}
 			else {
 				this.openToast('Files uploaded');

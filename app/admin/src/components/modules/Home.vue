@@ -20,7 +20,7 @@
 
 			<li>
 				<small>Provided by:</small>
-				<h4><a href="https://github.com/peronczyk/servant" target="_blank">Servant</a></h4>
+				<h4><a href="https://servant.onl/" target="_blank">Servant</a></h4>
 			</li>
 		</ul>
 	</div>
@@ -60,6 +60,7 @@ export default {
 	align-items: center;
 	height: 100vh;
 
+
 	&__slogan {
 		h1 {
 			margin: 0;
@@ -73,7 +74,14 @@ export default {
 			line-height: 1em;
 			color: var(--color-bg-lighter);
 		}
+
+		@include narrower-than(sm) {
+			p {
+				font-size: 120px;
+			}
+		}
 	}
+
 
 	&__bottom {
 		list-style-type: none;
@@ -86,7 +94,7 @@ export default {
 		padding-left: var(--gutter);
 		padding-right: var(--gutter);
 		height: 7vh;
-		min-height: 40px;
+		min-height: 60px;
 		border-top: 1px solid $color-lines;
 
 		li {

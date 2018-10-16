@@ -83,6 +83,6 @@ table {
 	}
 
 	&-thumb {
-		background-color: $color-text-lvl-3;
+		background-color: var(--color-bg-lighter);
 	}
 }

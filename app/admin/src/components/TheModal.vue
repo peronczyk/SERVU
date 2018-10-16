@@ -57,7 +57,7 @@ export default {
 	top: 0;
 	left: 0;
 	z-index: +10;
-	padding: 40px;
+	padding: var(--gutter);
 	width: 100%;
 	height: 100%;
 	border: none;

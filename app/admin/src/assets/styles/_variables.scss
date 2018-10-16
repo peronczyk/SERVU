@@ -4,6 +4,8 @@
 	 * Sizes
 	 */
 
+	--sidebar-size       : 200px;
+	--toolbar-size       : 50px;
 	--gutter             : 2vw;
 	--gutter-md          : calc(var(--gutter) * 1.5);
 	--gutter-lg          : calc(var(--gutter) * 2);
@@ -30,16 +32,24 @@
 	--font-size-h6       : calc(var(--font-size-base) * .9);
 
 
-	@include narrower-than(sm) {
-		--font-size-base: 14px;
+	@include narrower-than(lg) {
+		--sidebar-size   : 170px;
 	}
 
 	@include narrower-than(md) {
-		--gutter: 14px;
+		--sidebar-size   : 140px;
+		--gutter         : 14px;
+		--input-height   : 32px;
 	}
 
 	@include narrower-than(sm) {
-		--gutter: 10px;
+		--sidebar-size   : 0;
+		--gutter         : 10px;
+		--font-size-base : 14px;
+		--font-size-h1   : 24px;
+		--font-size-h2   : 20px;
+		--font-size-h3   : 16px;
+		--font-size-h4   : 15px;
 	}
 
 

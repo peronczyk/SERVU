@@ -1,6 +1,10 @@
 <template>
 
-	<nav class="c-Nav">
+	<nav
+		v-click-outside="closeMenu"
+		:class="{'is-Open': isMenuOpen}"
+		class="c-Nav"
+	>
 		<div class="c-Nav__top">
 			<router-link to="/">
 				<svg><use xlink:href="#logo-servant"></use></svg>
@@ -9,7 +13,12 @@
 
 		<div class="c-Nav__links">
 			<ul>
-				<li v-for="route in $router.options.routes" :key="route.name" v-if="route.path != '/'">
+				<li
+					v-for="route in $router.options.routes"
+					v-if="route.path != '/'"
+					@click="closeMenu"
+					:key="route.name"
+				>
 					<router-link :to="route.path">
 						<icon size="24" :glyph="route.icon" />
 						{{ route.name }}
@@ -21,6 +30,11 @@
 		<div class="c-Nav__bottom">
 			<a @click.prevent="logout()">Logout</a>
 		</div>
+
+		<a
+			@click.prevent="toggleMenuVisibility"
+			class="c-Nav__toggle"
+		></a>
 	</nav>
 
 </template>
@@ -33,15 +47,28 @@ import axios from 'axios';
 import { mapActions } from 'vuex';
 
 export default {
+	data() {
+		return {
+			isMenuOpen: false,
+		}
+	},
+
 	methods: {
 		...mapActions('user', [
 			'logout'
 		]),
+
+		closeMenu() {
+			this.isMenuOpen = false;
+		},
+
+		toggleMenuVisibility() {
+			this.isMenuOpen = !this.isMenuOpen;
+		},
 	},
 }
 
 </script>
-
 
 
 <style lang="scss">
@@ -49,26 +76,21 @@ export default {
 @import '../assets/styles/definitions';
 
 .c-Nav {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
 	height: 100%;
 
-	> * {
-		width: 100%;
-	}
 
 	a {
 		color: $color-text-lvl-3;
 	}
 
+
 	&__top {
 		display: flex;
 		align-items: center;
-		padding-left: var(--gutter);
-		padding-right: var(--gutter);
-		height: 14vh;
-		min-height: 80px;
 
 		a {
 			display: inline-block;
@@ -94,7 +116,35 @@ export default {
 				will-change: transform;
 			}
 		}
+
+		// Desktop only
+		@include wider-than(sm) {
+			height: 14vh;
+			min-height: 80px;
+			padding-left: var(--gutter);
+			padding-right: var(--gutter);
+		}
+
+		// Mobile only
+		@include narrower-than(sm) {
+			width: var(--toolbar-size);
+			height: 100%;
+
+			a {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100%;
+				padding: 0;
+
+				svg {
+					width: 60%;
+					height: 60%;
+				}
+			}
+		}
 	}
+
 
 	&__links {
 		ul {
@@ -131,6 +181,7 @@ export default {
 			}
 
 			.Icon {
+				flex-shrink: 0;
 				margin-right: 10px;
 			}
 
@@ -144,18 +195,36 @@ export default {
 			}
 
 			@include narrower-than(sm) {
-				flex-direction: column;
 				height: auto;
-				padding: 10px 0;
-				font-size: 13px;
+				padding: 20px;
+			}
+		}
 
-				.Icon {
-					margin-right: 0;
-					margin-bottom: 10px;
+		@include narrower-than(sm) {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			height: 0;
+
+			ul {
+				visibility: hidden;
+				opacity: 0;
+				background-color: var(--color-bg-light);
+				transform: scaleY(0);
+				transform-origin: top;
+				transition: .3s;
+				will-change: visibility, opacity, transform;
+
+				.is-Open & {
+					visibility: visible;
+					opacity: 1;
+					transform: none;
 				}
 			}
 		}
 	}
+
 
 	&__bottom {
 		display: flex;
@@ -178,6 +247,50 @@ export default {
 				color: $color-links-hover;
 			}
 		}
+
+		@include narrower-than(sm) {
+			display: none;
+		}
+	}
+
+
+	&__toggle {
+		display: none;
+
+		@include narrower-than(sm) {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: var(--toolbar-size);
+			height: 100%;
+			margin-left: auto;
+
+			&::before {
+				content: '';
+				display: block;
+				height: 1px;
+				width: 40%;
+				background-color: var(--color-link);
+				box-shadow:
+					0  7px 0 0 var(--color-link),
+					0 -7px 0 0 var(--color-link);
+				transition: .2s;
+			}
+
+			.is-Open & {
+				&::before {
+					box-shadow:
+						0  5px 0 0 var(--color-link),
+						0 -5px 0 0 var(--color-link);
+				}
+			}
+		}
+	}
+
+
+	@include narrower-than(sm) {
+		flex-direction: row;
+		height: var(--toolbar-size);
 	}
 }
 
