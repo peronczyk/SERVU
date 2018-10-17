@@ -1,11 +1,19 @@
 <template>
 
-	<div class="c-FormFiles">
+	<div
+		:class="{
+			'is-Error'    : !isValid,
+			'is-DragOver' : isDragOver,
+		}"
+		class="c-FormFiles"
+	>
 		<label
-			:class="{'is-Error': !isValid}"
-			class="c-FormFiles__input"
+			@drop.prevent="onDrop"
+			@dragover.prevent="onDragOver"
+			@dragleave.prevent="onDragLeave"
+			class="c-FormFiles__dropzone"
 		>
-			<a class="Btn Btn--hollow">Select files</a>
+			<p>Drag files here or<br> <a>click here to select</a></p>
 			<input
 				@change="fileInputChange"
 				:disabled="isMax"
@@ -21,7 +29,7 @@
 					{{ file.name }}<br>
 					<small>{{ file.size / 1000 }}&nbsp;KB</small>
 				</td>
-				<td>
+				<td style="width: 20px;">
 					<a @click.prevent="removeFile(file)">
 						<icon size="16" glyph="times" />
 					</a>
@@ -56,6 +64,7 @@ export default {
 		return {
 			value: INITIAL_VALUE,
 			isValid: true,
+			isDragOver: false,
 		}
 	},
 
@@ -89,25 +98,48 @@ export default {
 			this.isValid = true;
 		},
 
-		fileInputChange(event) {
-			let addedFiles = event.target.files;
-
-			if (addedFiles.length + this.value.length > this.max) {
+		/**
+		 * @todo need to validate files - extensions, types and prevent of multiple
+		 *   upload.
+		 */
+		processFileListAdd(files) {
+			if (files.length + this.value.length > this.max) {
 				this.openToast('Maximal number of files reached: ' + this.max);
 				event.target.value = '';
 			}
 			else {
-				for (let i = 0; i < addedFiles.length; i++) {
-					this.value.push(addedFiles[i]);
+				for (let i = 0; i < files.length; i++) {
+					this.value.push(files[i]);
 				}
 			}
+		},
+
+		fileInputChange(event) {
+			this.processFileListAdd(event.target.files);
 		},
 
 		removeFile(file) {
 			this.value = this.value.filter(addedFile => {
 				return addedFile.name != file.name
 			});
-		}
+		},
+
+		onDragOver(event) {
+			this.isDragOver = true;
+		},
+
+		onDragLeave(event) {
+			this.isDragOver = false;
+		},
+
+		onDrop(event) {
+			let droppedFiles = (event.dataTransfer.files.length)
+				? event.dataTransfer.files
+				: event.dataTransfer.items;
+
+			this.processFileListAdd(droppedFiles);
+			this.isDragOver = false;
+		},
 	}
 }
 
@@ -119,11 +151,17 @@ export default {
 @import '../../assets/styles/definitions';
 
 .c-FormFiles {
-	&__input {
+	&__dropzone {
 		position: relative;
-		display: inline-block;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 10vh;
+		margin-bottom: 0;
 		overflow: hidden;
-		font-size: 0;
+		text-align: center;
+		background-color: var(--color-bg-light);
+		transition: .2s;
 
 		input {
 			position: absolute;
@@ -133,16 +171,21 @@ export default {
 			height: 0;
 			opacity: 0;
 		}
+
+		.is-DragOver & {
+			box-shadow: inset 0 0 40px rgba($color-white, .2);
+		}
 	}
 
+
 	&__list {
-		margin-top: calc(var(--box-margin) / -3);
-		margin-bottom: calc(var(--box-margin) / 3);
+		margin-top: 10px;
 		max-width: 100%;
 
 		td {
 			padding: 4px;
 			line-height: 1.2em;
+			word-break: break-all;
 
 			&:first-child {
 				padding-left: 0;

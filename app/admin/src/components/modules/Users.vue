@@ -13,14 +13,14 @@
 				<table class="u-Table--styled u-Table--withOptions">
 					<thead>
 						<tr>
-							<th>ID</th>
+							<th style="width: 30px;">ID</th>
 							<th>Email</th>
 							<th>Options</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="entry in usersList" :key="entry.id">
-							<td>{{ entry.id }}</td>
+							<td><small>{{ entry.id }}</small></td>
 							<td>{{ entry.email }}</td>
 							<td>
 								<options-menu :options="[
@@ -56,7 +56,7 @@
 					]"
 					:uri="nodeUrl + 'create/'"
 					:success="onUserCreateSuccess"
-					title="Create user"
+					title="Create user:"
 					cta="Create"
 					ref="createUserForm"
 				/>
@@ -89,7 +89,7 @@
 						},
 					]"
 					:uri="nodeUrl + 'change-data/'"
-					title="Change your data"
+					title="Change your data:"
 					cta="Change"
 					ref="changeCurrentUserDataForm"
 				/>

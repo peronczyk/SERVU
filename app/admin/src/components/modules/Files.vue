@@ -108,7 +108,7 @@
 					:uri="nodeUrl + 'upload/'"
 					:success="onUploadFilesSuccess"
 					ref="uploadFilesForm"
-					title="Upload files"
+					title="Upload files:"
 					cta="Upload"
 				/>
 
@@ -129,7 +129,7 @@
 					:uri="nodeUrl + 'create-dir/'"
 					:success="onCreateDirectorySuccess"
 					ref="createDirectoryForm"
-					title="Create directory"
+					title="Create directory:"
 					cta="Create"
 				/>
 			</div>

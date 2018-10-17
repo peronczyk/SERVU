@@ -9,17 +9,20 @@
 			</div>
 		</header>
 
-		<transition name="fade">
-			<table v-if="isCollectionsFetched" class="u-Table--styled u-Table--withOptions u-Table--withOptions">
-				<thead>
-					<tr>
-						<th style="width: 20px"></th>
-						<th>Name</th>
-						<th class="u-Text--center">Fields</th>
-						<th class="u-Text--center" style="width: 80px">Options</th>
-					</tr>
-				</thead>
-				<tbody>
+
+		<table class="u-Table--styled u-Table--withOptions u-Table--withOptions">
+			<thead>
+				<tr>
+					<th style="width: 30px"></th>
+					<th>Name</th>
+					<th class="u-Text--center">Fields</th>
+					<th class="u-Text--center" style="width: 80px">Options</th>
+				</tr>
+			</thead>
+
+			<transition name="fade">
+
+				<tbody v-if="isCollectionsFetched">
 					<tr v-for="(entry, index) in collectionsList" :key="entry.id">
 						<td><small>{{ index + 1 }}.</small></td>
 						<td>{{ entry.name }}</td>
@@ -32,8 +35,10 @@
 						</td>
 					</tr>
 				</tbody>
-			</table>
-		</transition>
+
+			</transition>
+
+		</table>
 	</div>
 
 </template>
