@@ -1,2 +1,7 @@
+# JS dev directories
 node_modules/
 dist/
+
+# Temp files
+*.tmp
+*.sqlite-journal
