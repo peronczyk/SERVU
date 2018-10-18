@@ -57,7 +57,6 @@ export default {
 				}
 			],
 			loginUri: window.appConfig.apiBaseUrl + 'users/login',
-			loginErrorText: null,
 		}
 	},
 
@@ -69,19 +68,19 @@ export default {
 		}),
 
 		onSuccess(result) {
-			if (result.errors) {
-				this.loginErrorText = result.errors[0].message;
-			}
-			else if (result.status !== true) {
-				this.loginErrorText = 'API refuses to log you in because of unhandled error.';
+			if (result.status === true) {
+				this.handleReceivedMeta(result.meta);
 			}
 			else {
-				this.handleReceivedMeta(result.meta);
+				this.openToast('API refuses to log you in because of unhandled error.');
 			}
 		},
 
 		onError(error) {
-			this.loginErrorText = 'Cannot connect to API';
+			this.openToast((error.data.errors)
+				? error.data.errors[0].message
+				: 'Cannot connect to API'
+			);
 		},
 
 		passwordRecovery() {
