@@ -5,11 +5,12 @@
 	&-enter-active,
 	&-leave-active {
 		transform-origin: top;
-		transition: .6s;
+		transition: .8s;
 	}
 
 	&-enter {
 		opacity: 0;
+		transform: translateY(-10px);
 	}
 
 	&-enter-to {

@@ -41,7 +41,7 @@ class Auth {
 	 * Set auth lvl
 	 */
 
-	public function setLvl($lvl) {
+	public function setLvl(int $lvl) {
 		$_SESSION['servant_auth_lvl'] = $lvl;
 		$this->lvl = $lvl;
 	}
@@ -52,17 +52,18 @@ class Auth {
 	 * @return boolean
 	 */
 
-	public function emailValidate($email) : bool {
+	public function emailValidate(string $email) : bool {
 		return (filter_var($email, FILTER_VALIDATE_EMAIL) !== false) ? true : false;
 	}
 
 
 	/** ----------------------------------------------------------------------------
 	 * Validate password
+	 * @todo
 	 * @return boolean
 	 */
 
-	public function passwordValidate($password) : bool {
+	public function passwordValidate(string $password) : bool {
 		return strlen($password) > 6;
 	}
 
@@ -72,17 +73,17 @@ class Auth {
 	 * @return string
 	 */
 
-	public function passwordEncode($password) : string {
+	public function passwordEncode(string $password) : string {
 		return password_hash($password, PASSWORD_BCRYPT);
 	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * Verify password
+	 * Verify password by comparing it to stored hash
 	 * @return boolean
 	 */
 
-	public function passwordVerify($password, $hash) : bool {
+	public function passwordVerify(string $password, string $hash) : bool {
 		return password_verify($password, $hash);
 	}
 
@@ -91,7 +92,7 @@ class Auth {
 	 * Login
 	 */
 
-	public function login($email, $password) : bool {
+	public function login(string $email, string $password) : bool {
 		if (empty($email)) {
 			throw new Exception("Email not provided");
 		}

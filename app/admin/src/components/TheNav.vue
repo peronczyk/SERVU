@@ -182,7 +182,8 @@ export default {
 
 			.Icon {
 				flex-shrink: 0;
-				margin-right: 10px;
+				margin-right: 12px;
+				color: var(--color-text-base);
 			}
 
 			@include narrower-than(lg) {

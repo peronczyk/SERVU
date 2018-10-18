@@ -13,7 +13,12 @@ class Router {
 	private $requirements = [];
 
 
+	/** ----------------------------------------------------------------------------
+	 * Constructor
+	 */
+
 	public function __construct(DependencyContainer $container) {
+		// Allow each of the routes to access stored dependencies
 		$this->dependencies = $container;
 	}
 
@@ -44,7 +49,7 @@ class Router {
 	 * Add requirement
 	 */
 
-	public function addRequirement($name, $operator, $to) {
+	public function addRequirement(string $name, string $operator, string $to) {
 		array_push($this->requirements, [$name, $operator, $to]);
 	}
 
@@ -53,7 +58,7 @@ class Router {
 	 * Check custom requirements
 	 */
 
-	private function checkCustomRequirements($route) : bool {
+	private function checkCustomRequirements(array $route) : bool {
 		if (!$this->requirements) {
 			return true;
 		}
@@ -132,7 +137,12 @@ class Router {
 		throw new Exception("There is no route that matches path: '{$request_target}' or that meet the requirements.");
 	}
 
-	public function getRoutes() {
+
+	/** ----------------------------------------------------------------------------
+	 * Return stored routes
+	 */
+
+	public function getRoutes() : array {
 		return $this->routes;
 	}
 }

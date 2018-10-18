@@ -87,8 +87,10 @@ class RestExceptionHandler {
 	 */
 
 	private function processFilePath(string $file_path) : string {
+		$file_path = str_replace('\\', '/', $file_path);
+
 		return ($this->debug)
-			? str_replace('\\', '/', $file_path)
+			? $file_path
 			: basename($file_path);
 	}
 }
