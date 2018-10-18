@@ -58,6 +58,12 @@ export default {
 	box-shadow: $shadow-lvl-3;
 	transition: .4s;
 
+	&__content {
+		width: 100%;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+	}
+
 	&__close {
 		position: absolute;
 		top: 10px;

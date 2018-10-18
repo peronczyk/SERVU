@@ -14,7 +14,7 @@ class FilesActions {
 	 * Constructor
 	 */
 
-	public function __construct(DependencyContainer $container) {
+	public function __construct() {
 		$this->uploads_dir = _CONFIG['storage_dir'] . 'uploads/';
 	}
 
@@ -23,7 +23,7 @@ class FilesActions {
 	 * Get files list
 	 */
 
-	public function getFilesList($location = '') {
+	public function getFilesList($location = '') : array {
 
 		// Validate $location
 		if (!empty($location)) {
@@ -77,7 +77,7 @@ class FilesActions {
 	 * Create directory
 	 */
 
-	public function createDir($dir_name, $location) {
+	public function createDir(string $dir_name, string $location) {
 		// Check if new directory name was provided
 		if (empty($dir_name)) {
 			throw new Exception("Name of the directory to be created was not provided.");
@@ -108,11 +108,13 @@ class FilesActions {
 
 		$result = @mkdir($dir_path);
 
-		if ($result) return true;
+		if ($result) {
+			return true;
+		}
 		else {
 			$last_error = error_get_last();
 			if (is_array($last_error)) {
-				throw new Exception("Directory creation failed in {$dir_path}. " . $last_error['message']);
+				throw new Exception("Directory creation failed in {$dir_path}. {$last_error['message']}");
 			}
 			else {
 				throw new Exception("Unknown error occured while trying to create directory {$dir_path}");
@@ -125,7 +127,7 @@ class FilesActions {
 	 * Upload files
 	 */
 
-	public function upload($files, $location) {
+	public function upload(array $files, string $location) : bool {
 		$files_number = count($files['name']);
 		$errors = 0;
 
@@ -143,36 +145,54 @@ class FilesActions {
 
 
 	/** ----------------------------------------------------------------------------
-	 * Delete file
+	 * Delete file or directory and it's contents
 	 */
 
-	public function delete($file_location) {
-		if (empty($file_location)) {
-			throw new Exception('File to be removed was not specified.');
-		}
-
+	public function delete(string $file_location) : bool {
 		$file_path = ROOT_DIR . '/' . $this->uploads_dir . $file_location;
+		$errors = 0;
+		$type = 'file';
 
 		if (!file_exists($file_path)) {
-			throw new Exception("File or directory `{$file_location}` does not exist in specified location of uploads.");
+			throw new Exception("File or directory `{$file_location}` does not exist in specified location of configured uploads directory.");
 		}
 
+
+		/**
+		 * Recursive deletion of directory contents. Code below is taken from:
+		 * @link https://stackoverflow.com/questions/3349753/delete-directory-with-files-in-it
+		 */
 		if (is_dir($file_path)) {
-			$result = @rmdir($file_path);
+			$type = 'directory';
+			$it = new RecursiveDirectoryIterator($file_path, RecursiveDirectoryIterator::SKIP_DOTS);
+			$files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+
+			foreach($files as $file) {
+				if ($file->isDir()) {
+					if (!@rmdir($file->getRealPath())) $errors++;
+				}
+				else {
+					if (!@unlink($file->getRealPath())) $errors++;
+				}
+			}
+
+			if (!@rmdir($file_path)) $errors++;
 		}
 		else {
-			$result = @unlink($file_path);
+			if (!@unlink($file_path)) $errors++;
 		}
 
-		if ($result) return true;
-		else {
+		if ($errors > 0) {
 			$last_error = error_get_last();
 			if (is_array($last_error)) {
-				throw new Exception("Error occured while trying to remove file `{$file_path}`: {$last_error['message']}.");
+				throw new Exception("Error occured while trying to remove {$type} `{$file_path}`: {$last_error['message']}.");
 			}
 			else {
-				throw new Exception("Unknown error occured while trying to remove file `{$file_path}`");
+				throw new Exception("Unknown error occured while trying to remove {$type} `{$file_path}`");
 			}
+			return false;
 		}
+
+		return true;
 	}
 }

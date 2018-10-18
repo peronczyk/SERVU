@@ -55,7 +55,7 @@
 								<td></td>
 								<td>
 									<options-menu :options="[
-										{name: 'Delete directory and its contents', action: () => deleteFile(file)}
+										{name: 'Delete directory', action: () => deleteFile(file)}
 									]" />
 								</td>
 							</tr>
@@ -216,17 +216,22 @@ export default {
 		 */
 		deleteFile(file) {
 			this.openDialog({
-				message: `Do you really want to delete file <strong>${file['full-name']}</strong>?`,
+				message: (file.type === 'directory')
+					? `Do you really want to delete directory <strong>${file['full-name']}</strong> and all it's contents?`
+					: `Do you really want to delete file <strong>${file['full-name']}</strong>?`,
 				callback: () => {
 					let fileLocation = this.actualPath + '/' + file['full-name'];
 					axios.post(this.nodeUrl + 'delete', 'file=' + fileLocation)
 						.then(result => {
-							if (result.data.errors) {
-								this.openToast('File or directory removal failed.<br>Returned error: ' + result.errors[0].message);
-							}
-							else if (result.data.success === true) {
+							if (result.data.success === true) {
 								this.openToast('File or directory deleted permanently.');
 								this.getList();
+							}
+							else if (result.data.errors) {
+								this.openToast('File or directory removal failed.<br>Returned error: ' + result.data.errors[0].message);
+							}
+							else {
+								console.log(result.data);
 							}
 						});
 				}
@@ -244,9 +249,9 @@ export default {
 		/**
 		 * Form Control Success : Create directory
 		 */
-		onCreateDirectorySuccess(result) {
-			if (result.errors) {
-				this.openToast(`Directory creation failed.<br>Returned error: ${result.errors[0].message}`);
+		onCreateDirectorySuccess(resultData) {
+			if (resultData.errors) {
+				this.openToast(`Directory creation failed.<br>Returned error: ${resultData.errors[0].message}`);
 			}
 			else {
 				this.openToast('Directory created');
@@ -258,9 +263,9 @@ export default {
 		/**
 		 * Form Control Success : Upload Files
 		 */
-		onUploadFilesSuccess(result) {
-			if (result.errors) {
-				this.openToast(`Files upload failed.<br>Returned error: ${result.errors[0].message}`);
+		onUploadFilesSuccess(resultData) {
+			if (resultData.errors) {
+				this.openToast(`Files upload failed.<br>Returned error: ${resultData.errors[0].message}`);
 			}
 			else {
 				this.openToast('Files uploaded');
