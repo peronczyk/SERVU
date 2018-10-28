@@ -1,20 +1,22 @@
 <template>
 
-	<div
-		class="c-App"
-		:class="{
-			'is-AppConnected': isConnected,
-			'is-UserLoggedIn': isUserLoggedIn
-		}"
-	>
-		<the-sidebar />
-		<the-main />
-		<the-dialog />
-		<the-toast />
-		<the-modal />
+	<transition name="fade">
+		<div
+			v-if="isConnected"
+			:class="{
+				'is-UserLoggedIn': isUserLoggedIn
+			}"
+			class="c-App"
+		>
+			<the-sidebar />
+			<the-main />
+			<the-dialog />
+			<the-toast />
+			<the-modal />
 
-		<svg-icon-set />
-	</div>
+			<svg-icon-set />
+		</div>
+	</transition>
 
 </template>
 
@@ -76,17 +78,9 @@ export default {
 <style lang="scss">
 
 .c-App {
-	visibility: hidden;
 	position: relative;
 	min-height: 100%;
-	opacity: 0;
 	overflow: hidden;
-	transition: .4s;
-
-	&.is-AppConnected {
-		visibility: visible;
-		opacity: 1;
-	}
 }
 
 #StreamlineIcons {

@@ -34,7 +34,7 @@ $app_modules = $modules->getConfigs();
 	<title>Administration Panel</title>
 
 	<style>
-		body { background-color: #161617; }
+		body { background-color: #1e1e1e; }
 	</style>
 
 	<script>

@@ -43,7 +43,8 @@ export default {
 	width: 50%;
 	height: 100%;
 	background-color: var(--color-bg-light);
-	transition: .4s;
+	transition: .8s;
+	will-change: width;
 
 	.is-UserLoggedIn & {
 		width: var(--sidebar-size);
