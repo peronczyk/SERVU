@@ -17,6 +17,7 @@
 
 		<a
 			@click.prevent="toggleOpen"
+			:name="name"
 			class="c-FormSelect__toggle"
 		>
 			<span v-html="selectedValueLabel"></span>
@@ -60,6 +61,10 @@ export default {
 		options: {
 			type: Array,
 			required: true,
+		},
+
+		name: {
+			type: String,
 		},
 
 		changeCallback: {

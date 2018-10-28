@@ -13,7 +13,7 @@
 				},
 				{
 					type: 'select',
-					name: 'collection',
+					name: 'collection-id',
 					label: 'Collection',
 					options: collectionsOptions,
 					changeCallback: onCollectionChange,

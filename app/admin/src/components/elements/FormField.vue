@@ -15,35 +15,39 @@
 		<textarea
 			v-if="type == 'textarea'"
 			v-model="value"
-			:aria-invalid="!isValid"
 			@focus="onFocus"
 			@blur="onBlur"
+			:name="name"
+			:aria-invalid="!isValid"
 		/>
 
 		<input
 			v-else-if="type == 'text'"
 			v-model="value"
-			:aria-invalid="!isValid"
 			@focus="onFocus"
 			@blur="onBlur"
+			:name="name"
+			:aria-invalid="!isValid"
 			type="text"
 		>
 
 		<input
 			v-else-if="type == 'email'"
 			v-model="value"
-			:aria-invalid="!isValid"
 			@focus="onFocus"
 			@blur="onBlur"
+			:name="name"
+			:aria-invalid="!isValid"
 			type="email"
 		>
 
 		<input
 			v-else-if="type == 'password'"
 			v-model="value"
-			:aria-invalid="!isValid"
 			@focus="onFocus"
 			@blur="onBlur"
+			:name="name"
+			:aria-invalid="!isValid"
 			type="password"
 		>
 	</label>
@@ -61,6 +65,11 @@ export default {
 		type: {
 			type: String,
 			default: 'text',
+		},
+
+		// Required to get form autosuggestions work
+		name: {
+			type: String,
 		},
 
 		required: {

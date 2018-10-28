@@ -60,4 +60,15 @@ final class ContentController {
 
 		$this->_rest_store->set('data', $content_list);
 	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Add content
+	 */
+
+	public function add() {
+		$result = $this->actions->add();
+
+		$this->_rest_store->set('post', $result);
+	}
 }

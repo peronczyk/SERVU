@@ -21,6 +21,7 @@
 				<form-field
 					v-else-if="field.type == 'text' || field.type == 'password' || field.type == 'email'"
 					:type="field.type"
+					:name="field.name"
 					:ref="field.name"
 					:required="field.required"
 				>
@@ -30,6 +31,7 @@
 				<form-select
 					v-else-if="field.type == 'select'"
 					:options="field.options"
+					:name="field.name"
 					:ref="field.name"
 					:required="field.required"
 					:change-callback="field.changeCallback"

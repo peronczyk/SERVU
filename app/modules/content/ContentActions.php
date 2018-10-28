@@ -70,4 +70,22 @@ class ContentActions {
 
 		return $result;
 	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Add new content
+	 *
+	 * @todo fields-values
+	 */
+
+	public function add() {
+		return $this->_db
+			->insert([
+				'name'          => $_POST['content-name'],
+				'parent-id'     => 0,
+				'collection-id' => $_POST['collection-id'],
+				'fields-values' => '@TODO',
+			])
+			->into('content');
+	}
 }
