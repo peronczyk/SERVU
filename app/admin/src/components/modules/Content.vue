@@ -12,7 +12,7 @@
 
 		<ul class="o-Path">
 			<li>Start</li>
-			<li v-for="(index, chunk) in pathChunks" :key="index">{{ chunk }}</li>
+			<li v-for="(chunk, index) in pathChunks" :key="index">{{ chunk }}</li>
 		</ul>
 
 		<table class="u-Table--styled u-Table--withOptions">
@@ -36,8 +36,7 @@
 
 					<tr v-for="(entry, index) in contentList" :key="entry.id">
 						<td><small>{{ index + 1 }}.</small></td>
-						<td v-if="entry.children > 0"><a @click.prevent="fetchList(entry.id)">{{ entry.name }}</a></td>
-						<td v-else>{{ entry.name }}</td>
+						<td><a @click.prevent="fetchList(entry.id)">{{ entry.name }}</a></td>
 						<td class="u-Text--center">{{ entry.children }}</td>
 						<td>
 							<options-menu :options="[
@@ -107,6 +106,14 @@ export default {
 		}),
 
 		fetchList(id) {
+			// Handle breadcrumbs
+			if (!id || id === 0) {
+				this.pathChunks = [];
+			}
+			else {
+				this.pathChunks.push(this.contentList.filter(entry => entry.id === id)[0].name);
+			}
+
 			this.isContentListFetched = false;
 
 			this.previousParentId = id ? this.actualParentId : null;
@@ -151,6 +158,10 @@ export default {
 		if (!this.isCollectionsFetched) {
 			this.fetchCollectionsList();
 		}
+
+		this.$root.$on('content-added', () => {
+			this.fetchList();
+		});
 	},
 }
 

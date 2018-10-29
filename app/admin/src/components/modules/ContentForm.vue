@@ -32,7 +32,7 @@
 <script>
 
 // Dependencies
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 // Components
 import FormControl from '../elements/FormControl.vue';
@@ -68,8 +68,15 @@ export default {
 	},
 
 	methods: {
+		...mapActions({
+			closeModal : 'modal/close',
+			openToast  : 'toast/open',
+		}),
+
 		onAddSuccess() {
-			console.log('Add success');
+			this.closeModal();
+			this.openToast('Content added.');
+			this.$root.$emit('content-added');
 		},
 
 		onCollectionChange(collectionId) {
