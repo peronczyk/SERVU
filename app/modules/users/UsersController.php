@@ -9,6 +9,7 @@ final class UsersController {
 	// Dependencies
 	private $_auth;
 	private $_rest_store;
+	private $_db;
 
 
 	/** ----------------------------------------------------------------------------
@@ -18,6 +19,7 @@ final class UsersController {
 	public function __construct(DependencyContainer $container) {
 		$this->_auth = $container->get('auth');
 		$this->_rest_store = $container->get('rest_store');
+		$this->_db = $container->get('db');
 
 		require 'UsersActions.php';
 		$this->actions = new UsersActions($container);
@@ -98,6 +100,21 @@ final class UsersController {
 	 */
 
 	public function delete($params) {
-		/** @todo */
+		if (!isset($params['id'])) {
+			throw new Exception("Param 'id' is missing.");
+		}
+
+		$users_number = count($this->actions->getList());
+		if ($users_number === 1) {
+			throw new Exception("You can't delete the only account.");
+		}
+
+		$result = $this->_db
+			->delete()
+			->from('users')
+			->where("`id` = '{$params['id']}'")
+			->all();
+
+		$this->_rest_store->set('params', $result);
 	}
 }

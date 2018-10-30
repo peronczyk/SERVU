@@ -62,7 +62,7 @@ final class CollectionsController {
 	 */
 
 	public function delete($params) {
-		if (!$params['id']) {
+		if (!isset($params['id'])) {
 			throw new Exception("Param 'id' is missing.");
 		}
 

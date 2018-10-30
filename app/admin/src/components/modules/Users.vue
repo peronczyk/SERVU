@@ -118,17 +118,18 @@ export default {
 
 	data() {
 		return {
-			nodeUrl: window.appConfig.apiBaseUrl + 'users/',
-			usersList: [],
+			nodeUrl   : window.appConfig.apiBaseUrl + 'users/',
+			usersList : [],
 		}
 	},
 
 	methods: {
 		...mapActions({
-			openToast: 'toast/open',
+			openToast  : 'toast/open',
+			openDialog : 'dialog/open',
 		}),
 
-		getList() {
+		fetchList() {
 			axios.get(this.nodeUrl + 'list')
 				.then(result => {
 					if (result.data.errors) {
@@ -155,18 +156,35 @@ export default {
 		 * @todo
 		 */
 		deleteUser(entry) {
-			this.openToast('Operation not available yet');
+			this.openDialog({
+				message: `Do you really wish to delete user: <strong>${entry.email}</strong>?`,
+				callback: () => {
+					axios.post(this.nodeUrl + 'delete/' + entry.id)
+						.then(result => {
+							if (result.data.errors) {
+								this.openToast(result.data.errors[0].message);
+							}
+							else {
+								this.openToast('User deleted');
+								this.fetchList();
+							}
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			});
 		},
 
 		onUserCreateSuccess(resultData) {
 			this.openToast('User created');
 			this.$refs.createUserForm.resetForm();
-			this.getList();
-		}
+			this.fetchList();
+		},
 	},
 
 	created() {
-		this.getList();
+		this.fetchList();
 	},
 }
 
