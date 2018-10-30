@@ -8,6 +8,7 @@ final class ContentController {
 
 	// Dependencies
 	private $_rest_store;
+	private $_db;
 
 
 	/** ----------------------------------------------------------------------------
@@ -16,6 +17,7 @@ final class ContentController {
 
 	public function __construct(DependencyContainer $container) {
 		$this->_rest_store = $container->get('rest_store');
+		$this->_db = $container->get('db');
 
 		require 'ContentActions.php';
 		$this->actions = new ContentActions($container);
@@ -70,5 +72,25 @@ final class ContentController {
 		$result = $this->actions->add();
 
 		$this->_rest_store->set('post', $result);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Delete collection
+	 * @todo
+	 */
+
+	public function delete($params) {
+		if (!$params['id']) {
+			throw new Exception("Param 'id' is missing.");
+		}
+
+		$result = $this->_db
+			->delete()
+			->from('content')
+			->where("`id` = '{$params['id']}'")
+			->all();
+
+		$this->_rest_store->set('params', $result);
 	}
 }

@@ -13,7 +13,7 @@
 			</div>
 
 			<div class="c-Dialog__buttons">
-				<button class="Btn" @click="confirm">Yes</button>
+				<button class="Btn" @click="confirm" ref="confirmButton">Yes</button>
 				<button class="Btn Btn--hollow" @click="close">No</button>
 			</div>
 		</dialog>
@@ -44,7 +44,7 @@ export default {
 			'close',
 			'confirm',
 		]),
-	}
+	},
 }
 
 </script>

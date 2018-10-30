@@ -16,5 +16,11 @@ return [
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => $helper->PassCallbackMethod('add'),
 		],
+		[
+			'path'     => 'content/delete/:id(/)',
+			'method'   => 'POST',
+			'auth_lvl' => Auth::LVL_ADMIN,
+			'callback' => $helper->PassCallbackMethod('delete'),
+		],
 	],
 ];

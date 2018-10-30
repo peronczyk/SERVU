@@ -102,6 +102,7 @@ export default {
 		...mapActions({
 			openModal            : 'modal/open',
 			openToast            : 'toast/open',
+			openDialog           : 'dialog/open',
 			fetchCollectionsList : 'collections/fetchList',
 		}),
 
@@ -146,9 +147,25 @@ export default {
 			this.openToast('This option is not available yet.');
 		},
 
-		/** @todo */
-		deleteContent() {
-			this.openToast('This option is not available yet.');
+		deleteContent(entry) {
+			this.openDialog({
+				message: `Do you really wish to delete content: <strong>${entry.name}</strong>?`,
+				callback: () => {
+					axios.post(this.nodeUrl + 'delete/' + entry.id)
+						.then(result => {
+							if (result.data.errors) {
+								this.openToast(result.data.errors[0].message);
+							}
+							else {
+								this.openToast('Content deleted');
+								this.fetchList();
+							}
+						})
+						.catch(error => {
+							console.log(error);
+						});
+				}
+			});
 		},
 	},
 
