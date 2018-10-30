@@ -5,7 +5,7 @@
 			<h1>Collections</h1>
 
 			<div class="o-Header__buttons">
-				<a class="Btn" @click.prevent="addCollection()">Add collection</a>
+				<button class="Btn" @click.prevent="addCollection()">Add collection</button>
 			</div>
 		</header>
 

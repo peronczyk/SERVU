@@ -5,7 +5,7 @@
 			<h1>Content</h1>
 
 			<div class="o-Header__buttons">
-				<a class="Btn" @click.prevent="openForm">Add content</a>
+				<button class="Btn" @click.prevent="openForm">Add content</button>
 			</div>
 		</header>
 
@@ -31,12 +31,12 @@
 				<tbody v-if="isContentListFetched">
 
 					<tr>
-						<td colspan="4" v-if="previousParentId !== null"><a @click.prevent="fetchList(previousParentId)">Go up</a></td>
+						<td colspan="4" v-if="previousParentId !== null"><a @click.prevent="fetchList(previousParentId)"><strong>Go up</strong></a></td>
 					</tr>
 
 					<tr v-for="(entry, index) in contentList" :key="entry.id">
 						<td><small>{{ index + 1 }}.</small></td>
-						<td><a @click.prevent="fetchList(entry.id)">{{ entry.name }}</a></td>
+						<td><a @click.prevent="fetchList(entry.id)" tabindex="0">{{ entry.name }}</a></td>
 						<td class="u-Text--center">{{ entry.children }}</td>
 						<td>
 							<options-menu :options="[

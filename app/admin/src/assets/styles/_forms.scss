@@ -71,6 +71,10 @@ button,
 		transform: scale(.9);
 	}
 
+	&:focus {
+		outline: 6px solid rgba($color-base-1, .2);
+	}
+
 
 	&--primary {
 		height: --input-primary-height;

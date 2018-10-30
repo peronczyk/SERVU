@@ -12,7 +12,10 @@
 			</div>
 
 			<div class="Col-6 u-Text--right">
-				<a class="Btn Btn--hollow" @click.prevent="addField">Add field</a>
+				<button
+					@click.prevent="addField"
+					class="Btn Btn--hollow"
+				>Add field</button>
 			</div>
 		</div>
 
@@ -22,7 +25,7 @@
 					List of fields
 				-->
 				<tr v-for="(field, fieldNumber) in fieldsList" :key="fieldNumber">
-					<td class="u-Text--center">{{ fieldNumber + 1 }}
+					<td class="u-Text--center"><small>{{ fieldNumber + 1 }}</small></td>
 					<td>
 						<form-select
 							:options="fieldTypesOptions"
@@ -34,10 +37,20 @@
 						</form-select>
 					</td>
 					<td>
-						<form-field ref="name" required>Field name</form-field>
+						<form-field
+							:name="'field-name-' + fieldNumber"
+							ref="name"
+							required
+						>Field name</form-field>
 					</td>
 					<td>
-						<a @click.prevent="removeField(fieldNumber)" class="c-FormList__table__remove"><icon size="16" glyph="times" /></a>
+						<a
+							@click.prevent="removeField(fieldNumber)"
+							class="c-FormList__table__remove"
+							tabindex="0"
+						>
+							<icon size="16" glyph="times" />
+						</a>
 					</td>
 				</tr>
 

@@ -33,6 +33,8 @@
 					<li
 						v-for="(option, index) in options"
 						@click.prevent="selectOption(option, index)"
+						@keydown.space.prevent="selectOption(option, index)"
+						@keydown.enter.prevent="selectOption(option, index)"
 						:class="{'is-Selected': isSelected(option.value)}"
 						:key="index"
 						tabindex="0"
@@ -74,10 +76,11 @@ export default {
 
 	data() {
 		return {
-			value: INITIAL_VALUE,
-			isOpen: false,
-			isDirty: false,
-			isValid: true,
+			value               : INITIAL_VALUE,
+			isOpen              : false,
+			isDirty             : false,
+			isValid             : true,
+			focusedOptionNumber : -1,
 		}
 	},
 
@@ -116,6 +119,7 @@ export default {
 
 		close() {
 			this.isOpen = false;
+			this.focusedOptionNumber = -1;
 		},
 
 		toggleOpen() {
@@ -130,6 +134,8 @@ export default {
 			if (this.changeCallback) {
 				this.changeCallback(this.value);
 			}
+
+			this.focusedOptionNumber = optionIndex;
 		},
 
 		isSelected(optionValue) {
@@ -137,7 +143,6 @@ export default {
 		},
 
 		handleKeypress(event) {
-			console.log(event);
 			switch(event.code) {
 				case 'Space':
 					event.preventDefault();
@@ -173,7 +178,19 @@ export default {
 		},
 
 		handleArrowKey(dir) {
+			// Choose index of option to set focus
+			if (this.focusedOptionNumber < 1 && dir < 0) {
+				this.focusedOptionNumber = this.options.length - 1;
+			}
+			else if (this.focusedOptionNumber == this.options.length - 1 && dir > 0) {
+				this.focusedOptionNumber = 0;
+			}
+			else {
+				this.focusedOptionNumber += dir;
+			}
 
+			// Set focus to option
+			this.$refs.option[this.focusedOptionNumber].focus();
 		},
 	}
 }
@@ -261,7 +278,8 @@ export default {
 				background-color: rgba($color-white, .03);
 			}
 
-			&:hover {
+			&:hover,
+			&:focus {
 				color: var(--color-text-base);
 				background-color: rgba($color-white, .05);
 			}
