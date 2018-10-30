@@ -43,8 +43,8 @@ export default {
 	width: 50%;
 	height: 100%;
 	background-color: var(--color-bg-light);
-	transition: .8s;
-	will-change: width;
+	transition: width .8s, filter .3s;
+	will-change: width, filter;
 
 	.is-UserLoggedIn & {
 		width: var(--sidebar-size);
@@ -53,6 +53,10 @@ export default {
 			width: 100%;
 			height: var(--toolbar-size);
 		}
+	}
+
+	.is-ModalOpen & {
+		filter: blur(4px);
 	}
 }
 

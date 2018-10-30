@@ -51,6 +51,10 @@ export default {
 
 @import '../assets/styles/definitions';
 
+.is-ModalOpen {
+	overflow: hidden;
+}
+
 .c-Modal {
 	display: block;
 	position: fixed;
@@ -81,7 +85,7 @@ export default {
 		position: relative;
 		z-index: +1;
 		min-height: 40px;
-		max-width: 800px;
+		max-width: 1000px;
 		background-color: var(--color-bg-base);
 	}
 

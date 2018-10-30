@@ -47,9 +47,15 @@ export default {
 	position: relative;
 	margin-left: 50%;
 	height: 100%;
+	transition: filter .3s;
+	will-change: filter;
 
 	.is-UserLoggedIn & {
 		margin-left: var(--sidebar-size);
+	}
+
+	.is-ModalOpen & {
+		filter: blur(4px);
 	}
 
 	&__view {

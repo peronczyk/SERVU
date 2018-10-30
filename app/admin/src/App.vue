@@ -4,7 +4,7 @@
 		<div
 			v-if="isConnected"
 			:class="{
-				'is-UserLoggedIn': isUserLoggedIn
+				'is-UserLoggedIn': isUserLoggedIn,
 			}"
 			class="c-App"
 		>
@@ -44,8 +44,8 @@ export default {
 
 	computed: {
 		...mapGetters({
-			isConnected: 'base/isConnected',
-			isUserLoggedIn: 'user/isLoggedIn',
+			isConnected    : 'base/isConnected',
+			isUserLoggedIn : 'user/isLoggedIn',
 		}),
 	},
 
