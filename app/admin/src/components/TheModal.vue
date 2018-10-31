@@ -78,6 +78,7 @@ export default {
 		margin-left: -0.5em;
 	}
 
+
 	&__window {
 		display: inline-block;
 		vertical-align: middle;
@@ -87,13 +88,16 @@ export default {
 		min-height: 40px;
 		max-width: 1000px;
 		background-color: var(--color-bg-base);
+		box-shadow: 0 20px 160px 0 rgba($color-base-lines, .1);
 	}
+
 
 	&__close {
 		position: absolute;
 		top: 10px;
 		right: 10px;
 	}
+
 
 	&__content {
 		min-height: 100px;
@@ -109,7 +113,7 @@ export default {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: rgba($color-base-1, .8);
+		background-color: rgba($color-base-lines, .05);
 	}
 }
 
