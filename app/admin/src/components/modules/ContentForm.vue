@@ -18,6 +18,11 @@
 					options: collectionsOptions,
 					changeCallback: onCollectionChange,
 				},
+				{
+					type: 'hidden',
+					name: 'parent-id',
+					value: contentCurrentParentId,
+				},
 				...collectionFields,
 			]"
 			:uri="apiUri"
@@ -54,7 +59,8 @@ export default {
 
 	computed: {
 		...mapGetters({
-			collectionsList: 'collections/getList',
+			contentCurrentParentId : 'content/getCurrentParentId',
+			collectionsList        : 'collections/getList',
 		}),
 
 		collectionsOptions() {

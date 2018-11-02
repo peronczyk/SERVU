@@ -82,7 +82,7 @@ class ContentActions {
 		return $this->_db
 			->insert([
 				'name'          => $_POST['content-name'],
-				'parent-id'     => 0,
+				'parent-id'     => $_POST['parent-id'] ?? 0,
 				'collection-id' => $_POST['collection-id'],
 				'fields-values' => '@TODO',
 			])

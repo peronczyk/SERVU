@@ -10,10 +10,9 @@
 		</header>
 
 
-		<ul class="o-Path">
-			<li>Start</li>
-			<li v-for="(chunk, index) in pathChunks" :key="index">{{ chunk }}</li>
-		</ul>
+		<breadcrumbs
+			:path="currentPath"
+		/>
 
 		<table class="u-Table--styled u-Table--withOptions">
 
@@ -31,16 +30,24 @@
 				<tbody v-if="isContentListFetched">
 
 					<tr>
-						<td colspan="4" v-if="previousParentId !== null"><a @click.prevent="fetchList(previousParentId)"><strong>Go up</strong></a></td>
+						<td colspan="4" v-if="currentPath.length > 0">
+							<a @click.prevent="navigateUp"><strong>Go up</strong></a>
+						</td>
 					</tr>
 
 					<tr v-for="(entry, index) in contentList" :key="entry.id">
 						<td><small>{{ index + 1 }}.</small></td>
-						<td><a @click.prevent="fetchList(entry.id)" tabindex="0">{{ entry.name }}</a></td>
+						<td>
+							<a
+								@click.prevent="navigateDown(entry.id, entry.name)"
+								:title="'ID: ' + entry.id"
+								tabindex="0"
+							>{{ entry.name }}</a>
+						</td>
 						<td class="u-Text--center">{{ entry.children }}</td>
 						<td>
 							<options-menu :options="[
-								{name: 'Edit', action: () => editContent(entry)},
+								{name: 'Edit',   action: () => editContent(entry)},
 								{name: 'Delete', action: () => deleteContent(entry)},
 							]" />
 						</td>
@@ -61,15 +68,16 @@
 
 // Dependencies
 import axios from 'axios';
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 // Components
+import Breadcrumbs from '../elements/Breadcrumbs.vue';
 import ContentForm from './ContentForm.vue';
 import OptionsMenu from '../elements/OptionsMenu.vue';
 
 export default {
 	components: {
-		OptionsMenu
+		Breadcrumbs, OptionsMenu
 	},
 
 	data() {
@@ -77,28 +85,26 @@ export default {
 			nodeUrl: window.appConfig.apiBaseUrl + 'content/',
 			isContentListFetched: false,
 
-			// Id of parent element of actually displayed content list
-			// 0 means it is root of the tree
-			actualParentId: 0,
-
-			// Stores previous parentId to allow of going back (lower) in the tree
-			previousParentId: null,
-
-			// Stores received content list for actualParentId
+			// Stores received content list for currentParentId
 			contentList: [],
 
 			// Breadcrumb address elements
-			pathChunks: [],
+			currentPath: [],
 		}
 	},
 
 	computed: {
 		...mapGetters({
+			currentParentId      : 'content/getCurrentParentId',
 			isCollectionsFetched : 'collections/isFetched',
 		}),
 	},
 
 	methods: {
+		...mapMutations({
+			setCurrentParentId   : 'content/setCurrentParentId',
+		}),
+
 		...mapActions({
 			openModal            : 'modal/open',
 			openToast            : 'toast/open',
@@ -106,21 +112,10 @@ export default {
 			fetchCollectionsList : 'collections/fetchList',
 		}),
 
-		fetchList(id) {
-			// Handle breadcrumbs
-			if (!id || id === 0) {
-				this.pathChunks = [];
-			}
-			else {
-				this.pathChunks.push(this.contentList.filter(entry => entry.id === id)[0].name);
-			}
-
+		fetchList(parentId) {
 			this.isContentListFetched = false;
 
-			this.previousParentId = id ? this.actualParentId : null;
-			this.actualParentId   = id ? id : 0;
-
-			axios.get(this.nodeUrl + 'list?parent-id=' + this.actualParentId)
+			return axios.get(this.nodeUrl + 'list?parent-id=' + (parentId || 0))
 				.then(result => {
 					this.isContentListFetched = true;
 
@@ -130,12 +125,40 @@ export default {
 					}
 					else {
 						this.contentList = result.data.data;
+						this.setCurrentParentId(parentId || 0);
 					}
 				})
 				.catch(error => {
 					this.isContentListFetched = true;
 					console.log(error);
 				});
+		},
+
+		/**
+		 * Navigate back through the current content structure
+		 */
+		navigateUp() {
+			let pathLength = this.currentPath.length;
+
+			if (pathLength > 1) {
+				this.fetchList(this.currentPath[pathLength - 2].id);
+				this.currentPath.splice(-1, 1);
+			}
+			else {
+				this.fetchList(0);
+				this.currentPath = [];
+			}
+		},
+
+		/**
+		 * Navigate deeper through the content structure
+		 */
+		navigateDown(parentId, parentName) {
+			this.fetchList(parentId);
+			this.currentPath.push({
+				id: parentId,
+				name: parentName
+			});
 		},
 
 		openForm() {
