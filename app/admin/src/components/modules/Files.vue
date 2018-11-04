@@ -8,12 +8,10 @@
 		<div class="Grid Grid--gutter">
 
 			<div class="Col-8 Col-12@LG">
-				<ul class="o-Path">
-					<li>Uploads</li>
-					<li v-for="(chunk, index) in pathChunks" :key="index">
-						{{ chunk }}
-					</li>
-				</ul>
+
+				<breadcrumbs
+					:path="currentPath"
+				/>
 
 				<table class="u-Table--styled u-Table--withOptions">
 
@@ -29,7 +27,7 @@
 
 						<tbody v-if="isFilesFetched">
 
-							<tr v-if="pathChunks.length > 0">
+							<tr v-if="currentPath.length > 0">
 								<td colspan="4">
 									<a @click.prevent="getList('../')">
 										<icon size="24" glyph="back" />
@@ -102,7 +100,7 @@
 						{
 							type: 'hidden',
 							name: 'location',
-							value: actualPath
+							value: currentPathString
 						}
 					]"
 					:uri="nodeUrl + 'upload/'"
@@ -117,7 +115,7 @@
 						{
 							type: 'hidden',
 							name: 'location',
-							value: actualPath,
+							value: currentPathString,
 						},
 						{
 							type: 'text',
@@ -146,27 +144,28 @@ import axios from 'axios';
 import { mapActions } from 'vuex';
 
 // Components
+import Breadcrumbs from '../elements/Breadcrumbs.vue';
 import FormControl from '../elements/FormControl.vue';
 import OptionsMenu from '../elements/OptionsMenu.vue';
 
 export default {
 	components: {
-		FormControl, OptionsMenu,
+		Breadcrumbs, FormControl, OptionsMenu,
 	},
 
 	data() {
 		return {
 			nodeUrl: window.appConfig.apiBaseUrl + 'files/',
 			isFilesFetched: false,
-			pathChunks: [],
+			currentPath: [],
 			filesList: [],
 		}
 	},
 
 	computed: {
-		actualPath() {
-			return (this.pathChunks.length)
-				? this.pathChunks.join('/')
+		currentPathString() {
+			return (this.currentPath.length)
+				? this.currentPath.map(chunk => chunk.name).join('/')
 				: '';
 		},
 	},
@@ -187,17 +186,19 @@ export default {
 
 			if (parent) {
 				if (parent == '../') {
-					if (this.pathChunks.length > 0) {
-						this.pathChunks.pop();
+					if (this.currentPath.length > 0) {
+						this.currentPath.pop();
 					}
 				}
 				else {
-					this.pathChunks.push(parent);
+					this.currentPath.push({
+						name: parent
+					});
 				}
 			}
 
-			if (this.pathChunks.length > 0) {
-				action += '?location=' + this.actualPath;
+			if (this.currentPath.length > 0) {
+				action += '?location=' + this.currentPathString;
 			}
 
 			axios.get(this.nodeUrl + action)
@@ -220,7 +221,7 @@ export default {
 					? `Do you really want to delete directory <strong>${file['full-name']}</strong> and all it's contents?`
 					: `Do you really want to delete file <strong>${file['full-name']}</strong>?`,
 				callback: () => {
-					let fileLocation = this.actualPath + '/' + file['full-name'];
+					let fileLocation = this.currentPathString + '/' + file['full-name'];
 					axios.post(this.nodeUrl + 'delete', 'file=' + fileLocation)
 						.then(result => {
 							if (result.data.success === true) {

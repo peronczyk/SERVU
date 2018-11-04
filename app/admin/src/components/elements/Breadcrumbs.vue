@@ -2,8 +2,13 @@
 
 	<ul class="c-Breadcrumbs">
 		<li>Start</li>
-		<li v-for="(chunk, index) in path" :key="index" :title="'ID: ' + chunk.id">
-			{{ chunk.name }}
+		<li
+			v-for="(chunk, index) in path"
+			:key="(chunk.id) ? chunk.id : index"
+			:title="(chunk.id) ? 'ID: ' + chunk.id : false"
+		>
+			<a v-if="clickAction" @click.prevent="clickAction(chunk.id)">{{ chunk.name }}</a>
+			<span v-else>{{ chunk.name }}</span>
 		</li>
 	</ul>
 
@@ -15,6 +20,7 @@
 export default {
 	props: {
 		path: Array,
+		clickAction: Function,
 	},
 }
 
@@ -27,6 +33,8 @@ export default {
 
 .c-Breadcrumbs {
 	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
 	list-style-type: none;
 	margin-bottom: 10px;
 	font-size: 16px;
