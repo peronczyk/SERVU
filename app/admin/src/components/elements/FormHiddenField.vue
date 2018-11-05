@@ -8,11 +8,9 @@
 <script>
 
 export default {
-	props: {
-		value: {
-			type: String,
-		}
-	},
+	props: [
+		'value'
+	],
 
 	methods: {
 		getValue() {

@@ -10,6 +10,9 @@ export default {
 		},
 	],
 
+	// Id of content to be edited
+	editId: null,
+
 	// Id of parent element of actually displayed content list
 	// 0 means it is root of the tree
 	currentParentId: 0,

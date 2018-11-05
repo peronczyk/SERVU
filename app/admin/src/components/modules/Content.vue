@@ -5,7 +5,7 @@
 			<h1>Content</h1>
 
 			<div class="o-Header__buttons">
-				<button class="Btn" @click.prevent="openForm">Add content</button>
+				<button class="Btn" @click.prevent="addContent">Add content</button>
 			</div>
 		</header>
 
@@ -20,6 +20,7 @@
 				<tr>
 					<th style="width: 30px;"></th>
 					<th>Name</th>
+					<th>Collection</th>
 					<th class="u-Text--center">Children</th>
 					<th>Options</th>
 				</tr>
@@ -44,6 +45,7 @@
 								tabindex="0"
 							>{{ entry.name }}</a>
 						</td>
+						<td>{{ getCollectionName(entry['collection-id']) }}</td>
 						<td class="u-Text--center">{{ entry.children }}</td>
 						<td>
 							<options-menu :options="[
@@ -97,11 +99,13 @@ export default {
 		...mapGetters({
 			currentParentId      : 'content/getCurrentParentId',
 			isCollectionsFetched : 'collections/isFetched',
+			collectionList       : 'collections/getList',
 		}),
 	},
 
 	methods: {
 		...mapMutations({
+			setEditId            : 'content/setEditId',
 			setCurrentParentId   : 'content/setCurrentParentId',
 		}),
 
@@ -161,13 +165,14 @@ export default {
 			});
 		},
 
-		openForm() {
+		addContent() {
+			this.setEditId(null);
 			this.openModal(ContentForm);
 		},
 
-		/** @todo */
-		editContent() {
-			this.openToast('This option is not available yet.');
+		editContent(entry) {
+			this.setEditId(entry.id);
+			this.openModal(ContentForm);
 		},
 
 		deleteContent(entry) {
@@ -189,6 +194,13 @@ export default {
 						});
 				}
 			});
+		},
+
+		getCollectionName(collectionId) {
+			let collectionFound = this.collectionList.filter(collection => (collection.id === collectionId));
+			return (collectionFound.length)
+				? collectionFound[0].name
+				: '';
 		},
 	},
 

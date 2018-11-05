@@ -87,6 +87,7 @@ export default {
 		z-index: +1;
 		min-height: 40px;
 		max-width: 1000px;
+		border-top: 2px solid var(--color-brand);
 		background-color: var(--color-bg-base);
 		box-shadow: 0 20px 160px 0 rgba($color-base-lines, .1);
 	}

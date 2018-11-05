@@ -59,6 +59,7 @@ export default {
 
 	computed: {
 		...mapGetters({
+			contentEditId          : 'content/getEditId',
 			contentCurrentParentId : 'content/getCurrentParentId',
 			collectionsList        : 'collections/getList',
 		}),
@@ -108,6 +109,12 @@ export default {
 			}
 
 			this.collectionFields = collectionFields;
+		}
+	},
+
+	created() {
+		if (this.contentEditId !== null) {
+
 		}
 	},
 }

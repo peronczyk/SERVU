@@ -173,7 +173,7 @@ export default {
 			for (let refName in this.$refs) {
 				let ref = this.$refs[refName][0];
 
-				(typeof ref.reset === 'function')
+				(ref && typeof ref.reset === 'function')
 					? ref.reset()
 					: console.warn('Form element' + refName + ' does not have "reset" method');
 			}

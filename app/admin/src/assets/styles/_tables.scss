@@ -10,11 +10,11 @@
 			padding-right: var(--table-cell-padding);
 
 			&:first-child {
-				padding-left: 0;
+				padding-left: 5px;
 			}
 
 			&:last-child {
-				padding-right: 0;
+				padding-right: 5px;
 			}
 		}
 
@@ -34,6 +34,14 @@
 		}
 
 		tbody {
+			tr {
+				transition: .2s;
+
+				&:hover {
+					background-color: rgba($color-white, .02);
+				}
+			}
+
 			td {
 				padding-top: var(--table-cell-padding);
 				padding-bottom: var(--table-cell-padding);

@@ -60,7 +60,7 @@ class FilesActions {
 					$extension = pathinfo($file_name, PATHINFO_EXTENSION);
 
 					$arr['name']      = str_replace('.' . $extension, '', $file_name);
-					$arr['extension'] = $extension;
+					$arr['extension'] = strtolower($extension);
 					$arr['size']      = filesize($file_path);
 					$arr['path']      = $file_path;
 					$arr['full-path'] = ROOT_URL . $file_path;
