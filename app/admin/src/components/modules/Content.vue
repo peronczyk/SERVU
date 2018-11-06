@@ -59,6 +59,17 @@
 
 			</transition>
 
+			<tbody v-if="isContentListFetched && !contentList.length">
+				<tr>
+					<td colspan="5">
+						<p class="u-Text--center">
+							There is no content in the database.<br>
+							<small>Please use button at the top right corner to add your first content.</small>
+						</p>
+					</td>
+				</tr>
+			</tbody>
+
 		</table>
 
 	</div>

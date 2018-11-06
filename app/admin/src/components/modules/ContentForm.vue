@@ -4,6 +4,7 @@
 		<h1>Add new content</h1>
 
 		<form-control
+			v-if="collectionsList.length"
 			:fields="[
 				{
 					type: 'text',
@@ -29,6 +30,8 @@
 			:success="onAddSuccess"
 			cta="Add content"
 		/>
+
+		<p class="u-Info" v-else>There is no collections in the database. Please add at least one.</p>
 	</div>
 
 </template>

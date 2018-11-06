@@ -29,7 +29,7 @@
 						<td class="u-Text--center">{{ entry.fields.length }}</td>
 						<td class="u-Text--center">
 							<options-menu :options="[
-								{name: 'Edit', action: () => editCollection(entry)},
+								{name: 'Edit',   action: () => editCollection(entry)},
 								{name: 'Delete', action: () => deleteCollection(entry)},
 							]" />
 						</td>
@@ -37,6 +37,17 @@
 				</tbody>
 
 			</transition>
+
+			<tbody v-if="isCollectionsFetched && !collectionsList.length">
+				<tr>
+					<td colspan="5">
+						<p class="u-Text--center">
+							There is no collections in the database.<br>
+							<small>Please use button at the top right corner to add your first collection.</small>
+						</p>
+					</td>
+				</tr>
+			</tbody>
 
 		</table>
 	</div>
