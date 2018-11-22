@@ -31,7 +31,7 @@
 				<tbody v-if="isContentListFetched">
 
 					<tr>
-						<td colspan="4" v-if="currentPath.length > 0">
+						<td colspan="5" v-if="currentPath.length > 0">
 							<a @click.prevent="navigateUp"><strong>Go up</strong></a>
 						</td>
 					</tr>
@@ -63,7 +63,7 @@
 				<tr>
 					<td colspan="5">
 						<p class="u-Text--center">
-							There is no content in the database.<br>
+							There is no content here.<br>
 							<small>Please use button at the top right corner to add your first content.</small>
 						</p>
 					</td>

@@ -3,7 +3,7 @@
 **[Headless CMS](https://en.wikipedia.org/wiki/Headless_CMS) for your [JAMstack](https://jamstack.org/) website**
 
 ## Description
-The simpliest and easy to use headless CMS that you can imagine. Its ligghtning fast, weights only 200KB, does not require any vendor libraries and scripts - just core functionalities that allows you to publish your API online.
+The simpliest and easy to use headless CMS that you can imagine. Its lightning fast, weights only 200KB, does not require any vendor libraries and scripts - just core functionalities that allows you to publish your API online.
 
 ## Installation
 Just upload Servant files into your host, access administration panel and enter default admin credentials: `admin@servant.onl` / `servant`. Voila.

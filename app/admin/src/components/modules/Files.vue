@@ -89,8 +89,8 @@
 						<tr>
 							<td colspan="5">
 								<p class="u-Text--center">
-									There is no files uploaded.<br>
-									<small>Please use one of the forms on the right to uplload your first file or create new directory.</small>
+									There is no files here.<br>
+									<small>Please use one of the forms on the right to upload files or create new directory.</small>
 								</p>
 							</td>
 						</tr>
