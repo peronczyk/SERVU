@@ -84,7 +84,7 @@ export default {
 		},
 
 		passwordRecovery() {
-			this.openModal(PasswordRecovery);
+			this.openModal({ content: PasswordRecovery });
 		},
 	},
 }

@@ -28,10 +28,6 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-	props: {
-
-	},
-
 	computed: {
 		...mapGetters('dialog', [
 			'isOpen',

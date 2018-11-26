@@ -93,12 +93,14 @@ export default {
 		}),
 
 		addCollection() {
-			this.openModal(CollectionsForm);
+			this.openModal({ content: CollectionsForm });
 		},
 
-		/** @todo */
-		editCollection() {
-			this.openToast('This option is not available yet.');
+		editCollection(entry) {
+			this.openModal({
+				content : CollectionsForm,
+				props   : { id: Number(entry.id) }
+			});
 		},
 
 		deleteCollection(entry) {

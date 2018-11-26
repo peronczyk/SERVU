@@ -116,7 +116,6 @@ export default {
 
 	methods: {
 		...mapMutations({
-			setEditId            : 'content/setEditId',
 			setCurrentParentId   : 'content/setCurrentParentId',
 		}),
 
@@ -177,13 +176,14 @@ export default {
 		},
 
 		addContent() {
-			this.setEditId(null);
-			this.openModal(ContentForm);
+			this.openModal({ content: ContentForm });
 		},
 
 		editContent(entry) {
-			this.setEditId(entry.id);
-			this.openModal(ContentForm);
+			this.openModal({
+				content : ContentForm,
+				props   : { id: Number(entry.id) }
+			});
 		},
 
 		deleteContent(entry) {

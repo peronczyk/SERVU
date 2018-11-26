@@ -22,7 +22,7 @@
 				{
 					type: 'hidden',
 					name: 'parent-id',
-					value: contentCurrentParentId,
+					value: parentId,
 				},
 				...collectionFields,
 			]"
@@ -51,6 +51,11 @@ export default {
 		FormControl
 	},
 
+	props: {
+		id: Number,
+		parentId: Number,
+	},
+
 	data() {
 		return {
 			baseApiUri       : window.appConfig.apiBaseUrl + 'content',
@@ -65,15 +70,13 @@ export default {
 
 	computed: {
 		...mapGetters({
-			contentEditId          : 'content/getEditId',
-			contentCurrentParentId : 'content/getCurrentParentId',
-			collectionsList        : 'collections/getList',
+			collectionsList: 'collections/getList',
 		}),
 
 		apiUri() {
-			return this.baseApiUri + (this.contentEditId)
+			return this.baseApiUri + ((this.id)
 				? this.modifyApiUri
-				: this.addApiUri;
+				: this.addApiUri);
 		},
 
 		collectionsOptions() {
@@ -123,19 +126,11 @@ export default {
 			this.collectionFields = collectionFields;
 		},
 
-		fetchValues(contentId) {
-			axios.get(this.nodeUrl + 'list?parent-id=' + (parentId || 0))
+		fetchFormValues(contentId) {
+			axios.get(this.baseApiUri + '/list?parent-id=' + (contentId || 0))
 				.then(result => {
-					this.isContentListFetched = true;
+					console.log(result);
 
-					if (result.data.errors) {
-						this.openToast(result.data.errors[0].message);
-						console.log(result.data.errors);
-					}
-					else {
-						this.contentList = result.data.data;
-						this.setCurrentParentId(parentId || 0);
-					}
 				})
 				.catch(error => {
 					this.isContentListFetched = true;
@@ -145,8 +140,10 @@ export default {
 	},
 
 	created() {
-		if (this.contentEditId !== null) {
-			this.fetchValues(this.contentEditId);
+		console.log(this.id);
+
+		if (this.id !== null) {
+			this.fetchFormValues(this.id);
 		}
 	},
 }

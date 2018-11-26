@@ -40,6 +40,10 @@ export default {
 		FormControl
 	},
 
+	props: {
+		id: Number,
+	},
+
 	data() {
 		return {
 			apiUri: window.appConfig.apiBaseUrl + 'collections/add/',
@@ -64,6 +68,10 @@ export default {
 			this.openToast('Collection added.');
 			this.fetchCollections();
 		},
+	},
+
+	created() {
+		console.log(this.id);
 	},
 }
 

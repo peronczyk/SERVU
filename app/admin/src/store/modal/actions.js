@@ -1,7 +1,9 @@
 export default {
-	open({ state }, content) {
-		state.isOpen = true;
-		state.content = content;
+	open({ state }, modalData) {
+		state.isOpen  = true;
+		state.content = modalData.content;
+		state.props   = modalData.props;
+
 		document.documentElement.classList.add('is-ModalOpen');
 	},
 

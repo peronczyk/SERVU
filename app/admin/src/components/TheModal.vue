@@ -12,7 +12,10 @@
 
 				<div class="c-Modal__content">
 					<keep-alive>
-						<component :is="getContent" />
+						<component
+							:is="getContent"
+							v-bind="getProps"
+						/>
 					</keep-alive>
 				</div>
 			</div>
@@ -34,6 +37,7 @@ export default {
 		...mapGetters('modal', [
 			'isOpen',
 			'getContent',
+			'getProps',
 		]),
 	},
 
