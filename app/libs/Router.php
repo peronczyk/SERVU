@@ -3,10 +3,14 @@
 declare(strict_types=1);
 
 class Router {
+	// COnstants
+	const GET = 'GET';
+	const POST = 'POST';
+
 	private $routes = [];
 	private $dependencies;
 	private $options = [
-		'default_method' => 'GET',
+		'default_method' => self::GET,
 	];
 
 	// Custom requirements that should be met by route

@@ -8,7 +8,7 @@ return [
 	'routes' => [
 		[
 			'path'     => 'files/list(/)',
-			'callback' => $helper->PassCallbackMethod('getList'),
+			'callback' => $helper->PassCallbackMethod('list'),
 		],
 		[
 			'method'   => 'POST',

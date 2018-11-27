@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 final class CollectionsController {
+	const DB_TABLE_NAME = 'collections';
 
 	private $actions;
 
@@ -28,15 +29,45 @@ final class CollectionsController {
 	 * List
 	 */
 
-	public function getList() {
-		$collections_list = $this->_db->select()->from('collections')->all();
+	public function list() {
+		$collections_list = $this->_db
+			->select()
+			->from(self::DB_TABLE_NAME)
+			->all();
 
-		// Decode fields JSON string in all collections
+		// Decode field's JSON string in all collections
 		foreach($collections_list as $key => $val) {
 			$collections_list[$key]['fields'] = json_decode($val['fields']);
 		}
 
 		$this->_rest_store->set('data', $collections_list);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Get one collection's data
+	 */
+
+	public function get($params) {
+		if (!isset($params['id'])) {
+			throw new Exception("Param 'id' is missing.");
+		}
+
+		$result = $this->_db
+			->select()
+			->from(self::DB_TABLE_NAME)
+			->where("`id` = '{$params['id']}'")
+			->all();
+
+		if (is_array($result) && count($result) > 0) {
+			$result = $result[0];
+			$result['fields'] = json_decode($result['fields']);
+		}
+		else {
+			$result = null;
+		}
+
+		$this->_rest_store->set('data', $result);
 	}
 
 
@@ -50,7 +81,7 @@ final class CollectionsController {
 				'name'   => $_POST['collection-name'],
 				'fields' => json_encode($_POST['field-list']),
 			])
-			->into('collections');
+			->into(self::DB_TABLE_NAME);
 
 		$this->_rest_store->set('post', $result);
 	}
@@ -68,7 +99,7 @@ final class CollectionsController {
 
 		$result = $this->_db
 			->delete()
-			->from('collections')
+			->from(self::DB_TABLE_NAME)
 			->where("`id` = '{$params['id']}'")
 			->all();
 

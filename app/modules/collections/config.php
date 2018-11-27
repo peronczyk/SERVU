@@ -8,19 +8,23 @@ return [
 	'routes' => [
 		[
 			'path'     => 'collections/list(/)',
-			'callback' => $helper->PassCallbackMethod('getList'),
+			'callback' => $helper->PassCallbackMethod('list'),
 		],
 		[
 			'path'     => 'collections/add(/)',
-			'method'   => 'POST',
+			'method'   => Router::POST,
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => $helper->PassCallbackMethod('add'),
 		],
 		[
 			'path'     => 'collections/delete/:id(/)',
-			'method'   => 'POST',
+			'method'   => Router::POST,
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => $helper->PassCallbackMethod('delete'),
+		],
+		[
+			'path'     => 'collections/get/:id(/)',
+			'callback' => $helper->PassCallbackMethod('get'),
 		],
 	],
 ];

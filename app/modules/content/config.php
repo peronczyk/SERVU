@@ -8,17 +8,17 @@ return [
 	'routes' => [
 		[
 			'path'     => 'content/list(/)',
-			'callback' => $helper->PassCallbackMethod('getList'),
+			'callback' => $helper->PassCallbackMethod('list'),
 		],
 		[
 			'path'     => 'content/add(/)',
-			'method'   => 'POST',
+			'method'   => Router::POST,
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => $helper->PassCallbackMethod('add'),
 		],
 		[
 			'path'     => 'content/delete/:id(/)',
-			'method'   => 'POST',
+			'method'   => Router::POST,
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => $helper->PassCallbackMethod('delete'),
 		],

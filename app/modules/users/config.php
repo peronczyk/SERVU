@@ -9,7 +9,7 @@ return [
 		[
 			'path'     => 'users/list(/)',
 			'auth_lvl' => Auth::LVL_ADMIN,
-			'callback' => $helper->PassCallbackMethod('getList'),
+			'callback' => $helper->PassCallbackMethod('list'),
 		],
 		[
 			'method'   => 'POST',

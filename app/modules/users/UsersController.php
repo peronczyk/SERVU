@@ -53,7 +53,7 @@ final class UsersController {
 	 * List
 	 */
 
-	public function getList() {
+	public function list() {
 		$users_list = $this->actions->getList();
 		$this->_rest_store->set('data', $users_list);
 	}

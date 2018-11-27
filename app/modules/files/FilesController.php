@@ -28,7 +28,7 @@ final class FilesController {
 	 * List
 	 */
 
-	public function getList() {
+	public function list() {
 		$location = $_GET['location'] ?? null;
 
 		$files_list = $this->actions->getFilesList($location);

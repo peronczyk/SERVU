@@ -42,7 +42,7 @@ final class ContentController {
 	 * List
 	 */
 
-	public function getList() {
+	public function list() {
 		$content_list = [];
 
 		// List children of specified parent
