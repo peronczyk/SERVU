@@ -3,97 +3,99 @@
 	<div class="c-FormControl">
 		<h3 v-if="title">{{ title }}</h3>
 
-		<form @submit.prevent="submitForm">
+		<transition name="fade">
+			<form @submit.prevent="submitForm" v-show="formReady">
 
-			<fieldset v-for="(field, index) in fields" :key="index">
+				<fieldset v-for="(field, index) in fields" :key="index">
 
-				<h4
-					v-if="field.type == 'header'"
-					v-html="field.value"
-				></h4>
+					<h4
+						v-if="field.type == 'header'"
+						v-html="field.value"
+					></h4>
 
-				<p
-					v-else-if="field.type == 'description'"
-					v-html="field.value"
-					class="c-FormControl__desc"
-				></p>
+					<p
+						v-else-if="field.type == 'description'"
+						v-html="field.value"
+						class="c-FormControl__desc"
+					></p>
 
-				<form-field
-					v-else-if="field.type == 'text' || field.type == 'password' || field.type == 'email'"
-					:type="field.type"
-					:name="field.name"
-					:ref="field.name"
-					:required="field.required"
-				>
-					{{ field.label }}
-				</form-field>
+					<form-field
+						v-else-if="field.type == 'text' || field.type == 'password' || field.type == 'email'"
+						:type="field.type"
+						:name="field.name"
+						:ref="field.name"
+						:required="field.required"
+					>
+						{{ field.label }}
+					</form-field>
 
-				<form-select
-					v-else-if="field.type == 'select'"
-					:options="field.options"
-					:name="field.name"
-					:ref="field.name"
-					:required="field.required"
-					:change-callback="field.changeCallback"
-				>
-					{{ field.label }}
-				</form-select>
+					<form-select
+						v-else-if="field.type == 'select'"
+						:options="field.options"
+						:name="field.name"
+						:ref="field.name"
+						:required="field.required"
+						:change-callback="field.changeCallback"
+					>
+						{{ field.label }}
+					</form-select>
 
-				<form-files
-					v-else-if="field.type == 'files'"
-					:ref="field.name"
-					:required="field.required"
-					:max="field.max"
-				/>
+					<form-files
+						v-else-if="field.type == 'files'"
+						:ref="field.name"
+						:required="field.required"
+						:max="field.max"
+					/>
 
-				<form-checkbox
-					v-else-if="field.type == 'checkbox'"
-					:ref="field.name"
-					:required="field.required"
-				>
-					{{ field.label }}
-				</form-checkbox>
+					<form-checkbox
+						v-else-if="field.type == 'checkbox'"
+						:ref="field.name"
+						:required="field.required"
+					>
+						{{ field.label }}
+					</form-checkbox>
 
-				<form-list
-					v-else-if="field.type == 'list'"
-					:ref="field.name"
-					:required="field.required"
-				>
-					{{ field.label }}
-				</form-list>
+					<form-list
+						v-else-if="field.type == 'list'"
+						:ref="field.name"
+						:required="field.required"
+					>
+						{{ field.label }}
+					</form-list>
 
-				<form-rich
-					v-else-if="field.type == 'rich'"
-					:ref="field.name"
-					:required="field.required"
-				>
-					{{ field.label }}
-				</form-rich>
+					<form-rich
+						v-else-if="field.type == 'rich'"
+						:ref="field.name"
+						:required="field.required"
+					>
+						{{ field.label }}
+					</form-rich>
 
-				<form-hidden-field
-					v-else-if="field.type == 'hidden'"
-					:value="field.value"
-					:ref="field.name"
-				/>
+					<form-hidden-field
+						v-else-if="field.type == 'hidden'"
+						:value="field.value"
+						:ref="field.name"
+					/>
 
-				<p
-					v-else
-					class="u-Info"
-				>Unhandled field: {{ field.type }}</p>
+					<p
+						v-else
+						class="u-Info"
+					>Unhandled field: {{ field.type }}</p>
 
-			</fieldset>
+				</fieldset>
 
-			<transition name="fade">
-				<p class="u-Error" v-if="!isFormValid">
-					Please fill in all required fields
-				</p>
-			</transition>
+				<transition name="fade">
+					<p class="u-Error" v-if="!isFormValid">
+						Please fill in all required fields
+					</p>
+				</transition>
 
-			<div class="c-FormControl__buttons">
-				<button type="submit" class="Btn">{{ cta }}</button>
-				<button @click.prevent="resetForm" v-if="!hideReset" type="reset" class="Btn Btn--hollow">Reset</button>
-			</div>
-		</form>
+				<div class="c-FormControl__buttons">
+					<button type="submit" class="Btn">{{ cta }}</button>
+					<button @click.prevent="resetForm" v-if="!hideReset" type="reset" class="Btn Btn--hollow">Reset</button>
+				</div>
+			</form>
+		</transition>
 	</div>
 
 </template>
@@ -161,6 +163,16 @@ export default {
 		}
 	},
 
+	computed: {
+		isEditMode() {
+			return (this.fetchUri);
+		},
+
+		formReady() {
+			return (this.isEditMode) ? this.isValuesFetched : true;
+		},
+	},
+
 	methods: {
 		...mapActions({
 			openToast: 'toast/open',
@@ -201,6 +213,8 @@ export default {
 		fetchValues() {
 			axios.get(this.fetchUri)
 				.then(result => {
+					this.isValuesFetched = true;
+
 					if (result.data.errors) {
 						this.openToast(result.data.errors[0].message);
 					}
@@ -320,10 +334,9 @@ export default {
 
 	created() {
 		// If this components was created in edit mode fetch form fields values
-		if (this.fetchUri) {
+		if (this.isEditMode) {
 			this.fetchValues();
 		}
-		console.log('FormControl created');
 	},
 }
 

@@ -159,6 +159,8 @@ export default {
 		 * @param {Object} value
 		 */
 		setValue(value) {
+			this.reset();
+
 			for (let i = 0; i < value.length; i++) {
 				this.addField();
 			}

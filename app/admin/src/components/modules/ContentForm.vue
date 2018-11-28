@@ -26,7 +26,7 @@
 				},
 				...collectionFields,
 			]"
-			:uri="baseApiUri + apiAddNode"
+			:uri="baseApiUri + ((isEditMode) ? apiModifyNode : apiAddNode)"
 			:fetch-uri="(isEditMode) ? this.baseApiUri + this.apiGetNode + this.id : null"
 			:success="onAddSuccess"
 			:cta="formCtaLabel"
@@ -62,9 +62,10 @@ export default {
 			baseApiUri       : window.appConfig.apiBaseUrl + 'content/',
 			apiAddNode       : 'add/',
 			apiGetNode       : 'get/',
+			apiModifyNode    : 'modify/',
 			collectionFields : [{
-				type: 'description',
-				value: 'Choose collection.'
+				type  : 'description',
+				value : 'Choose collection.'
 			}],
 		}
 	},
@@ -135,18 +136,6 @@ export default {
 			}
 
 			this.collectionFields = collectionFields;
-		},
-
-		fetchFormValues(contentId) {
-			axios.get(this.baseApiUri + '/list?parent-id=' + (contentId || 0))
-				.then(result => {
-					console.log(result);
-
-				})
-				.catch(error => {
-					this.isContentListFetched = true;
-					console.log(error);
-				});
 		},
 	},
 }

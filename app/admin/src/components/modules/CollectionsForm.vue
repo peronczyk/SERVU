@@ -14,7 +14,7 @@
 				{
 					type: 'list',
 					name: 'fields',
-					label: 'Fields list',
+					label: 'Fields list:',
 					required: true,
 				},
 			]"
