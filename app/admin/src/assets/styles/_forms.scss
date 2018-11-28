@@ -1,11 +1,11 @@
 form {
-	margin-bottom: var(--box-margin);
+	margin-bottom: var(--margin-lg);
 	width: 100%;
 }
 
 label {
 	display: block;
-	margin-bottom: calc(var(--box-margin) / 2);
+	margin-bottom: var(--margin-md);
 	line-height: 1.3em;
 	user-select: none;
 	color: var(--color-text-dimmed);

@@ -1,26 +1,28 @@
 <template>
 
 	<div class="c-CollectionsForm">
-		<h1>Add new collection</h1>
+		<h1>{{ formTitle }}</h1>
 
 		<form-control
 			:fields="[
 				{
 					type: 'text',
-					name: 'collection-name',
+					name: 'name',
 					label: 'Collection name',
 					required: true,
 				},
 				{
 					type: 'list',
-					name: 'field-list',
+					name: 'fields',
 					label: 'Fields list',
 					required: true,
 				},
 			]"
-			:uri="apiUri"
+			:uri="baseApiUri + apiAddNode"
+			:fetch-uri="(isEditMode) ? this.baseApiUri + this.apiGetNode + this.id : null"
 			:success="onAddSuccess"
-			cta="Add collection"
+			:cta="formCtaLabel"
+			ref="collectionsForm"
 		/>
 	</div>
 
@@ -30,6 +32,7 @@
 <script>
 
 // Dependencies
+import axios from 'axios';
 import { mapGetters, mapActions } from 'vuex';
 
 // Components
@@ -46,7 +49,9 @@ export default {
 
 	data() {
 		return {
-			apiUri: window.appConfig.apiBaseUrl + 'collections/add/',
+			baseApiUri : window.appConfig.apiBaseUrl + 'collections/',
+			apiAddNode : 'add/',
+			apiGetNode : 'get/',
 		}
 	},
 
@@ -54,6 +59,22 @@ export default {
 		...mapGetters('content', {
 			fieldTypes: 'fieldTypes',
 		}),
+
+		isEditMode() {
+			return (this.id >= 0);
+		},
+
+		formTitle() {
+			return (this.isEditMode)
+				? 'Modify collection'
+				: 'Add new collection';
+		},
+
+		formCtaLabel() {
+			return (this.isEditMode)
+				? 'Apply changes'
+				: 'Add collection';
+		}
 	},
 
 	methods: {
@@ -68,10 +89,6 @@ export default {
 			this.openToast('Collection added.');
 			this.fetchCollections();
 		},
-	},
-
-	created() {
-		console.log(this.id);
 	},
 }
 

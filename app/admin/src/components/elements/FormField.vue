@@ -91,6 +91,11 @@ export default {
 			return this.value;
 		},
 
+		setValue(value) {
+			this.value = value;
+			this.isDirty = (value);
+		},
+
 		validate() {
 			this.isValid = true;
 

@@ -130,24 +130,21 @@ export default {
 			required: true,
 		},
 
+		// API uri that provides values for this form
+		fetchUri: String,
+
 		cta: {
 			type: String,
 			default: 'Send',
 		},
 
-		title: {
-			type: String,
-		},
+		title: String,
 
 		// Hook fired when form succesfully receives data
-		success: {
-			type: Function,
-		},
+		success: Function,
 
 		// Hook fired when form call ends with error
-		error: {
-			type: Function,
-		},
+		error: Function,
 
 		// Hide reset button
 		hideReset: {
@@ -159,6 +156,8 @@ export default {
 	data() {
 		return {
 			isFormValid: true,
+			isValuesFetched: false,
+			fetchedValues: {},
 		}
 	},
 
@@ -167,18 +166,72 @@ export default {
 			openToast: 'toast/open',
 		}),
 
+		/**
+		 * Reset all the fields values by setting their values to fetched ones
+		 * or by invoking reset() method on them
+		 */
 		resetForm() {
 			this.isFormValid = true;
 
 			for (let refName in this.$refs) {
 				let ref = this.$refs[refName][0];
 
-				(ref && typeof ref.reset === 'function')
-					? ref.reset()
-					: console.warn('Form element' + refName + ' does not have "reset" method');
+				// Set fetched value...
+				if (this.fetchedValues[refName] && typeof ref.setValue === 'function') {
+					ref.setValue(this.fetchedValues[refName]);
+				}
+
+				// ...or hard reset
+				else if (ref && typeof ref.reset === 'function') {
+					ref.reset();
+				}
+
+				else {
+					console.warn('Form element' + refName + ' does not have fetched value and "reset" method');
+				}
 			}
 		},
 
+		/**
+		 * This method can be invoked by other component to fetch values of each of
+		 * the fields from defined apiUrl node.
+		 *
+		 * @param {String} apiUrl
+		 */
+		fetchValues() {
+			axios.get(this.fetchUri)
+				.then(result => {
+					if (result.data.errors) {
+						this.openToast(result.data.errors[0].message);
+					}
+					else {
+						this.fetchedValues = result.data.data;
+						console.log(this.fetchedValues);
+
+						this.resetForm();
+					}
+				})
+				.catch(error => {
+					this.openToast('<small>Faetching form values failed</small><br>');
+					console.warn(error);
+				});
+		},
+
+		/**
+		 * @param {Object} values
+		 */
+		setValues(values) {
+			for (let entry in values) {
+				if (this.$refs[entry] && this.$refs[entry].setValue) {
+					this.$refs[entry].setValue(values[entry]);
+					console.log(entry);
+				}
+			}
+		},
+
+		/**
+		 * Action that performs API call
+		 */
 		submitForm() {
 			this.isFormValid = true;
 
@@ -275,6 +328,13 @@ export default {
 			}
 		}
 	},
+
+	created() {
+		// If this components was created in edit mode fetch form fields values
+		if (this.fetchUri) {
+			this.fetchValues();
+		}
+	},
 }
 
 </script>
@@ -284,7 +344,7 @@ export default {
 
 .c-FormControl {
 	&__desc {
-		margin-bottom: var(--medium-margin) !important;
+		margin-bottom: var(--margin-md) !important;
 	}
 
 

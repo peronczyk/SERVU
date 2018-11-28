@@ -3,7 +3,7 @@
 	 * Styled table has horizontal lines and additional paddings
 	 */
 	&--styled {
-		margin-bottom: var(--box-margin);
+		margin-bottom: var(--margin-lg);
 
 		th, td {
 			padding-left: var(--table-cell-padding);

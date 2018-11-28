@@ -48,6 +48,7 @@ export default {
 	margin-left: 50%;
 	height: 100%;
 	transition: filter .3s;
+	filter: blur(0); // Allow to smooth the blur animation
 	will-change: filter;
 
 	.is-UserLoggedIn & {

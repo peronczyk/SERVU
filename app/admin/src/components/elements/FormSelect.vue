@@ -98,6 +98,11 @@ export default {
 			return this.value;
 		},
 
+		setValue(value) {
+			this.value = value;
+			this.isDirty = (value);
+		},
+
 		validate() {
 			this.isValid = !(this.required && this.value.length < 1);
 			return this.isValid;

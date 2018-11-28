@@ -62,6 +62,7 @@ final class CollectionsController {
 		if (is_array($result) && count($result) > 0) {
 			$result = $result[0];
 			$result['fields'] = json_decode($result['fields']);
+			unset($result['id']);
 		}
 		else {
 			$result = null;
@@ -78,8 +79,8 @@ final class CollectionsController {
 	public function add() {
 		$result = $this->_db
 			->insert([
-				'name'   => $_POST['collection-name'],
-				'fields' => json_encode($_POST['field-list']),
+				'name'   => $_POST['name'],
+				'fields' => json_encode($_POST['fields']),
 			])
 			->into(self::DB_TABLE_NAME);
 

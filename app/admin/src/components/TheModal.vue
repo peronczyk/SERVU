@@ -11,12 +11,10 @@
 				<a class="c-Modal__close e-ToolBtn e-ToolBtn--close" @click.prevent="close"></a>
 
 				<div class="c-Modal__content">
-					<keep-alive>
-						<component
-							:is="getContent"
-							v-bind="getProps"
-						/>
-					</keep-alive>
+					<component
+						:is="getContent"
+						v-bind="getProps"
+					/>
 				</div>
 			</div>
 
@@ -106,7 +104,7 @@ export default {
 
 	&__content {
 		min-height: 100px;
-		padding: var(--gutter) var(--gutter-md);
+		padding: var(--margin-lg) var(--gutter-md) var(--margin-sm) var(--gutter-md);
 		overflow: hidden;
 		text-align: left;
 	}
