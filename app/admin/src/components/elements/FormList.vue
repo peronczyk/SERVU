@@ -28,8 +28,9 @@
 					<td class="u-Text--center"><small>{{ fieldNumber + 1 }}</small></td>
 					<td>
 						<form-select
+							:name="'field-' + fieldColumns[0] + '-' + fieldNumber"
 							:options="fieldTypesOptions"
-							ref="typeId"
+							:ref="fieldColumns[0]"
 							label="Field type"
 							required
 						>
@@ -38,8 +39,8 @@
 					</td>
 					<td>
 						<form-field
-							:name="'field-name-' + fieldNumber"
-							ref="name"
+							:name="'field-' + fieldColumns[1] + '-' + fieldNumber"
+							:ref="fieldColumns[1]"
 							required
 						>Field name</form-field>
 					</td>
@@ -97,7 +98,7 @@ export default {
 
 	data() {
 		return {
-			fieldColumns: ['name', 'typeId'],
+			fieldColumns: ['typeId', 'name'],
 			fieldsList: INITIAL_VALUE,
 			isValid: true,
 		};
@@ -124,26 +125,51 @@ export default {
 
 	methods: {
 		/**
-		 * Field value getter
-		 * @return Array
+		 *
 		 */
-		getValue() {
-			let computedValue = [];
-
-			// Iterate column types
+		iterateFields(callbackFunc) {
 			this.fieldColumns.forEach(column => {
 				let columnRefs = this.$refs[column] || [];
 
 				// Iterate refs of selected column type
 				for (let index in columnRefs) {
-					if (!computedValue[index]) {
-						computedValue[index] = {};
-					}
-					computedValue[index][column] = columnRefs[index].getValue();
+					callbackFunc(columnRefs[index], column, index);
 				}
+			});
+		},
+
+		/**
+		 * Field value getter
+		 * @return {Array}
+		 */
+		getValue() {
+			let computedValue = [];
+
+			this.iterateFields((ref, column, index) => {
+				if (!computedValue[index]) {
+					computedValue[index] = {};
+				}
+				computedValue[index][column] = ref.getValue();
 			});
 
 			return computedValue;
+		},
+
+		/**
+		 * @param {Object} value
+		 */
+		setValue(value) {
+			for (let i = 0; i < value.length; i++) {
+				this.addField();
+			}
+
+			this.$nextTick(() => {
+				this.iterateFields((ref, column, index) => {
+					if (value[index][column]) {
+						ref.setValue(value[index][column]);
+					}
+				});
+			});
 		},
 
 		/**
@@ -156,21 +182,16 @@ export default {
 			if (this.isNotEnough) {
 				this.isValid = false;
 			}
-
-			// Iterate column types
-			this.fieldColumns.forEach(column => {
-				let columnRefs = this.$refs[column] || [];
-
-				// Iterate refs of selected column type
-				for (let index in columnRefs) {
-					let fieldIsValid = columnRefs[index].validate();
+			else {
+				this.iterateFields((ref) => {
+					let fieldIsValid = ref.validate();
 
 					// Change component valid state to false on first invalid element
 					if (!fieldIsValid && this.isValid) {
 						this.isValid = false;
 					}
-				}
-			});
+				});
+			}
 
 			return this.isValid;
 		},

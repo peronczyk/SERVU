@@ -1,7 +1,7 @@
 <template>
 
 	<div class="c-ContentForm">
-		<h1>Add new content</h1>
+		<h1>{{ formTitle }}</h1>
 
 		<form-control
 			v-if="collectionsList.length"
@@ -26,9 +26,10 @@
 				},
 				...collectionFields,
 			]"
-			:uri="apiUri"
+			:uri="baseApiUri + apiAddNode"
+			:fetch-uri="(isEditMode) ? this.baseApiUri + this.apiGetNode + this.id : null"
 			:success="onAddSuccess"
-			cta="Add content"
+			:cta="formCtaLabel"
 		/>
 
 		<p class="u-Info" v-else>There is no collections in the database. Please add at least one.</p>
@@ -58,9 +59,9 @@ export default {
 
 	data() {
 		return {
-			baseApiUri       : window.appConfig.apiBaseUrl + 'content',
-			addApiUri        : '/add/',
-			modifyApiUri     : '/modify/',
+			baseApiUri       : window.appConfig.apiBaseUrl + 'content/',
+			apiAddNode       : 'add/',
+			apiGetNode       : 'get/',
 			collectionFields : [{
 				type: 'description',
 				value: 'Choose collection.'
@@ -73,10 +74,20 @@ export default {
 			collectionsList: 'collections/getList',
 		}),
 
-		apiUri() {
-			return this.baseApiUri + ((this.id)
-				? this.modifyApiUri
-				: this.addApiUri);
+		isEditMode() {
+			return (this.id >= 0);
+		},
+
+		formTitle() {
+			return (this.isEditMode)
+				? 'Modify content'
+				: 'Add new content';
+		},
+
+		formCtaLabel() {
+			return (this.isEditMode)
+				? 'Apply changes'
+				: 'Add content';
 		},
 
 		collectionsOptions() {
@@ -137,14 +148,6 @@ export default {
 					console.log(error);
 				});
 		},
-	},
-
-	created() {
-		console.log(this.id);
-
-		if (this.id !== null) {
-			this.fetchFormValues(this.id);
-		}
 	},
 }
 

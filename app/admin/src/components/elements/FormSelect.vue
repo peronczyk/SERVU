@@ -65,9 +65,7 @@ export default {
 			required: true,
 		},
 
-		name: {
-			type: String,
-		},
+		name: String,
 
 		changeCallback: {
 			type: Function,

@@ -204,10 +204,11 @@ export default {
 					if (result.data.errors) {
 						this.openToast(result.data.errors[0].message);
 					}
+					else if (!result.data.data) {
+						this.openToast('There is no values for this form');
+					}
 					else {
 						this.fetchedValues = result.data.data;
-						console.log(this.fetchedValues);
-
 						this.resetForm();
 					}
 				})
@@ -215,18 +216,6 @@ export default {
 					this.openToast('<small>Faetching form values failed</small><br>');
 					console.warn(error);
 				});
-		},
-
-		/**
-		 * @param {Object} values
-		 */
-		setValues(values) {
-			for (let entry in values) {
-				if (this.$refs[entry] && this.$refs[entry].setValue) {
-					this.$refs[entry].setValue(values[entry]);
-					console.log(entry);
-				}
-			}
 		},
 
 		/**
@@ -334,6 +323,7 @@ export default {
 		if (this.fetchUri) {
 			this.fetchValues();
 		}
+		console.log('FormControl created');
 	},
 }
 

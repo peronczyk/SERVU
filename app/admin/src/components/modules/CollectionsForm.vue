@@ -18,11 +18,10 @@
 					required: true,
 				},
 			]"
-			:uri="baseApiUri + apiAddNode"
+			:uri="baseApiUri + ((isEditMode) ? apiModifyNode : apiAddNode)"
 			:fetch-uri="(isEditMode) ? this.baseApiUri + this.apiGetNode + this.id : null"
 			:success="onAddSuccess"
 			:cta="formCtaLabel"
-			ref="collectionsForm"
 		/>
 	</div>
 
@@ -49,9 +48,10 @@ export default {
 
 	data() {
 		return {
-			baseApiUri : window.appConfig.apiBaseUrl + 'collections/',
-			apiAddNode : 'add/',
-			apiGetNode : 'get/',
+			baseApiUri    : window.appConfig.apiBaseUrl + 'collections/',
+			apiAddNode    : 'add/',
+			apiGetNode    : 'get/',
+			apiModifyNode : 'modify/',
 		}
 	},
 
