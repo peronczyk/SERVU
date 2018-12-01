@@ -164,6 +164,9 @@ export default {
 	},
 
 	computed: {
+		/**
+		 * Defines if the form will edit data or add new one
+		 */
 		isEditMode() {
 			return (this.fetchUri);
 		},
@@ -233,7 +236,7 @@ export default {
 		},
 
 		/**
-		 * Action that performs API call
+		 * Action that sends form data to API
 		 */
 		submitForm() {
 			this.isFormValid = true;

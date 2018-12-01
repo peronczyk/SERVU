@@ -29,12 +29,8 @@ final class ContentController {
 	 */
 
 	public function index($request) {
-		if (is_numeric($request[0])) {
-			$this->_rest_store->set('details', $this->actions->getDetails($request[0]));
-		}
-		else {
-			throw new Exception('Requested content id should be numeric');
-		}
+		Assumpt::integer($request[0], 'id', true);
+		$this->_rest_store->set('details', $this->actions->getDetails($request[0]));
 	}
 
 
@@ -44,14 +40,15 @@ final class ContentController {
 
 	public function list() {
 		$content_list = [];
+		$parent_id = $_GET['parent-id'] ?? null;
 
 		// List children of specified parent
-		if (!empty($_GET['parent-id'])) {
-			if (!is_numeric($_GET['parent-id'])) {
-				throw new Exception('Requested content parent id has bad format');
+		if (!empty($parent_id)) {
+			if (is_numeric($parent_id) || ctype_digit($parent_id)) {
+				$content_list = $this->actions->getChildren(intval($parent_id));
 			}
 			else {
-				$content_list = $this->actions->getChildren($_GET['parent-id']);
+				throw new Exception('Requested content parent id has bad format');
 			}
 		}
 
@@ -69,9 +66,15 @@ final class ContentController {
 	 */
 
 	public function add() {
-		$result = $this->actions->add();
+		Assumpt::text($_POST, 'name', true);
 
-		$this->_rest_store->set('post', $result);
+		$name          = $_POST['name'];
+		$parent_id     = Sanitise::integerId($_POST, 'parent-id');
+		$collection_id = Sanitise::integerId($_POST, 'collection-id', true);
+
+		$result = $this->actions->add($name, $parent_id, $collection_id);
+
+		$this->_rest_store->set('success', ($result) ? true : false);
 	}
 
 
@@ -81,9 +84,7 @@ final class ContentController {
 	 */
 
 	public function delete($params) {
-		if (!isset($params['id'])) {
-			throw new Exception("Param 'id' is missing.");
-		}
+		Assumpt::integerId($params, 'id', true);
 
 		$result = $this->_db
 			->delete()
@@ -91,6 +92,6 @@ final class ContentController {
 			->where("`id` = '{$params['id']}'")
 			->all();
 
-		$this->_rest_store->set('params', $result);
+		$this->_rest_store->set('success', ($result) ? true : false);
 	}
 }

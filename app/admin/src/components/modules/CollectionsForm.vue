@@ -20,7 +20,7 @@
 			]"
 			:uri="baseApiUri + ((isEditMode) ? apiModifyNode : apiAddNode)"
 			:fetch-uri="(isEditMode) ? this.baseApiUri + this.apiGetNode + this.id : null"
-			:success="onAddSuccess"
+			:success="onFormSuccess"
 			:cta="formCtaLabel"
 		/>
 	</div>
@@ -60,6 +60,9 @@ export default {
 			fieldTypes: 'fieldTypes',
 		}),
 
+		/**
+		 * Defines if the form will edit data or add new one
+		 */
 		isEditMode() {
 			return (this.id >= 0);
 		},
@@ -84,7 +87,7 @@ export default {
 			fetchCollections : 'collections/fetchList',
 		}),
 
-		onAddSuccess() {
+		onFormSuccess() {
 			this.closeModal();
 			this.openToast('Collection added.');
 			this.fetchCollections();

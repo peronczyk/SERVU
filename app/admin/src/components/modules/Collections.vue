@@ -96,6 +96,9 @@ export default {
 			this.openModal({ content: CollectionsForm });
 		},
 
+		/**
+		 * @param {Object} entry
+		 */
 		editCollection(entry) {
 			this.openModal({
 				content : CollectionsForm,
@@ -103,6 +106,9 @@ export default {
 			});
 		},
 
+		/**
+		 * @param {Object} entry
+		 */
 		deleteCollection(entry) {
 			this.openDialog({
 				message: `Do you really wish to delete collection: <strong>${entry.name}</strong>?`,

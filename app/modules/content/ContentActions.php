@@ -78,12 +78,12 @@ class ContentActions {
 	 * @todo fields-values
 	 */
 
-	public function add() {
+	public function add($name, $parent_id, $collection_id) {
 		return $this->_db
 			->insert([
-				'name'          => $_POST['content-name'],
-				'parent-id'     => $_POST['parent-id'] ?? 0,
-				'collection-id' => $_POST['collection-id'],
+				'name'          => $name,
+				'parent-id'     => $parent_id,
+				'collection-id' => $collection_id,
 				'fields-values' => '@TODO',
 			])
 			->into('content');

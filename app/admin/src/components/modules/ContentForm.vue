@@ -8,7 +8,7 @@
 			:fields="[
 				{
 					type: 'text',
-					name: 'content-name',
+					name: 'name',
 					label: 'Content name',
 					required: true,
 				},
@@ -75,6 +75,9 @@ export default {
 			collectionsList: 'collections/getList',
 		}),
 
+		/**
+		 * Defines if the form will edit data or add new one
+		 */
 		isEditMode() {
 			return (this.id >= 0);
 		},
@@ -113,6 +116,9 @@ export default {
 			this.$root.$emit('content-added');
 		},
 
+		/**
+		 * @param {Number} collectionId
+		 */
 		onCollectionChange(collectionId) {
 			if (!collectionId) {
 				this.collectionFields = [];
