@@ -41,10 +41,11 @@ final class FilesController {
 	 */
 
 	public function createDir() {
-		$dir_name = $_POST['name']     ?? null;
+		Assumpt::directory($_POST, 'name');
+
 		$location = $_POST['location'] ?? null;
 
-		$result = $this->actions->createDir($dir_name, $location);
+		$result = $this->actions->createDir($_POST['name'], $location);
 		$this->_rest_store->set('success', $result);
 	}
 

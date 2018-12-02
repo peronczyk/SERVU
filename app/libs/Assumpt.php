@@ -1,10 +1,25 @@
 <?php
 
+/**
+ * =================================================================================
+ *
+ * Assumption class
+ *
+ * This class is used to check if the assumptions about the variable are correct.
+ * Application is interrupted by returning an exception if not.
+ *
+ * @link      https://github.com/peronczyk/servant
+ * @copyright Bartosz Perończyk <bartosz@peronczyk.com>
+ *
+ * =================================================================================
+ */
+
 declare(strict_types=1);
 
 class Assumpt {
 	private static $patterns = [
-		'text' => '/[\p{L}0-9\s-.,;:!"%&()?+\'°#\/@]+/',
+		'text'      => '/[\p{L}0-9\s-.,;:!"%&()?+\'°#\/@]+/',
+		'directory' => '/^[^\\/?%*:|"<>\.]+$/',
 	];
 
 
@@ -20,6 +35,7 @@ class Assumpt {
 		$value    = $args[0] ?? null;
 		$name     = $args[1] ?? null;
 		$required = $args[2] ?? true;
+		$result   = null;
 		$options  = null;
 		$regexp   = null;
 
@@ -31,7 +47,7 @@ class Assumpt {
 
 		// If value is required
 		if ($required === true && empty($value)) {
-			throw new Exception("Assumption failed: {$name} is required");
+			self::error("Variable '{$name}' is required");
 		}
 
 		// Return if empty
@@ -49,12 +65,22 @@ class Assumpt {
 				$filter = FILTER_VALIDATE_EMAIL;
 				break;
 
+			// Simple text string
 			case 'text':
 				$regexp = self::$patterns['text'];
 				break;
 
+			// Directory name (not full path)
+			case 'directory':
+				$regexp = self::$patterns['directory'];
+				break;
+
+			case 'stringInt':
+				$result = ctype_digit($value);
+				break;
+
 			default:
-				self::error("Unknown validation type '{$type}'");
+				self::error("Unknown assumption method '{$method}'");
 		}
 
 		// If validation should use regexp set options
@@ -63,13 +89,16 @@ class Assumpt {
 			$options = ['options' => ['regexp' => $regexp]];
 		}
 
-		// Begin validation
-		$result = filter_var($value, $filter, $options);
+		// Begin validation with filter_var function when there is no result from
+		// any of the methods
+		if ($result === null) {
+			$result = filter_var($value, $filter, $options);
+		}
 
 		// Analyse results
 		if (!$result) {
 			self::error((!empty($name))
-				? "{$name} is invalid"
+				? "Variable '{$name}' is not valid {$method}"
 				: "One of the variables are invalid"
 			);
 		}

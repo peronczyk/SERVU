@@ -3,12 +3,10 @@
 declare(strict_types=1);
 
 final class CollectionsController {
-	const DB_TABLE_NAME = 'collections';
 
 	private $actions;
 
 	// Dependencies
-	private $_db;
 	private $_rest_store;
 
 
@@ -17,7 +15,6 @@ final class CollectionsController {
 	 */
 
 	public function __construct(DependencyContainer $container) {
-		$this->_db         = $container->get('db');
 		$this->_rest_store = $container->get('rest_store');
 
 		require 'CollectionsActions.php';
@@ -30,17 +27,9 @@ final class CollectionsController {
 	 */
 
 	public function list() {
-		$collections_list = $this->_db
-			->select()
-			->from(self::DB_TABLE_NAME)
-			->all();
+		$collection_list = $this->actions->getCollectionList();
 
-		// Decode field's JSON string in all collections
-		foreach($collections_list as $key => $val) {
-			$collections_list[$key]['fields'] = json_decode($val['fields']);
-		}
-
-		$this->_rest_store->set('data', $collections_list);
+		$this->_rest_store->set('data', $collection_list);
 	}
 
 
@@ -49,24 +38,10 @@ final class CollectionsController {
 	 */
 
 	public function get($params) {
-		if (!isset($params['id'])) {
-			throw new Exception("Param 'id' is missing.");
-		}
+		Assumpt::stringInt($params, 'id');
+		$collection_id = intval($params['id']);
 
-		$result = $this->_db
-			->select()
-			->from(self::DB_TABLE_NAME)
-			->where("`id` = '{$params['id']}'")
-			->all();
-
-		if (is_array($result) && count($result) > 0) {
-			$result = $result[0];
-			$result['fields'] = json_decode($result['fields']);
-			unset($result['id']);
-		}
-		else {
-			$result = null;
-		}
+		$result = $this->actions->getCollectionDataById($collection_id);
 
 		$this->_rest_store->set('data', $result);
 	}
@@ -77,32 +52,35 @@ final class CollectionsController {
 	 */
 
 	public function add() {
-		$result = $this->_db
-			->insert([
-				'name'   => $_POST['name'],
-				'fields' => json_encode($_POST['fields']),
-			])
-			->into(self::DB_TABLE_NAME);
+		Assumpt::text($_POST, 'name', true);
+
+		$result = $this->actions->addCollection(
+			$_POST['name'],
+			$_POST['fields']
+		);
 
 		$this->_rest_store->set('post', $result);
 	}
 
 
 	/** ----------------------------------------------------------------------------
+	 * Modify existing collection
+	 */
+
+	public function modify() {
+
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * Delete collection
-	 * @todo
 	 */
 
 	public function delete($params) {
-		if (!isset($params['id'])) {
-			throw new Exception("Param 'id' is missing.");
-		}
+		Assumpt::stringInt($params, 'id');
+		$collection_id = intval($params['id']);
 
-		$result = $this->_db
-			->delete()
-			->from(self::DB_TABLE_NAME)
-			->where("`id` = '{$params['id']}'")
-			->all();
+		$result = $this->actions->deleteCollectionById($collection_id);
 
 		$this->_rest_store->set('params', $result);
 	}

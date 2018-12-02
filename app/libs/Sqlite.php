@@ -103,6 +103,17 @@ class Sqlite {
 
 
 	/** ----------------------------------------------------------------------------
+	 * UPDATE
+	 */
+
+	public function update(string $table) : object {
+		$this->table = $table;
+		$this->query_type = 'update';
+		return $this;
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * DELETE
 	 */
 
@@ -129,6 +140,17 @@ class Sqlite {
 
 	public function from(string $table) : object {
 		$this->table = $table;
+		return $this;
+	}
+
+
+	/**
+	 * VALUES
+	 * Used with 'UPDATE'
+	 */
+
+	public function values(array $arr) : object {
+		$this->insert_data = $arr;
 		return $this;
 	}
 
@@ -169,9 +191,11 @@ class Sqlite {
 
 	/** ----------------------------------------------------------------------------
 	 * Perform query and return array of elements
+	 *
+	 * @return Array|Boolean
 	 */
 
-	public function all() : array {
+	public function all() {
 		$this->autoConnect();
 
 		// Perform query
@@ -179,6 +203,23 @@ class Sqlite {
 
 		// Fetch and return result
 		return $this->result->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Perform query and return one row as associative array
+	 *
+	 * @return Array|Boolean
+	 */
+
+	public function one() {
+		$this->autoConnect();
+
+		// Perform query
+		$this->query($this->prepareQuery());
+
+		// Fetch and return result
+		return $this->result->fetch(PDO::FETCH_ASSOC);
 	}
 
 
@@ -244,8 +285,26 @@ class Sqlite {
 				$query = "INSERT INTO {$this->table}({$columns}) VALUES({$values});";
 				break;
 
+			/**
+			 * Update data in database table
+			 * @todo
+			 */
+			case 'update':
+				if (count($this->insert_data) < 1) {
+					throw new Exceptions("There is no data set to insert. Please use method 'values' to add data.");
+				}
+				if (empty($this->conditions)) {
+					throw new Exception("Conditions are required to perform UPDATE operation. Use method 'where()' to add conditions.");
+				}
+
+				$query = "UPDATE {$this->table} SET " . http_build_query($this->insert_data, '', ', ') . " WHERE {$this->conditions}";
+				break;
+
+			/**
+			 * Delete rows from database table
+			 */
 			case 'delete':
-				if (empty ($this->conditions)) {
+				if (empty($this->conditions)) {
 					throw new Exception("Conditions are required to perform DELETE operation. Use method 'where()' to add conditions.");
 				}
 				$query = "DELETE FROM {$this->table} WHERE {$this->conditions}";

@@ -35,6 +35,7 @@ class Sanitise {
 			return null;
 		}
 
+		// Call static method
 		return call_user_func_array([__CLASS__, $method], [$value]);
 	}
 

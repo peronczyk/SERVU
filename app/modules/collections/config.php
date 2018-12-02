@@ -17,6 +17,12 @@ return [
 			'callback' => $helper->PassCallbackMethod('add'),
 		],
 		[
+			'path'     => 'collections/modify/:id(/)',
+			'method'   => Router::POST,
+			'auth_lvl' => Auth::LVL_ADMIN,
+			'callback' => $helper->PassCallbackMethod('modify'),
+		],
+		[
 			'path'     => 'collections/delete/:id(/)',
 			'method'   => Router::POST,
 			'auth_lvl' => Auth::LVL_ADMIN,
