@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
+use Sqlite\QueryBuilder as Query;
+
 class UsersActions {
 
-	private $db_table_name = 'users';
+	const DB_TABLE_NAME = 'users';
 
 	// Dependencies
 	private $_db;
@@ -24,10 +26,10 @@ class UsersActions {
 	 */
 
 	public function getList() {
-		$result = $this->_db
-			->select()
-			->from($this->db_table_name)
-			->all();
+		$result = $this->_db->fetchAll(
+			(new Query)
+				->selectFrom(self::DB_TABLE_NAME)
+		);
 
 		return $result;
 	}
@@ -42,13 +44,15 @@ class UsersActions {
 			throw new Exception('User with this email address already exist.');
 		}
 
-		$result = $this->_db
-			->insert([
-				'email'      => $email,
-				'password'   => $password_hash,
-				'access-lvl' => $lvl
-			])
-			->into($this->db_table_name);
+		$result = $this->_db->fetchOne(
+			(new Query)
+				->insertInto(self::DB_TABLE_NAME)
+				->values([
+					'email'      => $email,
+					'password'   => $password_hash,
+					'access-lvl' => $lvl
+				])
+		);
 
 		return $result;
 	}
@@ -59,12 +63,12 @@ class UsersActions {
 	 */
 
 	public function userExists($email) {
-		$result = $this->_db
-			->count()
-			->from($this->db_table_name)
-			->where("email = '{$email}'")
-			->all();
+		$result = $this->_db->fetchOne(
+			(new Query)
+				->countIn(self::DB_TABLE_NAME)
+				->where("email = '{$email}'")
+		);
 
-		return ((int) $result[0]['count'] > 0);
+		return ((int) $result['count'] > 0);
 	}
 }

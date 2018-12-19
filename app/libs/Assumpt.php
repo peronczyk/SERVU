@@ -79,6 +79,10 @@ class Assumpt {
 				$result = ctype_digit($value);
 				break;
 
+			case 'array':
+				$result = is_array($value);
+				break;
+
 			default:
 				self::error("Unknown assumption method '{$method}'");
 		}

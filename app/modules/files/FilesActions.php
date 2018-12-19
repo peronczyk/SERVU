@@ -15,7 +15,7 @@ class FilesActions {
 	 */
 
 	public function __construct() {
-		$this->uploads_dir = _CONFIG['storage_dir'] . 'uploads/';
+		$this->uploads_dir = Config::$STORAGE_DIR . 'uploads/';
 	}
 
 

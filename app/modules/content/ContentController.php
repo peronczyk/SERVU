@@ -42,20 +42,7 @@ final class ContentController {
 		$content_list = [];
 		$parent_id = $_GET['parent-id'] ?? null;
 
-		// List children of specified parent
-		if (!empty($parent_id)) {
-			if (is_numeric($parent_id) || ctype_digit($parent_id)) {
-				$content_list = $this->actions->getChildren(intval($parent_id));
-			}
-			else {
-				throw new Exception('Requested content parent id has bad format');
-			}
-		}
-
-		// Default: list children of root
-		else {
-			$content_list = $this->actions->getChildren();
-		}
+		$content_list = $this->actions->getChildren($parent_id);
 
 		$this->_rest_store->set('data', $content_list);
 	}
@@ -66,15 +53,13 @@ final class ContentController {
 	 */
 
 	public function add() {
-		Assumpt::text($_POST, 'name', true);
-
-		$name          = $_POST['name'];
-		$parent_id     = Sanitise::integerId($_POST, 'parent-id');
-		$collection_id = Sanitise::integerId($_POST, 'collection-id', true);
+		$name          = $_POST['name'] ?? '';
+		$parent_id     = $_POST['parent-id'] ?? null;
+		$collection_id = $_POST['collection-id'] ?? null;
 
 		$result = $this->actions->add($name, $parent_id, $collection_id);
 
-		$this->_rest_store->set('success', ($result) ? true : false);
+		$this->_rest_store->set('success', ($result));
 	}
 
 
@@ -84,14 +69,8 @@ final class ContentController {
 	 */
 
 	public function delete($params) {
-		Assumpt::integerId($params, 'id', true);
+		$result = $this->actions->delete($params['id']);
 
-		$result = $this->_db
-			->delete()
-			->from('content')
-			->where("`id` = '{$params['id']}'")
-			->all();
-
-		$this->_rest_store->set('success', ($result) ? true : false);
+		$this->_rest_store->set('success', ($result));
 	}
 }

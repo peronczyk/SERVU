@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Sqlite\QueryBuilder as Query;
+
 class CollectionsActions {
 
 	const DB_TABLE_NAME = 'collections';
@@ -23,18 +25,19 @@ class CollectionsActions {
 	 * Get collection list
 	 */
 
-	public function getCollectionList() {
-		$collection_list = $this->_db
-			->select()
-			->from(self::DB_TABLE_NAME)
-			->all();
+	public function getCollectionList() : array {
+		$result = $this->_db->fetchAll(
+			(new Query)
+				->selectFrom(self::DB_TABLE_NAME)
+		);
 
 		// Decode field's JSON string in all collections
-		foreach($collection_list as $key => $val) {
-			$collection_list[$key]['fields'] = json_decode($val['fields']);
+		foreach($result as $key => $val) {
+			$result[$key]['id'] = intval($result[$key]['id']);
+			$result[$key]['fields'] = json_decode($val['fields']);
 		}
 
-		return $collection_list;
+		return $result;
 	}
 
 
@@ -42,12 +45,16 @@ class CollectionsActions {
 	 * Get one collection details
 	 */
 
-	public function getCollectionDataById(int $collection_id) {
-		$result = $this->_db
-			->select()
-			->from(self::DB_TABLE_NAME)
-			->where("`id` = '{$collection_id}'")
-			->one();
+	public function getCollectionDataById($collection_id) : array {
+		Assumpt::stringInt($collection_id, 'id');
+
+		$collection_id = intval($collection_id);
+
+		$result = $this->_db->fetchOne(
+			(new Query)
+				->selectFrom(self::DB_TABLE_NAME)
+				->where("`id` = '{$collection_id}'")
+		);
 
 		if ($result) {
 			$result['fields'] = json_decode($result['fields']);
@@ -65,13 +72,18 @@ class CollectionsActions {
 	 * Add new collection
 	 */
 
-	public function addCollection(string $name, array $fields) {
-		$result = $this->_db
-			->insert([
-				'name'   => $name,
-				'fields' => json_encode($fields),
-			])
-			->into(self::DB_TABLE_NAME);
+	public function addCollection(string $name, array $fields) : bool {
+		Assumpt::text($name, 'name');
+		Assumpt::array($fields, 'fields');
+
+		$result = $this->_db->fetchOne(
+			(new Query)
+				->insertInto(self::DB_TABLE_NAME)
+				->values([
+					'name'   => $name,
+					'fields' => json_encode($fields),
+				])
+		);
 
 		return $result;
 	}
@@ -79,17 +91,24 @@ class CollectionsActions {
 
 	/** ----------------------------------------------------------------------------
 	 * Modify collection data
+	 *
+	 * @param String $collection_id - integer stored as string
 	 */
 
-	public function updateCollectionDataById(int $collection_id, array $fields) {
-		$result = $this->_db
-			->update(self::DB_TABLE_NAME)
-			->values([
-				'name'   => $name,
-				'fields' => json_encode($fields),
-			])
-			->where("`id` = '{$collection_id}'")
-			->one();
+	public function updateCollectionDataById($collection_id, $name, $fields) : bool {
+		Assumpt::stringInt($collection_id, 'id');
+		Assumpt::text($name, 'name');
+		Assumpt::array($fields, 'fields');
+
+		$result = $this->_db->fetchOne(
+			(new Query)
+				->update(self::DB_TABLE_NAME)
+				->values([
+					'name'   => $name,
+					//'fields' => json_encode($fields),
+				])
+				->where("`id` = '{$collection_id}'")
+		);
 
 		return $result;
 	}
@@ -99,12 +118,14 @@ class CollectionsActions {
 	 * Delete collection by ID
 	 */
 
-	public function deleteCollectionById(int $collection_id) {
-		$result = $this->_db
-			->delete()
-			->from(self::DB_TABLE_NAME)
-			->where("`id` = '{$collection_id}'")
-			->one();
+	public function deleteCollectionById($collection_id) : bool {
+		Assumpt::stringInt($collection_id, 'id');
+
+		$result = $this->_db->fetchOne(
+			(new Query)
+				->deleteFrom(self::DB_TABLE_NAME)
+				->where("`id` = '{$collection_id}'")
+		);
 
 		return $result;
 	}

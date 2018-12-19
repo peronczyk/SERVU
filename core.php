@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 class Core {
 
+	private $libs_dir;
+
 	// Stores list of classes that was autoloaded.
 	private $autoloaded_classes = [];
 
@@ -22,45 +24,44 @@ class Core {
 	 */
 
 	public function init() {
-		$this->loadConfiguration();
-
-		if (_CONFIG['debug']) {
+		if (Config::$DEBUG) {
 			$this->forceDisplayPhpErrors();
 		}
 
 		$this->startSession();
 		$this->definePaths();
-		$this->defineAutoloader();
 
-		if (_CONFIG['secure_headers']) {
+		if (Config::$SECURE_HEADERS) {
 			$this->sendSecureHeaders();
 		}
 
-		if (_CONFIG['force_https']) {
+		if (Config::$FORCE_HTTPS) {
 			$this->forceHttps();
 		}
 	}
 
 	/** ----------------------------------------------------------------------------
-	 * Define configuration constant _CONFIG
+	 * Load configuration class and file that can override config values.
 	 *
 	 * @return bool - true if overwriting config file exist
 	 */
 
-	private function loadConfiguration() : bool {
-		if (!file_exists('config-defaults.php')) {
-			throw new Exception('Default configuration file is missing');
+	public function loadConfiguration(string $defaults_file, string $override_file = null) : bool {
+		if (!file_exists($defaults_file)) {
+			throw new Exception("Default configuration file is missing");
 		}
 
-		$defaults = require_once 'config-defaults.php';
+		require_once $defaults_file;
 
-		if (file_exists('config.php')) {
-			$overwrite = require_once 'config.php';
-			define('_CONFIG', array_merge($defaults, $overwrite));
+		if (!class_exists('Config')) {
+			throw new Exception("Configuration file does not contain 'Config' class.");
+		}
+
+		if ($override_file && file_exists($override_file)) {
+			require_once $override_file;
 			return true;
 		}
 		else {
-			define('_CONFIG', $defaults);
 			return false;
 		}
 	}
@@ -111,16 +112,31 @@ class Core {
 		}
 		define('ROOT_URI', $root_uri . '/');
 
-		// ROOT URL
+		/**
+		 * Root URL
+		 * @example https://somewebsite.com/yourapp/
+		 */
 		define('ROOT_URL', REQUEST_PROTOCOL . '://' . ROOT_URI);
 
-		// ROOT DIR
-		// Phisical path of app root file
+		/**
+		 * Root phisical directory path
+		 * Physical path of app root file
+		 */
 		define('ROOT_DIR', __DIR__);
 
-		// REQUEST TARGET
-		// app_request is created by Mod Rewrite configured in .htaccess file
+		/**
+		 * Request target that is created by Mod Rewrite
+		 * configured in .htaccess file
+		 * @var String
+		 * @example 'users/get/1/'
+		 */
 		define('REQUEST_TARGET', $_GET['app_request'] ?? '');
+
+		/**
+		 * Request target divided into chunks
+		 * @var Array
+		 * @example ['users', 'get', '1']
+		 */
 		define('REQUEST_TARGET_CHUNKS', explode('/', trim(REQUEST_TARGET, '/')));
 	}
 
@@ -164,12 +180,19 @@ class Core {
 	 * Autoload libs (PSR-0)
 	 */
 
-	public function defineAutoloader() {
-		spl_autoload_register(function($class) {
-			$class_path = __DIR__ . '/' . _CONFIG['app_dir'] . _CONFIG['libs_dir'] . str_replace('\\', '/', $class) . '.php';
+	public function defineAutoloader($libs_dir) {
+		if (!is_dir($libs_dir)) {
+			throw new Exception("Provided PHP libraries directory does not exist.");
+		}
+
+		$this->libs_dir = $libs_dir;
+
+		spl_autoload_register(function($class_name) {
+			$class_path = $this->libs_dir . str_replace('\\', '/', $class_name) . '.php';
+
 			if (file_exists($class_path)) {
 				include_once $class_path;
-				array_push($this->autoloaded_classes, $class);
+				array_push($this->autoloaded_classes, $class_name);
 			}
 		});
 	}

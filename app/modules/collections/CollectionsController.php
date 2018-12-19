@@ -29,7 +29,7 @@ final class CollectionsController {
 	public function list() {
 		$collection_list = $this->actions->getCollectionList();
 
-		$this->_rest_store->set('data', $collection_list);
+		$this->_rest_store->set(Config::$API_RESULT_DATA, $collection_list);
 	}
 
 
@@ -38,12 +38,8 @@ final class CollectionsController {
 	 */
 
 	public function get($params) {
-		Assumpt::stringInt($params, 'id');
-		$collection_id = intval($params['id']);
-
-		$result = $this->actions->getCollectionDataById($collection_id);
-
-		$this->_rest_store->set('data', $result);
+		$result = $this->actions->getCollectionDataById($params['id']);
+		$this->_rest_store->set(Config::$API_RESULT_DATA, $result);
 	}
 
 
@@ -52,14 +48,12 @@ final class CollectionsController {
 	 */
 
 	public function add() {
-		Assumpt::text($_POST, 'name', true);
-
 		$result = $this->actions->addCollection(
 			$_POST['name'],
 			$_POST['fields']
 		);
 
-		$this->_rest_store->set('post', $result);
+		$this->_rest_store->set(Config::$API_RESULT_BOOL, $result);
 	}
 
 
@@ -67,8 +61,14 @@ final class CollectionsController {
 	 * Modify existing collection
 	 */
 
-	public function modify() {
+	public function modify($params) {
+		$result = $this->actions->updateCollectionDataById(
+			$params['id'],
+			$_POST['name'],
+			$_POST['fields']
+		);
 
+		$this->_rest_store->set(Config::$API_RESULT_BOOL, $result);
 	}
 
 
@@ -77,11 +77,8 @@ final class CollectionsController {
 	 */
 
 	public function delete($params) {
-		Assumpt::stringInt($params, 'id');
-		$collection_id = intval($params['id']);
+		$result = $this->actions->deleteCollectionById($params['id']);
 
-		$result = $this->actions->deleteCollectionById($collection_id);
-
-		$this->_rest_store->set('params', $result);
+		$this->_rest_store->set(Config::$API_RESULT_BOOL, $result);
 	}
 }

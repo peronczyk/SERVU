@@ -11,7 +11,11 @@
  * SERVANT SAYS HELLO
  * Headless Content Management System
  *
- * @author Bartosz Perończyk (peronczyk.com)
+ * ---------------------------------------------------------------------------------
+ *
+ * @author    Bartosz Perończyk (peronczyk.com)
+ * @link      https://github.com/peronczyk/servant
+ *
  * =================================================================================
  */
 
@@ -21,13 +25,19 @@ define('APP_START', microtime(true));
 define('APP_VERSION', '0.0.1');
 define('APP_INDEX', true);
 
+
 /**
  * Initiate core
  */
 
 require_once 'core.php';
 $core = new Core();
+$core->loadConfiguration(
+	__DIR__ . '/config.php',
+	__DIR__ . '/config-override.php'
+);
 $core->init();
+$core->defineAutoloader(__DIR__ . '/' . Config::$APP_DIR . Config::$LIBS_DIR);
 
 
 /**
@@ -41,9 +51,9 @@ $container = new DependencyContainer();
  * Initiate database handler
  */
 
-$db_file = _CONFIG['storage_dir'] . 'database/' . _CONFIG['db_file_name'];
-$db = new Sqlite($db_file, [
-	'debug' => _CONFIG['debug']
+$db_file = Config::$STORAGE_DIR . 'database/' . Config::$DB_FILE_NAME;
+$db = new Sqlite\Sqlite($db_file, [
+	'debug' => Config::$DEBUG
 ]);
 $container->add('db', $db);
 
@@ -60,12 +70,12 @@ $container->add('auth', $auth);
  * Load base madule
  */
 
-switch (_CONFIG['default_base_module']) {
+switch (Config::$DEFAULT_BASE_MODULE) {
 	case 'api':
-		require_once _CONFIG['app_dir'] . ((REQUEST_TARGET_CHUNKS[0] == 'admin') ? '/admin' : '/api') . '/index.php';
+		require_once __DIR__ . '/' . Config::$APP_DIR . ((REQUEST_TARGET_CHUNKS[0] == 'admin') ? '/admin' : '/api') . '/index.php';
 		break;
 
 	case 'admin':
-		require_once _CONFIG['app_dir'] . ((REQUEST_TARGET_CHUNKS[0] == 'api') ? '/api' : '/admin') . '/index.php';
+		require_once __DIR__ . '/' . Config::$APP_DIR . ((REQUEST_TARGET_CHUNKS[0] == 'api') ? '/api' : '/admin') . '/index.php';
 		break;
 }

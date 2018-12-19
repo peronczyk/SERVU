@@ -18,8 +18,8 @@
 					required: true,
 				},
 			]"
-			:uri="baseApiUri + ((isEditMode) ? apiModifyNode : apiAddNode)"
-			:fetch-uri="(isEditMode) ? this.baseApiUri + this.apiGetNode + this.id : null"
+			:uri="baseApiUri + ((isEditMode) ? apiModifyNode + id : apiAddNode)"
+			:fetch-uri="(isEditMode) ? baseApiUri + apiGetNode + id : null"
 			:success="onFormSuccess"
 			:cta="formCtaLabel"
 		/>

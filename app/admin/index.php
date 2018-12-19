@@ -9,16 +9,16 @@ if (!file_exists(__DIR__ . '/dist/app.js')) {
 $admin_url = ROOT_URL . 'admin/';
 
 // Physical address of admin app
-$admin_dir = ROOT_URL . _CONFIG['app_dir'] . _CONFIG['admin_dir'];
+$admin_dir = ROOT_URL . Config::$APP_DIR . Config::$ADMIN_DIR;
 
 $app_config = [
-	'siteName'   => _CONFIG['site_name'],
+	'siteName'   => Config::$SITE_NAME,
 	'rootUrl'    => $admin_url,
-	'apiBaseUrl' => ROOT_URL . ((_CONFIG['default_base_module'] == 'api' ? '' : 'api/')),
+	'apiBaseUrl' => ROOT_URL . ((Config::$DEFAULT_BASE_MODULE == 'api' ? '' : 'api/')),
 ];
 
-$modules_path = _CONFIG['app_dir'] . _CONFIG['modules_dir'];
-$modules = new ModulesHandler($modules_path, _CONFIG['modules_config_filename']);
+$modules_path = Config::$APP_DIR . Config::$MODULES_DIR;
+$modules = new ModulesHandler($modules_path, Config::$MODULES_CONFIG_FILENAME);
 $app_modules = $modules->getConfigs();
 
 ?><!DOCTYPE html>

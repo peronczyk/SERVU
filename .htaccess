@@ -1,8 +1,9 @@
-
 # ----------------------------------------------------------------------------------
 # URL REWRITES
 
 <IfModule mod_rewrite.c>
+	RewriteEngine On
+
 	# Whitelist of file types that will not be redirected to index.php
 	RewriteCond %{REQUEST_URI} !\.(7z|ai|css|doc?x|eot|eps|flv|gif|htm?l|ico|js|json|jpg|mov|mp3|mp4|odt|otf|rar|svg?z|pdf|psd|png|ppt?x|swf|tif?f|ttf|txt|woff?2|zip|xls|xml)$
 

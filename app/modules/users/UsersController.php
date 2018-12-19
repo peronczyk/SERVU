@@ -17,9 +17,9 @@ final class UsersController {
 	 */
 
 	public function __construct(DependencyContainer $container) {
-		$this->_auth = $container->get('auth');
+		$this->_auth       = $container->get('auth');
 		$this->_rest_store = $container->get('rest_store');
-		$this->_db = $container->get('db');
+		$this->_db         = $container->get('db');
 
 		require 'UsersActions.php';
 		$this->actions = new UsersActions($container);
@@ -97,9 +97,11 @@ final class UsersController {
 
 	/** ----------------------------------------------------------------------------
 	 * Delete user
+	 *
+	 * @param Array $params
 	 */
 
-	public function delete($params) {
+	public function delete(array $params) {
 		if (!isset($params['id'])) {
 			throw new Exception("Param 'id' is missing.");
 		}
@@ -109,11 +111,11 @@ final class UsersController {
 			throw new Exception("You can't delete the only account.");
 		}
 
-		$result = $this->_db
-			->delete()
-			->from('users')
-			->where("`id` = '{$params['id']}'")
-			->all();
+		$result = $this->_db->fetchAll(
+			(new Query)
+				->deleteFrom('users')
+				->where("`id` = '{$params['id']}'")
+			);
 
 		$this->_rest_store->set('params', $result);
 	}

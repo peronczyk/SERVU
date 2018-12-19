@@ -30,12 +30,7 @@ class Sanitise {
 			throw new Exception("Sanitiser: {$name} is required");
 		}
 
-		// Return if empty
-		if (empty($value)) {
-			return null;
-		}
-
-		// Call static method
+		// Call one of static methods listed below
 		return call_user_func_array([__CLASS__, $method], [$value]);
 	}
 

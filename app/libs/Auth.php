@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Sqlite\QueryBuilder as Query;
+
 class Auth {
 
 	const LVL_USER  = 0;
@@ -105,21 +107,22 @@ class Auth {
 			throw new Exception("Provided email address is incorrect");
 		}
 
-		$user = $this->_db
-			->select(['id', 'access-lvl', 'email', 'password'])
-			->from('users')
-			->where("email = '{$email}'")
-			->all();
+		$user = $this->_db->fetchOne(
+			(new Query)
+				->selectFrom('users')
+				->fields(['id', 'access-lvl', 'email', 'password'])
+				->where("email = '{$email}'")
+			);
 
 		if (!$user) {
 			throw new Exception("User with this email addres does not exist");
 		}
 
-		if (!$this->passwordVerify($password, $user[0]['password'])) {
+		if (!$this->passwordVerify($password, $user['password'])) {
 			throw new Exception("Provided password is incorrect");
 		}
 		else {
-			$this->setLvl((int) $user[0]['access-lvl']);
+			$this->setLvl((int) $user['access-lvl']);
 			return true;
 		}
 
