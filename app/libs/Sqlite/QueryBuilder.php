@@ -291,7 +291,13 @@ class QueryBuilder {
 			throw new Exception("Conditions are required to perform UPDATE operation. Use method 'where()' to add conditions.");
 		}
 
-		return "UPDATE {$this->table} SET " . http_build_query($this->values, '', ', ') . " WHERE {$this->conditions}";
+		$changes = [];
+		foreach($this->values as $col => $val) {
+			$changes[] = "`{$col}` = '{$val}'";
+		}
+		$changes = implode(', ', $changes);
+
+		return "UPDATE {$this->table} SET {$changes} WHERE {$this->conditions}";
 	}
 
 
