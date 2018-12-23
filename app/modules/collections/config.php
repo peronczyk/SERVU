@@ -11,6 +11,10 @@ return [
 			'callback' => $helper->PassCallbackMethod('list'),
 		],
 		[
+			'path'     => 'collections/get/:id(/)',
+			'callback' => $helper->PassCallbackMethod('get'),
+		],
+		[
 			'path'     => 'collections/add(/)',
 			'method'   => Router::POST,
 			'auth_lvl' => Auth::LVL_ADMIN,
@@ -27,10 +31,6 @@ return [
 			'method'   => Router::POST,
 			'auth_lvl' => Auth::LVL_ADMIN,
 			'callback' => $helper->PassCallbackMethod('delete'),
-		],
-		[
-			'path'     => 'collections/get/:id(/)',
-			'callback' => $helper->PassCallbackMethod('get'),
 		],
 	],
 ];

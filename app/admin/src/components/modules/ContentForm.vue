@@ -26,9 +26,9 @@
 				},
 				...collectionFields,
 			]"
-			:uri="baseApiUri + ((isEditMode) ? apiModifyNode : apiAddNode)"
+			:uri="baseApiUri + ((isEditMode) ? apiModifyNode + id : apiAddNode)"
 			:fetch-uri="(isEditMode) ? this.baseApiUri + this.apiGetNode + this.id : null"
-			:success="onAddSuccess"
+			:success="onFormSuccess"
 			:cta="formCtaLabel"
 		/>
 
@@ -110,9 +110,12 @@ export default {
 			openToast  : 'toast/open',
 		}),
 
-		onAddSuccess() {
+		onFormSuccess() {
 			this.closeModal();
-			this.openToast('Content added.');
+			this.openToast((this.isEditMode)
+				? 'Content modified.'
+				: 'Content added.'
+			);
 			this.$root.$emit('content-added');
 		},
 

@@ -25,21 +25,10 @@ final class ContentController {
 
 
 	/** ----------------------------------------------------------------------------
-	 * Index
-	 */
-
-	public function index($request) {
-		Assumpt::integer($request[0], 'id', true);
-		$this->_rest_store->set('details', $this->actions->getDetails($request[0]));
-	}
-
-
-	/** ----------------------------------------------------------------------------
 	 * List
 	 */
 
 	public function list() {
-		$content_list = [];
 		$parent_id = $_GET['parent-id'] ?? null;
 
 		$content_list = $this->actions->getChildren($parent_id);
@@ -49,22 +38,47 @@ final class ContentController {
 
 
 	/** ----------------------------------------------------------------------------
+	 * Get one content's data
+	 */
+
+	public function get($params) {
+		$result = $this->actions->getContentDataById($params['id']);
+		$this->_rest_store->set(Config::$API_RESULT_DATA, $result);
+	}
+
+
+	/** ----------------------------------------------------------------------------
 	 * Add content
 	 */
 
 	public function add() {
-		$name          = $_POST['name'] ?? '';
-		$parent_id     = $_POST['parent-id'] ?? null;
-		$collection_id = $_POST['collection-id'] ?? null;
-
-		$result = $this->actions->add($name, $parent_id, $collection_id);
+		$result = $this->actions->addContent(
+			$_POST['name'] ?? '',
+			$_POST['parent-id'] ?? null,
+			$_POST['collection-id'] ?? null
+		);
 
 		$this->_rest_store->set('success', ($result));
 	}
 
 
 	/** ----------------------------------------------------------------------------
-	 * Delete collection
+	 * Modify existing content
+	 */
+
+	public function modify($params) {
+		$result = $this->actions->updateContentDataById(
+			$params['id'],
+			$_POST['name'] ?? '',
+			$_POST['collection-id'] ?? null
+		);
+
+		$this->_rest_store->set(Config::$API_RESULT_BOOL, $result);
+	}
+
+
+	/** ----------------------------------------------------------------------------
+	 * Delete content
 	 * @todo
 	 */
 

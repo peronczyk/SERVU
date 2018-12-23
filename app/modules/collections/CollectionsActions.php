@@ -105,7 +105,7 @@ class CollectionsActions {
 				->update(self::DB_TABLE_NAME)
 				->values([
 					'name'   => $name,
-					//'fields' => json_encode($fields),
+					'fields' => json_encode($fields),
 				])
 				->where("`id` = '{$collection_id}'")
 		);
