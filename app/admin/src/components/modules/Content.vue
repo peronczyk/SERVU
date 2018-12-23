@@ -126,7 +126,7 @@ export default {
 			fetchCollectionsList : 'collections/fetchList',
 		}),
 
-		fetchList(parentId) {
+		fetchList(parentId = this.currentParentId) {
 			this.isContentListFetched = false;
 
 			return axios.get(this.nodeUrl + 'list?parent-id=' + (parentId || 0))
@@ -170,19 +170,22 @@ export default {
 		navigateDown(parentId, parentName) {
 			this.fetchList(parentId);
 			this.currentPath.push({
-				id: parentId,
-				name: parentName
+				id   : Number(parentId),
+				name : parentName
 			});
 		},
 
 		addContent() {
-			this.openModal({ content: ContentForm });
+			this.openModal({
+				content : ContentForm,
+				props   : { parentId: this.currentParentId }
+			});
 		},
 
 		editContent(entry) {
 			this.openModal({
 				content : ContentForm,
-				props   : { id: Number(entry.id) }
+				props   : { id: entry.id }
 			});
 		},
 

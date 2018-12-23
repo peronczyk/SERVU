@@ -1,5 +1,5 @@
 export default {
 	setCurrentParentId(state, contentId) {
-		state.currentParentId = contentId;
+		state.currentParentId = Number(contentId);
 	},
 }

@@ -3,8 +3,8 @@
 $helper = new ModuleConfigHelper(__DIR__, 'CollectionsController');
 
 return [
-	'name' => 'Collections',
-	'icon' => 'group',
+	'name'   => 'Collections',
+	'icon'   => 'group',
 	'routes' => [
 		[
 			'path'     => 'collections/list(/)',

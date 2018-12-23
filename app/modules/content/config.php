@@ -3,8 +3,8 @@
 $helper = new ModuleConfigHelper(__DIR__, 'ContentController');
 
 return [
-	'name' => 'Content',
-	'icon' => 'document',
+	'name'   => 'Content',
+	'icon'   => 'document',
 	'routes' => [
 		[
 			'path'     => 'content/list(/)',

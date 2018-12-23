@@ -3,8 +3,8 @@
 $helper = new ModuleConfigHelper(__DIR__, 'UsersController');
 
 return [
-	'name' => 'Users',
-	'icon' => 'user',
+	'name'   => 'Users',
+	'icon'   => 'user',
 	'routes' => [
 		[
 			'path'     => 'users/list(/)',

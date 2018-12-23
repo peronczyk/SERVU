@@ -3,8 +3,8 @@
 $helper = new ModuleConfigHelper(__DIR__, 'FilesController');
 
 return [
-	'name' => 'Files',
-	'icon' => 'files',
+	'name'   => 'Files',
+	'icon'   => 'files',
 	'routes' => [
 		[
 			'path'     => 'files/list(/)',
