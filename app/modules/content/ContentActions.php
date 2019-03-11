@@ -88,7 +88,7 @@ class ContentActions {
 	public function addContent($name, $parent_id, $collection_id) : bool {
 		Assumpt::text($name, 'name', true);
 
-		$parent_id     = Sanitise::integerId($parent_id, 'parent-id');
+		$parent_id     = Sanitise::integerId($parent_id, 'parent-id', false);
 		$collection_id = Sanitise::integerId($collection_id, 'collection-id', true);
 
 		$result = $this->_db->fetchOne(
