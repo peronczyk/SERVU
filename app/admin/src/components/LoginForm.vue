@@ -15,9 +15,9 @@
 			<a @click.prevent="passwordRecovery">Password recovery</a>
 		</div>
 
-		<a class="c-LoginForm__appname" href="https://github.com/peronczyk/servant" target="_blank">
+		<a class="c-LoginForm__appname" href="https://github.com/peronczyk/servu" target="_blank">
 			<span>Powered by:</span>
-			Servant
+			SERVU
 		</a>
 	</div>
 

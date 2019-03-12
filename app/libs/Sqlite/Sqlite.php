@@ -8,7 +8,7 @@
  * ---------------------------------------------------------------------------------
  *
  * @category  Database Access
- * @link      https://github.com/peronczyk/servant
+ * @link      https://github.com/peronczyk/servu
  * @author    Bartosz Perończyk <bartosz@peronczyk.com>
  *
  * =================================================================================

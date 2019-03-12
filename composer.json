@@ -1,6 +1,6 @@
 {
-    "name": "peronczyk/servant",
-    "description": "Servant - Headless CMS",
+    "name": "peronczyk/servu",
+    "description": "SERVU - Headless CMS",
     "type": "cms",
     "license": "MIT",
     "authors": [

@@ -8,6 +8,7 @@ class Auth {
 
 	const LVL_USER  = 0;
 	const LVL_ADMIN = 1;
+	const SESS_AUTH_LVL = 'servu_auth_lvl';
 
 	// User lvl and it's default state
 	protected $lvl = self::LVL_USER;
@@ -23,8 +24,10 @@ class Auth {
 	public function __construct(DependencyContainer $container) {
 		$this->_db = $container->get('db');
 
-		if (isset($_SESSION['servant_auth_lvl']) && is_numeric($_SESSION['servant_auth_lvl']) && $_SESSION['servant_auth_lvl'] > self::LVL_USER) {
-			$this->setLvl((int) $_SESSION['servant_auth_lvl']);
+		$auth_lvl = intval($_SESSION[self::SESS_AUTH_LVL] ?? 0);
+
+		if ($auth_lvl > self::LVL_USER) {
+			$this->setLvl($auth_lvl);
 		}
 	}
 
@@ -44,7 +47,7 @@ class Auth {
 	 */
 
 	public function setLvl(int $lvl) {
-		$_SESSION['servant_auth_lvl'] = $lvl;
+		$_SESSION[self::SESS_AUTH_LVL] = $lvl;
 		$this->lvl = $lvl;
 	}
 

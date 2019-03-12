@@ -61,7 +61,7 @@ $app_modules = $modules->getConfigs();
 			.logo-top {fill: #21e074; }
 			.logo-bottom {fill: #fff; }
 		</style>
-		<symbol id="logo-servant" viewBox="0 0 50 50">
+		<symbol id="logo-servu" viewBox="0 0 50 50">
 			<polygon class="logo-top" points="43,25 18,25 18,0"/>
 			<polygon class="logo-bottom" points="5,25 30,25 30,50"/>
 		</symbol>

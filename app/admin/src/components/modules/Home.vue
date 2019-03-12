@@ -20,7 +20,7 @@
 
 			<li>
 				<small>Provided by:</small>
-				<h4><a href="https://servant.onl/" target="_blank">Servant</a></h4>
+				<h4><a href="https://servu.dev/" target="_blank">SERVU</a></h4>
 			</li>
 		</ul>
 	</div>

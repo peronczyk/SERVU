@@ -1,6 +1,6 @@
 <?php
 
-define('SERVANT_API', true);
+define('SERVU_API', true);
 
 // Initiate resto store and rest exception handler
 $rest_store = new RestStore();

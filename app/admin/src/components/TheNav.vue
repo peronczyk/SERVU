@@ -7,7 +7,7 @@
 	>
 		<div class="c-Nav__top">
 			<router-link to="/">
-				<svg><use xlink:href="#logo-servant"></use></svg>
+				<svg><use xlink:href="#logo-servu"></use></svg>
 			</router-link>
 		</div>
 

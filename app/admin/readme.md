@@ -1,4 +1,4 @@
-# Servant administration panel JS app
+# SERVU administration panel JS app
 
 To allow of build admin JS app install dendencies by running this in console:
 ```

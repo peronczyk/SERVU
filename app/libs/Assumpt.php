@@ -8,7 +8,7 @@
  * This class is used to check if the assumptions about the variable are correct.
  * Application is interrupted by returning an exception if not.
  *
- * @link      https://github.com/peronczyk/servant
+ * @link      https://github.com/peronczyk/servu
  * @copyright Bartosz Perończyk <bartosz@peronczyk.com>
  *
  * =================================================================================

@@ -1,7 +1,7 @@
 {
-  "name": "servant-admin",
+  "name": "servu-admin",
   "version": "0.0.1",
-  "description": "Administration panel for Servant Headless CMS",
+  "description": "Administration panel for SERVU Headless CMS",
   "main": "index.php",
   "scripts": {
     "dev": "webpack --mode=development --progress --colors --watch",
